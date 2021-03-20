@@ -1,15 +1,17 @@
 buildscript {
     ext {
-        compose_version = '1.0.0-beta01'
+        compose_version = '1.0.0-beta02'
         koin_version = '2.2.2'
+        exo_player = '2.13.1'
+        kotlin_version = '1.4.31'
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.0.0-alpha08"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30"
+        classpath "com.android.tools.build:gradle:7.0.0-alpha10"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 

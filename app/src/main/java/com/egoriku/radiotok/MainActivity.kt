@@ -1,22 +1,29 @@
 package com.egoriku.radiotok
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.border
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.egoriku.radiotok.data.entity.StationEntity
+import com.egoriku.radiotok.foundation.player.AudioPlayer
 import com.egoriku.radiotok.ui.theme.RadioTokTheme
+import com.egoriku.radiotok.util.DynamicThemePrimaryColorsFromImage
+import com.egoriku.radiotok.util.constrastAgainst
+import com.egoriku.radiotok.util.rememberDominantColorState
 import com.egoriku.radiotok.viewmodel.RadioViewModel
 import dev.chrisbanes.accompanist.coil.CoilImage
 import org.koin.androidx.scope.ScopeActivity
@@ -26,59 +33,91 @@ class MainActivity : ScopeActivity() {
 
     private val viewModel: RadioViewModel by viewModel()
 
+    @SuppressLint("MissingSuperCall")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             RadioTokTheme {
                 Surface(color = MaterialTheme.colors.background) {
-                    val radioStations by viewModel.stations.collectAsState()
-                    LazyColumn {
-                        items(items = radioStations) {
-                            RadioItem(it)
+                    val playerModel by viewModel.currentPlayerModel.collectAsState()
+
+                    AudioPlayer(playerModel = playerModel, onNext = {
+                        viewModel.nextStation()
+                    })
+
+                    val surfaceColor = MaterialTheme.colors.surface
+
+                    val dominantColorState = rememberDominantColorState { color ->
+                        color.constrastAgainst(surfaceColor) >= 3f
+                    }
+
+                    DynamicThemePrimaryColorsFromImage(dominantColorState) {
+                        val selectedImageUrl = playerModel.icon
+
+                        if (selectedImageUrl.isNotEmpty()) {
+                            LaunchedEffect(selectedImageUrl) {
+                                dominantColorState.updateColorsFromImageUrl(selectedImageUrl)
+                            }
+                        } else {
+                            dominantColorState.reset()
+                        }
+
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            BoxWithConstraints(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .size(300.dp)
+                                    .shadow(5.dp, CircleShape)
+                                    .background(
+                                        color = dominantColorState.color,
+                                        shape = CircleShape
+                                    )
+                            ) {
+                                CoilImage(
+                                    fadeIn = true,
+                                    data = playerModel.icon,
+                                    contentDescription = null,
+                                    modifier = Modifier.width(170.dp),
+                                    error = {
+                                        Image(
+                                            painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                                            contentDescription = null
+                                        )
+                                    }
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.size(32.dp))
+                            Text(
+                                text = playerModel.name,
+                                style = MaterialTheme.typography.body1,
+                                modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+                            )
+                            Spacer(modifier = Modifier.size(32.dp))
+
+                            Spacer(modifier = Modifier.size(100.dp))
+
+                            Button(
+                                onClick = { viewModel.nextStation() },
+                                shape = CircleShape
+                            ) {
+                                Text(
+                                    text = "Next station",
+                                    modifier = Modifier.padding(
+                                        start = 16.dp,
+                                        end = 16.dp,
+                                        top = 8.dp,
+                                        bottom = 8.dp
+                                    )
+                                )
+                            }
                         }
                     }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun RadioItem(entity: StationEntity) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(16.dp)
-            ) {
-                CoilImage(
-                    data = entity.favicon,
-                    modifier = Modifier.size(50.dp),
-                    contentDescription = null
-                )
-
-                Text(text = entity.name, modifier = Modifier.padding(16.dp))
-            }
-
-            LazyRow(
-                contentPadding = PaddingValues(start = 8.dp, end = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                val tags = entity.tags.split(",").toTypedArray()
-
-                items(tags) {
-                    Text(
-                        text = it,
-                        style = MaterialTheme.typography.caption,
-                        modifier = Modifier
-                            .border(
-                                1.dp,
-                                LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
-                                CircleShape
-                            )
-                            .padding(8.dp)
-                    )
                 }
             }
         }

@@ -2,7 +2,7 @@ package com.egoriku.radiotok.data.entity
 
 import com.google.gson.annotations.SerializedName
 
-class StationEntity(
+data class StationEntity(
     @SerializedName("name")
     val name: String,
 

@@ -1,44 +1,29 @@
 package com.egoriku.radiotok.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
-private val DarkColorPalette = darkColors(
-        primary = Purple200,
-        primaryVariant = Purple700,
-        secondary = Teal200
-)
+val Yellow800 = Color(0xFFF29F05)
+val Red300 = Color(0xFFEA6D7E)
 
-private val LightColorPalette = lightColors(
-        primary = Purple500,
-        primaryVariant = Purple700,
-        secondary = Teal200
-
-        /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
+val RadioColors = lightColors(
+    primary = Yellow800,
     onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+    primaryVariant = Yellow800,
+    secondary = Yellow800,
+    onSecondary = Color.White,
+    error = Red300,
+    onError = Color.White
 )
 
 @Composable
-fun RadioTokTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
-
+fun RadioTokTheme(content: @Composable () -> Unit) {
     MaterialTheme(
-            colors = colors,
-            typography = Typography,
-            shapes = Shapes,
-            content = content
+        colors = RadioColors,
+        typography = Typography,
+        shapes = Shapes,
+        content = content
     )
 }
