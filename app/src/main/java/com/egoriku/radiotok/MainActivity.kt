@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.egoriku.radiotok.foundation.player.AudioPlayer
 import com.egoriku.radiotok.ui.theme.RadioTokTheme
@@ -72,7 +73,7 @@ class MainActivity : ScopeActivity() {
                                 contentAlignment = Alignment.Center,
                                 modifier = Modifier
                                     .size(300.dp)
-                                    .shadow(5.dp, CircleShape)
+                                    .shadow(2.dp, CircleShape)
                                     .background(
                                         color = dominantColorState.color,
                                         shape = CircleShape
@@ -85,7 +86,8 @@ class MainActivity : ScopeActivity() {
                                     modifier = Modifier.width(170.dp),
                                     error = {
                                         Image(
-                                            painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                                            modifier = Modifier.size(100.dp),
+                                            painter = painterResource(id = R.drawable.ic_radio),
                                             contentDescription = null
                                         )
                                     }
@@ -95,6 +97,7 @@ class MainActivity : ScopeActivity() {
                             Spacer(modifier = Modifier.size(32.dp))
                             Text(
                                 text = playerModel.name,
+                                textAlign = TextAlign.Center,
                                 style = MaterialTheme.typography.body1,
                                 modifier = Modifier.padding(start = 16.dp, end = 16.dp)
                             )
