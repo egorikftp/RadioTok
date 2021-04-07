@@ -3,7 +3,7 @@ buildscript {
         compose_version = '1.0.0-beta03'
         koin_version = '2.2.2'
         exo_player = '2.13.2'
-        kotlin_version = '1.4.31'
+        kotlin_version = '1.4.32'
     }
     repositories {
         google()
