@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<automotiveApp>
+    <!--
+      ~ This lets Android Auto know that UAMP can act as a media app.
+      ~ See: https://developer.android.com/training/auto/audio/ for more info.
+      -->
+    <uses name="media" />
+</automotiveApp>
