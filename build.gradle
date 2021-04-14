@@ -4,6 +4,7 @@ buildscript {
         koin_version = '2.2.2'
         exo_player = '2.13.2'
         kotlin_version = '1.4.32'
+        room_version = "2.2.6"
     }
     repositories {
         google()

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -70,7 +71,11 @@ dependencies {
     implementation "com.google.android.exoplayer:exoplayer-hls:$exo_player"
     implementation "com.google.android.exoplayer:exoplayer-ui:$exo_player"
     implementation "com.google.android.exoplayer:extension-mediasession:$exo_player"
-    
+
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
