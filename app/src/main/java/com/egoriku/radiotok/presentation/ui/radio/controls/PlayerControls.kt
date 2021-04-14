@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.IconButton
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.egoriku.radiotok.R
 import com.egoriku.radiotok.presentation.ControlsActions
 
 @Composable
@@ -32,7 +32,10 @@ fun PlayerControls(
             modifier = Modifier
                 .padding(start = 16.dp, top = 8.dp, bottom = 8.dp, end = 8.dp)
         ) {
-            Image(imageVector = Icons.Filled.NotInterested, contentDescription = null)
+            Image(
+                painter = painterResource(R.drawable.ic_not_interested),
+                contentDescription = "Not interested"
+            )
         }
 
         Row(
@@ -45,7 +48,10 @@ fun PlayerControls(
                 modifier = Modifier
                     .padding(start = 8.dp, top = 8.dp, bottom = 8.dp, end = 16.dp)
             ) {
-                Image(imageVector = Icons.Filled.Tune, contentDescription = null)
+                Image(
+                    painter = painterResource(R.drawable.ic_tune),
+                    contentDescription = "Tune"
+                )
             }
 
             PlayPauseButton(isPlaying = isPlaying, onClick = controlsActions.playPauseEvent)
@@ -55,7 +61,10 @@ fun PlayerControls(
                 modifier = Modifier
                     .padding(start = 16.dp, top = 8.dp, bottom = 8.dp, end = 8.dp)
             ) {
-                Image(imageVector = Icons.Filled.SkipNext, contentDescription = null)
+                Image(
+                    painter = painterResource(R.drawable.ic_skip_next),
+                    contentDescription = "Skip Next"
+                )
             }
         }
 
@@ -65,9 +74,15 @@ fun PlayerControls(
                 .padding(start = 8.dp, top = 8.dp, bottom = 8.dp, end = 16.dp)
         ) {
             if (isLiked) {
-                Image(imageVector = Icons.Filled.Favorite, contentDescription = null)
+                Image(
+                    painter = painterResource(R.drawable.ic_favorite),
+                    contentDescription = "Add favorite"
+                )
             } else {
-                Image(imageVector = Icons.Filled.FavoriteBorder, contentDescription = null)
+                Image(
+                    painter = painterResource(R.drawable.ic_favorite_border),
+                    contentDescription = "Remove favorite"
+                )
             }
         }
     }
