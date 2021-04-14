@@ -101,7 +101,10 @@ class RadioService : MediaBrowserServiceCompat() {
                 FavoriteActionProvider(
                     context = this@RadioService,
                     likedRadioStationsHolder = likedRadioStationsHolder,
-                    radioStationsHolder = radioStationsHolder
+                    radioStationsHolder = radioStationsHolder,
+                    onInvalidateNotification = {
+                        playerNotificationManager.invalidate()
+                    }
                 ),
                 DislikeActionProvider(
                     context = this@RadioService,
@@ -178,12 +181,16 @@ class RadioService : MediaBrowserServiceCompat() {
                         playerNotificationManager = playerNotificationManager,
                         radioItemModel = it
                     )
+
+                    mediaSessionConnector.invalidateMediaSessionPlaybackState()
                 },
                 onUnlike = {
                     likedRadioStationsHolder.unlike(
                         playerNotificationManager = playerNotificationManager,
                         radioItemModel = it
                     )
+                    mediaSessionConnector.invalidateMediaSessionPlaybackState()
+
                 },
                 onDislike = {
                     likedRadioStationsHolder.dislike(radioItemModel = it)

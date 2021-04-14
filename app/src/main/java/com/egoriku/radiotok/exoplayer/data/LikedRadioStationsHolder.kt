@@ -1,8 +1,6 @@
 package com.egoriku.radiotok.exoplayer.data
 
 import com.egoriku.radiotok.domain.model.RadioItemModel
-import com.google.android.exoplayer2.ControlDispatcher
-import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 
 class LikedRadioStationsHolder {
@@ -17,14 +15,8 @@ class LikedRadioStationsHolder {
         dislikedRadioStations.add(radioItemModel)
     }
 
-    fun unlike(
-        player: Player,
-        radioItemModel: RadioItemModel,
-        controlDispatcher: ControlDispatcher
-    ) {
+    fun unlike(radioItemModel: RadioItemModel) {
         likedRadioStations.remove(radioItemModel)
-
-        controlDispatcher.dispatchSeekTo(player, player.currentWindowIndex, player.currentPosition)
     }
 
     fun unlike(
@@ -35,14 +27,8 @@ class LikedRadioStationsHolder {
         playerNotificationManager.invalidate()
     }
 
-    fun like(
-        player: Player,
-        radioItemModel: RadioItemModel,
-        controlDispatcher: ControlDispatcher
-    ) {
+    fun like(radioItemModel: RadioItemModel) {
         likedRadioStations.add(radioItemModel)
-
-        controlDispatcher.dispatchSeekTo(player, player.currentWindowIndex, player.currentPosition)
     }
 
     fun like(

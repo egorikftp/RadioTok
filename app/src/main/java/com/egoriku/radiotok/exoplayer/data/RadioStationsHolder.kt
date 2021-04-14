@@ -52,7 +52,7 @@ class RadioStationsHolder(
         }
     }
 
-    fun asMediaItems(): MutableList<MediaBrowserCompat.MediaItem> {
+    fun asMediaItems(): List<MediaBrowserCompat.MediaItem> {
         Log.d("kek", "asMediaItems")
 
         return allRadioStations.map { model ->
@@ -60,6 +60,6 @@ class RadioStationsHolder(
                 model.toMediaDescription(),
                 MediaBrowserCompat.MediaItem.FLAG_PLAYABLE
             )
-        }.toMutableList()
+        }.subList(0, 50)
     }
 }

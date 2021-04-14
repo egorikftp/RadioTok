@@ -14,6 +14,7 @@ import com.egoriku.radiotok.exoplayer.PlayerConstants.NETWORK_ERROR
 import com.egoriku.radiotok.exoplayer.ext.isPlayEnabled
 import com.egoriku.radiotok.exoplayer.ext.isPlaying
 import com.egoriku.radiotok.exoplayer.ext.isPrepared
+import com.egoriku.radiotok.exoplayer.notification.CustomAction
 import com.egoriku.radiotok.exoplayer.service.RadioService
 import com.egoriku.radiotok.extensions.EMPTY
 import com.egoriku.radiotok.extensions.ResultOf
@@ -99,31 +100,40 @@ internal class MusicServiceConnection(context: Context) : IMusicServiceConnectio
     private inner class MediaControllerCallback : MediaControllerCompat.Callback() {
 
         override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
-            Log.d("kek", "onPlaybackStateChanged")
-
-            _playbackState.value = when (state) {
-                null -> RadioPlaybackState()
-                else -> RadioPlaybackState(
-                    isPlaying = state.isPlaying,
-                    isPrepared = state.isPrepared,
-                    isPlayEnabled = state.isPlayEnabled
-                )
+            Log.d("kek", "onPlaybackStateChanged = $state")
+            scope.launch {
+                _playbackState.value = when (state) {
+                    null -> RadioPlaybackState()
+                    else -> {
+                        RadioPlaybackState(
+                            isPlaying = state.isPlaying,
+                            isPrepared = state.isPrepared,
+                            isPlayEnabled = state.isPlayEnabled,
+                            isLiked = state.customActions.first {
+                                it.action == CustomAction.ACTION_TOGGLE_FAVORITE
+                            }.extras.getBoolean("IS_LIKED")
+                        )
+                    }
+                }
             }
         }
 
         override fun onMetadataChanged(metadata: MediaMetadataCompat?) {
             Log.d("kek", "onMetadataChanged $metadata")
-            _currentPlayingRadio.value = when (metadata) {
-                null -> RadioItemModel()
-                else -> {
-                    val description = metadata.description
 
-                    RadioItemModel(
-                        id = description.mediaId ?: EMPTY,
-                        name = description.title.toString(),
-                        streamUrl = description.mediaUri.toString(),
-                        icon = description.iconUri.toString()
-                    )
+            scope.launch {
+                _currentPlayingRadio.value = when (metadata) {
+                    null -> RadioItemModel()
+                    else -> {
+                        val description = metadata.description
+
+                        RadioItemModel(
+                            id = description.mediaId ?: EMPTY,
+                            name = description.title.toString(),
+                            streamUrl = description.mediaUri.toString(),
+                            icon = description.iconUri.toString()
+                        )
+                    }
                 }
             }
         }

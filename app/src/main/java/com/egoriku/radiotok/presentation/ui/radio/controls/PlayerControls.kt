@@ -7,10 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.NotInterested
-import androidx.compose.material.icons.filled.SkipNext
-import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +18,7 @@ import com.egoriku.radiotok.presentation.ControlsActions
 fun PlayerControls(
     modifier: Modifier = Modifier,
     isPlaying: Boolean,
+    isLiked: Boolean,
     controlsActions: ControlsActions
 ) {
     Row(
@@ -30,7 +28,7 @@ fun PlayerControls(
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
-            onClick = { controlsActions.notInterestedRadioEvent() },
+            onClick = { controlsActions.dislikeRadioStationEvent() },
             modifier = Modifier
                 .padding(start = 16.dp, top = 8.dp, bottom = 8.dp, end = 8.dp)
         ) {
@@ -43,7 +41,7 @@ fun PlayerControls(
             horizontalArrangement = Arrangement.Center
         ) {
             IconButton(
-                onClick = { controlsActions.tuneRadiosEvent },
+                onClick = { controlsActions.tuneRadiosEvent() },
                 modifier = Modifier
                     .padding(start = 8.dp, top = 8.dp, bottom = 8.dp, end = 16.dp)
             ) {
@@ -53,7 +51,7 @@ fun PlayerControls(
             PlayPauseButton(isPlaying = isPlaying, onClick = controlsActions.playPauseEvent)
 
             IconButton(
-                onClick = { controlsActions.nextRadioEvent },
+                onClick = { controlsActions.nextRadioEvent() },
                 modifier = Modifier
                     .padding(start = 16.dp, top = 8.dp, bottom = 8.dp, end = 8.dp)
             ) {
@@ -62,11 +60,15 @@ fun PlayerControls(
         }
 
         IconButton(
-            onClick = { controlsActions.addRemoveFavoriteEvent },
+            onClick = { controlsActions.addRemoveFavoriteEvent() },
             modifier = Modifier
                 .padding(start = 8.dp, top = 8.dp, bottom = 8.dp, end = 16.dp)
         ) {
-            Image(imageVector = Icons.Filled.FavoriteBorder, contentDescription = null)
+            if (isLiked) {
+                Image(imageVector = Icons.Filled.Favorite, contentDescription = null)
+            } else {
+                Image(imageVector = Icons.Filled.FavoriteBorder, contentDescription = null)
+            }
         }
     }
 }

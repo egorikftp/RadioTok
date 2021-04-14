@@ -22,6 +22,7 @@ fun RadioScreen(
             playerControls = {
                 PlayerControls(
                     isPlaying = playbackState.isPlaying,
+                    isLiked = playbackState.isLiked,
                     controlsActions = controlsActions
                 )
             }

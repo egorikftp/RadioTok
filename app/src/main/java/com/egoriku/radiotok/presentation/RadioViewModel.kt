@@ -1,14 +1,23 @@
 package com.egoriku.radiotok.presentation
 
+import android.support.v4.media.session.MediaControllerCompat
 import androidx.lifecycle.ViewModel
+import com.egoriku.radiotok.exoplayer.ext.sendDislikeAction
+import com.egoriku.radiotok.exoplayer.ext.sendLikeAction
+import com.egoriku.radiotok.exoplayer.ext.sendSkipToNextAction
 
 class RadioViewModel(
     private val serviceConnection: IMusicServiceConnection
 ) : ViewModel(), IMusicServiceConnection by serviceConnection {
 
-    fun next() {
-        serviceConnection.transportControls.skipToNext()
-    }
+    private val _transportControls: MediaControllerCompat.TransportControls
+        get() = serviceConnection.transportControls
+
+    fun nextRadioStation() = _transportControls.sendSkipToNextAction()
+
+    fun dislikeRadioStation() = _transportControls.sendDislikeAction()
+
+    fun likeRadioStation() = _transportControls.sendLikeAction()
 
     fun togglePlayPause() {
         val playbackState = playbackState.value

@@ -52,9 +52,9 @@ class MainActivity : ScopeActivity() {
 
 class ControlsActions(viewModel: RadioViewModel) {
 
-    val notInterestedRadioEvent: () -> Unit = {}
+    val dislikeRadioStationEvent: () -> Unit = { viewModel.dislikeRadioStation() }
     val tuneRadiosEvent: () -> Unit = {}
     val playPauseEvent: () -> Unit = { viewModel.togglePlayPause() }
-    val nextRadioEvent: () -> Unit = { viewModel.next() }
-    val addRemoveFavoriteEvent: () -> Unit = { }
+    val nextRadioEvent: () -> Unit = { viewModel.nextRadioStation() }
+    val addRemoveFavoriteEvent: () -> Unit = { viewModel.likeRadioStation() }
 }
