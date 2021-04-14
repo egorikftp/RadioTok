@@ -15,7 +15,7 @@ fun RadioScreen(
     controlsActions: ControlsActions
 ) {
     Surface {
-        Player(
+        RadioPlayer(
             topSection = {
                 TopSection(logoUrl = radioItemModel.icon, title = radioItemModel.name)
             },

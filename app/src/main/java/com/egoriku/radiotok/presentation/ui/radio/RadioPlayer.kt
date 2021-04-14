@@ -11,7 +11,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Player(
+fun RadioPlayer(
     topSection: @Composable () -> Unit,
     playerControls: @Composable () -> Unit
 ) {
