@@ -3,7 +3,10 @@
 package com.egoriku.radiotok
 
 import android.app.Application
+import com.egoriku.radiotok.koin.appScope
 import com.egoriku.radiotok.koin.radioModule
+import com.egoriku.radiotok.radioplayer.koin.exoPlayerModule
+import com.egoriku.radiotok.radioplayer.koin.radioPlayerModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -14,7 +17,12 @@ class RadioApplication : Application() {
 
         startKoin {
             androidContext(this@RadioApplication)
-            modules(radioModule)
+            modules(
+                appScope,
+                exoPlayerModule,
+                radioModule,
+                radioPlayerModule
+            )
         }
     }
 }

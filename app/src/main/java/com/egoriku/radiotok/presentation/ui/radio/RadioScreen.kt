@@ -2,7 +2,7 @@ package com.egoriku.radiotok.presentation.ui.radio
 
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import com.egoriku.radiotok.domain.model.RadioItemModel
+import com.egoriku.radiotok.common.model.RadioItemModel
 import com.egoriku.radiotok.presentation.ControlsActions
 import com.egoriku.radiotok.presentation.state.RadioPlaybackState
 import com.egoriku.radiotok.presentation.ui.radio.about.TopSection

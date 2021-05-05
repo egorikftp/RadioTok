@@ -1,6 +1,6 @@
 package com.egoriku.radiotok.data.datasource
 
-import android.util.Log
+import com.egoriku.radiotok.common.ext.logD
 import com.egoriku.radiotok.domain.datasource.IRadioServerDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -31,7 +31,7 @@ internal class RadioServerDataSource : IRadioServerDataSource {
             listResult.add(FALLBACK_SERVER)
         }
 
-        Log.d("DNS", "Found servers: $listResult")
+        logD("DNS, Found servers: $listResult")
 
         listResult
     }
