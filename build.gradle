@@ -3,7 +3,7 @@ buildscript {
         compose_version = '1.0.0-beta06'
         koin_version = '2.2.2'
         exo_player = '2.13.3'
-        kotlin_version = '1.4.32'
+        kotlin_version = '1.5.0'
         room_version = "2.3.0"
     }
     repositories {
