@@ -67,9 +67,9 @@ class RadioPlayerNotificationManager(
 
             add(CUSTOM_ACTION_NEXT)
 
-            val id = currentRadioQueueHolder.currentMediaQueue[player.currentWindowIndex].id
+            val currentRadioId = currentRadioQueueHolder.currentMediaMetadata?.id
 
-            if (likedRadioStationsHolder.likedRadioStationsIds.contains(id)) {
+            if (likedRadioStationsHolder.likedRadioStationsIds.contains(currentRadioId)) {
                 add(CUSTOM_ACTION_UNLIKE)
             } else {
                 add(CUSTOM_ACTION_LIKE)

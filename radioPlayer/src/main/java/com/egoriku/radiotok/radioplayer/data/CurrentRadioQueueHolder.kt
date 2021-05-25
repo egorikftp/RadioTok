@@ -1,56 +1,40 @@
 package com.egoriku.radiotok.radioplayer.data
 
 import android.support.v4.media.MediaMetadataCompat
-import com.egoriku.radiotok.radioplayer.data.mediator.IRadioCacheMediator
-import com.egoriku.radiotok.radioplayer.ext.isHsl
+import com.egoriku.radiotok.common.ext.logD
+import com.egoriku.radiotok.radioplayer.ext.isHls
 import com.egoriku.radiotok.radioplayer.ext.mediaUri
 import com.egoriku.radiotok.radioplayer.model.MediaPath
 import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
+import kotlin.properties.Delegates
 
 class CurrentRadioQueueHolder(
-    private val radioCacheMediator: IRadioCacheMediator,
     private val defaultHttpDataSourceFactory: DefaultHttpDataSource.Factory
 ) {
+    var currentMediaMetadata: MediaMetadataCompat? = null
+        private set
 
-    val currentMediaSource = ConcatenatingMediaSource()
-    val currentMediaQueue = mutableListOf<MediaMetadataCompat>()
+    var currentMediaSource: MediaSource by Delegates.notNull()
+        private set
 
-    suspend fun switchToRandomRadios() {
-        currentMediaSource.clear()
+    var currentPath: MediaPath = MediaPath.Root
 
-        val newQueue = radioCacheMediator.getMediaMetadataBy(mediaPath = MediaPath.RandomRadio)
+    fun set(item: MediaMetadataCompat) {
+        logD("set")
 
-        currentMediaQueue.clear()
-        currentMediaQueue.addAll(newQueue)
-
-        currentMediaSource.addMediaSources(newQueue.toMediaSource())
-    }
-
-    suspend fun switchToLikedRadios() {
-        currentMediaSource.clear()
-
-        val newQueue = radioCacheMediator.getMediaMetadataBy(mediaPath = MediaPath.LikedRadio)
-
-        currentMediaQueue.clear()
-        currentMediaQueue.addAll(newQueue)
-
-        currentMediaSource.addMediaSources(newQueue.toMediaSource())
-    }
-
-    private fun List<MediaMetadataCompat>.toMediaSource() = map {
-        it.toMediaSource()
+        currentMediaMetadata = item
+        currentMediaSource = item.toMediaSource()
     }
 
     private fun MediaMetadataCompat.toMediaSource(): MediaSource {
         val mediaItem = MediaItem.fromUri(mediaUri)
 
         return when {
-            isHsl -> HlsMediaSource.Factory(defaultHttpDataSourceFactory)
+            isHls -> HlsMediaSource.Factory(defaultHttpDataSourceFactory)
                 .createMediaSource(mediaItem)
             else -> ProgressiveMediaSource.Factory(defaultHttpDataSourceFactory)
                 .createMediaSource(mediaItem)

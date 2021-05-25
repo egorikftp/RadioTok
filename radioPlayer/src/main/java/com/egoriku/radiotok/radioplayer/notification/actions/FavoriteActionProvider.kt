@@ -21,8 +21,7 @@ class FavoriteActionProvider(
 ) : MediaSessionConnector.CustomActionProvider {
 
     override fun getCustomAction(player: Player): PlaybackStateCompat.CustomAction? {
-        val mediaItem =
-            currentRadioQueueHolder.currentMediaQueue.getOrNull(player.currentWindowIndex)
+        val mediaItem = currentRadioQueueHolder.currentMediaMetadata
 
         return if (mediaItem == null) {
             null
@@ -57,16 +56,16 @@ class FavoriteActionProvider(
         action: String,
         extras: Bundle?
     ) {
-        if (currentRadioQueueHolder.currentMediaQueue.isNotEmpty()) {
-            val id = currentRadioQueueHolder.currentMediaQueue[player.currentWindowIndex].id
+        val currentMediaMetadata = currentRadioQueueHolder.currentMediaMetadata ?: return
 
-            if (likedRadioStationsHolder.likedRadioStationsIds.contains(id)) {
-                likedRadioStationsHolder.unlike(id = id)
-            } else {
-                likedRadioStationsHolder.like(id = id)
-            }
+        val currentRadioId = currentMediaMetadata.id
 
-            onInvalidateNotification()
+        if (likedRadioStationsHolder.likedRadioStationsIds.contains(currentRadioId)) {
+            likedRadioStationsHolder.unlike(id = currentRadioId)
+        } else {
+            likedRadioStationsHolder.like(id = currentRadioId)
         }
+
+        onInvalidateNotification()
     }
 }

@@ -102,21 +102,23 @@ internal class RadioServiceConnection(context: Context) : IMusicServiceConnectio
     private inner class MediaControllerCallback : MediaControllerCompat.Callback() {
 
         override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
-            Log.d("kek", "onPlaybackStateChanged = $state")
+            Log.d("MediaControllerCallback", "onPlaybackStateChanged = $state")
             scope.launch {
-                _playbackState.value = when (state) {
-                    null -> RadioPlaybackState()
-                    else -> {
-                        RadioPlaybackState(
-                            isPlaying = state.isPlaying,
-                            isPrepared = state.isPrepared,
-                            isPlayEnabled = state.isPlayEnabled,
-                            isLiked = state.customActions.first {
-                                it.action == CustomAction.ACTION_TOGGLE_FAVORITE
-                            }.extras.getBoolean("IS_LIKED")
-                        )
+                _playbackState.emit(
+                    when (state) {
+                        null -> RadioPlaybackState()
+                        else -> {
+                            RadioPlaybackState(
+                                isPlaying = state.isPlaying,
+                                isPrepared = state.isPrepared,
+                                isPlayEnabled = state.isPlayEnabled,
+                                isLiked = state.customActions.first {
+                                    it.action == CustomAction.ACTION_TOGGLE_FAVORITE
+                                }.extras.getBoolean("IS_LIKED")
+                            )
+                        }
                     }
-                }
+                )
             }
         }
 
@@ -124,19 +126,21 @@ internal class RadioServiceConnection(context: Context) : IMusicServiceConnectio
             Log.d("kek", "onMetadataChanged $metadata")
 
             scope.launch {
-                _currentPlayingRadio.value = when (metadata) {
-                    null -> RadioItemModel()
-                    else -> {
-                        val description = metadata.description
+                _currentPlayingRadio.emit(
+                    when (metadata) {
+                        null -> RadioItemModel()
+                        else -> {
+                            val description = metadata.description
 
-                        RadioItemModel(
-                            id = description.mediaId ?: EMPTY,
-                            name = description.title.toString(),
-                            streamUrl = description.mediaUri.toString(),
-                            icon = description.iconUri.toString()
-                        )
+                            RadioItemModel(
+                                id = description.mediaId ?: EMPTY,
+                                name = description.title.toString(),
+                                streamUrl = description.mediaUri.toString(),
+                                icon = description.iconUri.toString()
+                            )
+                        }
                     }
-                }
+                )
             }
         }
 

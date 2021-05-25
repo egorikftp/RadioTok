@@ -47,7 +47,6 @@ val radioPlayerModule = module {
 
     single {
         CurrentRadioQueueHolder(
-            radioCacheMediator = get(),
             defaultHttpDataSourceFactory = get()
         )
     }

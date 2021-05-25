@@ -5,6 +5,11 @@ package com.egoriku.radiotok.radioplayer.ext
 import android.net.Uri
 import android.support.v4.media.MediaBrowserCompat.MediaItem
 import android.support.v4.media.MediaDescriptionCompat
+import android.support.v4.media.MediaMetadataCompat
+
+fun createPlayableMediaItem(metadata: MediaMetadataCompat): MediaItem {
+    return MediaItem(metadata.description, MediaItem.FLAG_PLAYABLE)
+}
 
 fun createPlayableMediaItem(
     id: String,

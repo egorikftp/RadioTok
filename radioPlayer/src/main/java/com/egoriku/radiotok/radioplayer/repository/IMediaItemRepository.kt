@@ -8,5 +8,5 @@ interface IMediaItemRepository {
 
     fun getRootItems(): List<MediaBrowserCompat.MediaItem>
 
-    fun getRandomItems(items: List<RadioItemModel>): List<MediaMetadataCompat>
+    fun getRandomItems(items: List<RadioItemModel>): MediaMetadataCompat
 }

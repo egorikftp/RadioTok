@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.os.ResultReceiver
 import android.support.v4.media.session.PlaybackStateCompat
 import com.egoriku.radiotok.common.ext.logD
-import com.egoriku.radiotok.radioplayer.data.CurrentRadioQueueHolder
+import com.egoriku.radiotok.radioplayer.data.mediator.IRadioCacheMediator
 import com.egoriku.radiotok.radioplayer.model.MediaPath
 import com.google.android.exoplayer2.ControlDispatcher
 import com.google.android.exoplayer2.Player
@@ -13,7 +13,7 @@ import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import kotlinx.coroutines.runBlocking
 
 class RadioPlaybackPreparer(
-    private val currentRadioQueueHolder: CurrentRadioQueueHolder,
+    private val radioCacheMediator: IRadioCacheMediator,
     private val onPlayerPrepared: () -> Unit
 ) : MediaSessionConnector.PlaybackPreparer {
 
@@ -36,7 +36,7 @@ class RadioPlaybackPreparer(
         when (MediaPath.fromParentIdOrNull(mediaId)) {
             is MediaPath.LikedRadio -> {
                 runBlocking {
-                    currentRadioQueueHolder.switchToLikedRadios()
+                    radioCacheMediator.switchToLikedRadios()
 
                     onPlayerPrepared()
                     logD("liked")
@@ -44,7 +44,7 @@ class RadioPlaybackPreparer(
             }
             is MediaPath.RandomRadio -> {
                 runBlocking {
-                    currentRadioQueueHolder.switchToRandomRadios()
+                    radioCacheMediator.switchToRandomRadios()
 
                     onPlayerPrepared()
                     logD("random")

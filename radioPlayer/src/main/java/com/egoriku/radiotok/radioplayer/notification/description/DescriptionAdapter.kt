@@ -22,23 +22,24 @@ class DescriptionAdapter(
 ) : PlayerNotificationManager.MediaDescriptionAdapter {
 
     override fun getCurrentContentTitle(player: Player) =
-        getDescription(player.currentWindowIndex).title.toString()
+        getDescription().title.toString()
 
     override fun createCurrentContentIntent(player: Player): PendingIntent? =
         mediaController.sessionActivity
 
     override fun getCurrentContentText(player: Player) =
-        getDescription(player.currentWindowIndex).subtitle.toString()
+        getDescription().subtitle.toString()
 
     override fun getCurrentLargeIcon(
         player: Player,
         callback: PlayerNotificationManager.BitmapCallback
     ): Bitmap? {
-        logD("getCurrentLargeIcon: ${getDescription(player.currentWindowIndex).iconUri}")
+        logD("getCurrentLargeIcon: ${getDescription().iconUri}")
+
         Glide.with(context)
             .asBitmap()
             .placeholder(R.drawable.ic_radio_white)
-            .load(getDescription(player.currentWindowIndex).iconUri)
+            .load(getDescription().iconUri)
             .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     callback.onBitmap(resource)
@@ -51,7 +52,9 @@ class DescriptionAdapter(
         return null
     }
 
-    private fun getDescription(index: Int): MediaDescriptionCompat {
-        return currentRadioQueueHolder.currentMediaQueue[index].description
+    private fun getDescription(): MediaDescriptionCompat {
+        val currentMediaMetadata = requireNotNull(currentRadioQueueHolder.currentMediaMetadata)
+
+        return currentMediaMetadata.description
     }
 }

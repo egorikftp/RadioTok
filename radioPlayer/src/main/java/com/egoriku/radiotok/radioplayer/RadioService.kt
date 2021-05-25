@@ -9,6 +9,7 @@ import android.support.v4.media.session.MediaSessionCompat
 import androidx.media.MediaBrowserServiceCompat
 import com.egoriku.radiotok.common.ext.logD
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.MEDIA_PATH_ROOT
+import com.egoriku.radiotok.radioplayer.constant.PlayerConstants.NETWORK_ERROR
 import com.egoriku.radiotok.radioplayer.constant.PlayerConstants.NOTIFICATION_CHANNEL_ID
 import com.egoriku.radiotok.radioplayer.constant.PlayerConstants.NOTIFICATION_ID
 import com.egoriku.radiotok.radioplayer.constant.PlayerConstants.SERVICE_TAG
@@ -23,7 +24,6 @@ import com.egoriku.radiotok.radioplayer.notification.NotificationCustomActionRec
 import com.egoriku.radiotok.radioplayer.notification.RadioPlayerNotificationManager
 import com.egoriku.radiotok.radioplayer.notification.actions.DislikeActionProvider
 import com.egoriku.radiotok.radioplayer.notification.actions.FavoriteActionProvider
-import com.egoriku.radiotok.radioplayer.notification.actions.NextActionProvider
 import com.egoriku.radiotok.radioplayer.notification.description.DescriptionAdapter
 import com.egoriku.radiotok.radioplayer.notification.listener.NotificationMediaButtonEventHandler
 import com.egoriku.radiotok.radioplayer.notification.listener.RadioPlayerNotificationListener
@@ -89,9 +89,11 @@ class RadioService : MediaBrowserServiceCompat() {
                     }
                 )
             )
-            setPlaybackPreparer(RadioPlaybackPreparer(currentRadioQueueHolder) {
-                preparePlayer()
-            })
+            setPlaybackPreparer(
+                RadioPlaybackPreparer(radioCacheMediator = radioCacheMediator) {
+                    preparePlayer()
+                }
+            )
             setCustomActionProviders(
                 FavoriteActionProvider(
                     context = this@RadioService,
@@ -106,14 +108,6 @@ class RadioService : MediaBrowserServiceCompat() {
                     currentRadioQueueHolder = currentRadioQueueHolder,
                     onDislike = {
                         likedRadioStationsHolder.dislike(id = it)
-                        serviceScope.launch {
-                            eventHandler.playNext()
-                        }
-                    }
-                ),
-                NextActionProvider(
-                    context = this@RadioService,
-                    onNext = {
                         serviceScope.launch {
                             eventHandler.playNext()
                         }
@@ -133,16 +127,21 @@ class RadioService : MediaBrowserServiceCompat() {
             )
         }
 
-        radioPlayerEventListener = RadioPlayerEventListener {
-            stopForeground(false)
-        }
+        radioPlayerEventListener = RadioPlayerEventListener(
+            onStopForeground = {
+                stopForeground(false)
+            }
+        )
 
         simpleExoPlayer.addListener(radioPlayerEventListener)
 
         serviceScope.launch {
             eventHandler.event.collect {
                 when (it) {
-                    EventHandler.Event.PlayNext -> simpleExoPlayer.next()
+                    EventHandler.Event.PlayNext -> {
+                        radioCacheMediator.loadNextRadio()
+                        preparePlayer()
+                    }
                 }
             }
         }
@@ -242,11 +241,27 @@ class RadioService : MediaBrowserServiceCompat() {
         result.detach()
 
         serviceScope.launch {
-            result.sendResult(
-                radioCacheMediator.getMediaBrowserItemsBy(
-                    mediaPath = MediaPath.fromParentIdOrThrow(parentId)
-                )
+            val mediaPath = MediaPath.fromParentIdOrThrow(parentId)
+            val mediaBrowseItems = radioCacheMediator.getMediaBrowserItemsBy(
+                mediaPath = mediaPath
             )
+
+            when (mediaPath) {
+                is MediaPath.Root -> result.sendResult(mediaBrowseItems)
+                else -> {
+                    if (mediaBrowseItems.isEmpty()) {
+                        logD("onLoadChildren empty")
+
+                        mediaSession.sendSessionEvent(NETWORK_ERROR, null)
+                        result.detach()
+                    } else {
+                        logD("onLoadChildren not empty")
+
+                        result.sendResult(mediaBrowseItems)
+                        preparePlayer()
+                    }
+                }
+            }
         }
     }
 }

@@ -28,11 +28,9 @@ internal class MediaItemRepository(
         )
     )
 
-    override fun getRandomItems(items: List<RadioItemModel>): List<MediaMetadataCompat> {
-        return items.shuffled()
-            .subList(0, 10)
-            .map {
-                MediaMetadataCompat.Builder().from(it, context).build()
-            }
-    }
+    override fun getRandomItems(items: List<RadioItemModel>) =
+        MediaMetadataCompat.Builder().from(
+            itemModel = items.random(),
+            context = context
+        ).build()
 }

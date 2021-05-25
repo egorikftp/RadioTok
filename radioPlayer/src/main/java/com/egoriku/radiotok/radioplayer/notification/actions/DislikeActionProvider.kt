@@ -31,8 +31,8 @@ class DislikeActionProvider(
         action: String,
         extras: Bundle?
     ) {
-        val id = currentRadioQueueHolder.currentMediaQueue[player.currentWindowIndex].id
+        val currentMediaMetadata = currentRadioQueueHolder.currentMediaMetadata ?: return
 
-        onDislike(id)
+        onDislike(currentMediaMetadata.id)
     }
 }

@@ -1,5 +1,6 @@
 package com.egoriku.radiotok.presentation.ui.radio.about
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -12,12 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.egoriku.radiotok.R
-import com.google.accompanist.coil.CoilImage
+import com.google.accompanist.coil.rememberCoilPainter
+import com.google.accompanist.imageloading.ImageLoadState
 
 @Composable
 fun TopSection(logoUrl: String, title: String) {
@@ -31,7 +31,6 @@ fun TopSection(logoUrl: String, title: String) {
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 48.dp, start = 16.dp, end = 16.dp),
-            fontFamily = FontFamily(Font(resId = R.font.khula_semibold)),
             text = title,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colors.onPrimary,
@@ -42,6 +41,12 @@ fun TopSection(logoUrl: String, title: String) {
 
 @Composable
 fun RadioLogo(logoUrl: String) {
+    val painter = rememberCoilPainter(
+        request = logoUrl,
+        fadeIn = true,
+        shouldRefetchOnSizeChange = { _, _ -> false },
+    )
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -54,20 +59,22 @@ fun RadioLogo(logoUrl: String) {
             .border(10.dp, MaterialTheme.colors.primary, CircleShape)
 
     ) {
-        CoilImage(
-            fadeIn = true,
-            data = logoUrl,
+        Image(
+            painter = painter,
             contentDescription = null,
             modifier = Modifier
                 .size(150.dp)
                 .padding(16.dp),
-            error = {
+        )
+
+        when (painter.loadState) {
+            is ImageLoadState.Error -> {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_radio),
                     tint = MaterialTheme.colors.onPrimary,
                     contentDescription = null
                 )
             }
-        )
+        }
     }
 }

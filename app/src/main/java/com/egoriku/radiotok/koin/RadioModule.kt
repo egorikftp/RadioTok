@@ -42,7 +42,8 @@ val radioModule = module {
     single<IRadioCacheMediator> {
         RadioCacheMediator(
             radioFetchNetworkRepository = get(),
-            mediaItemRepository = get()
+            mediaItemRepository = get(),
+            currentRadioQueueHolder = get()
         )
     }
 

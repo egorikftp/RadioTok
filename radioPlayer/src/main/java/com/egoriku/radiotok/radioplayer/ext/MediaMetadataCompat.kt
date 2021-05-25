@@ -19,7 +19,7 @@ inline val MediaMetadataCompat.mediaUri: Uri
 inline val MediaMetadataCompat.id: String
     get() = getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID)
 
-inline val MediaMetadataCompat.isHsl: Boolean
+inline val MediaMetadataCompat.isHls: Boolean
     get() = getLong(METADATA_KEY_IS_HLS) == 1L
 
 inline var MediaMetadataCompat.Builder.id: String

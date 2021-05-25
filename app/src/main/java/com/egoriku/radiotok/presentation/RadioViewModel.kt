@@ -3,10 +3,10 @@ package com.egoriku.radiotok.presentation
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaControllerCompat
 import androidx.lifecycle.ViewModel
+import com.egoriku.radiotok.common.ext.logD
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.MEDIA_PATH_RANDOM_RADIO
 import com.egoriku.radiotok.radioplayer.ext.sendDislikeAction
 import com.egoriku.radiotok.radioplayer.ext.sendLikeAction
-import com.egoriku.radiotok.radioplayer.ext.sendSkipToNextAction
 
 class RadioViewModel(
     private val serviceConnection: IMusicServiceConnection
@@ -20,6 +20,7 @@ class RadioViewModel(
             parentId: String,
             children: List<MediaBrowserCompat.MediaItem>
         ) {
+            logD("parentId=$parentId, children size = ${children.size}")
             val itemsList = children.map { child ->
                 val subtitle = child.description.subtitle ?: ""
                 /* MediaItemData(
@@ -38,7 +39,7 @@ class RadioViewModel(
         serviceConnection.subscribe(MEDIA_PATH_RANDOM_RADIO, subscriptionCallback)
     }
 
-    fun nextRadioStation() = _transportControls.sendSkipToNextAction()
+    fun nextRadioStation() = _transportControls.skipToNext()
 
     fun dislikeRadioStation() = _transportControls.sendDislikeAction()
 

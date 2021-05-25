@@ -3,6 +3,7 @@ package com.egoriku.radiotok.radioplayer.queue
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import com.egoriku.radiotok.common.ext.logD
 import com.egoriku.radiotok.radioplayer.data.CurrentRadioQueueHolder
 import com.google.android.exoplayer2.ControlDispatcher
 import com.google.android.exoplayer2.Player
@@ -17,7 +18,13 @@ class RadioQueueNavigator(
     override fun getMediaDescription(
         player: Player,
         windowIndex: Int
-    ): MediaDescriptionCompat = currentRadioQueueHolder.currentMediaQueue[windowIndex].description
+    ): MediaDescriptionCompat {
+        logD("windowIndex=$windowIndex")
+
+        val currentMediaMetadata = requireNotNull(currentRadioQueueHolder.currentMediaMetadata)
+
+        return currentMediaMetadata.description
+    }
 
     override fun getSupportedQueueNavigatorActions(player: Player): Long {
         var actions = 0L
