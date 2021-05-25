@@ -16,6 +16,12 @@ class RadioPlayerEventListener(
 
     override fun onPlayerError(error: ExoPlaybackException) {
         super.onPlayerError(error)
-        logD("PlayerEventListener: An unknown error occurred: $error")
+
+        when (error.type) {
+            ExoPlaybackException.TYPE_SOURCE -> logD("onPlayerError, TYPE_SOURCE: " + error.sourceException.toString())
+            ExoPlaybackException.TYPE_RENDERER -> logD("onPlayerError, TYPE_RENDERER: " + error.rendererException.toString())
+            ExoPlaybackException.TYPE_UNEXPECTED -> logD("onPlayerError, TYPE_UNEXPECTED: " + error.unexpectedException.toString())
+            else -> logD("onPlayerError, ETC: " + error.sourceException.toString())
+        }
     }
 }

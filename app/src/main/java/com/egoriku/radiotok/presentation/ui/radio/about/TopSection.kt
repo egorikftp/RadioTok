@@ -70,6 +70,7 @@ fun RadioLogo(logoUrl: String) {
         when (painter.loadState) {
             is ImageLoadState.Error -> {
                 Icon(
+                    modifier = Modifier.size(70.dp),
                     painter = painterResource(id = R.drawable.ic_radio),
                     tint = MaterialTheme.colors.onPrimary,
                     contentDescription = null

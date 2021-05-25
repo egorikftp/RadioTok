@@ -123,8 +123,6 @@ internal class RadioServiceConnection(context: Context) : IMusicServiceConnectio
         }
 
         override fun onMetadataChanged(metadata: MediaMetadataCompat?) {
-            Log.d("kek", "onMetadataChanged $metadata")
-
             scope.launch {
                 _currentPlayingRadio.emit(
                     when (metadata) {

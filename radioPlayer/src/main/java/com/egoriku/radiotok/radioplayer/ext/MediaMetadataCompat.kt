@@ -4,10 +4,8 @@ import android.content.Context
 import android.net.Uri
 import android.support.v4.media.MediaMetadataCompat
 import androidx.core.net.toUri
-import com.egoriku.radiotok.common.ext.getIconUri
 import com.egoriku.radiotok.common.ext.logD
 import com.egoriku.radiotok.common.model.RadioItemModel
-import com.egoriku.radiotok.radioplayer.R
 
 const val NO_GET = "Property does not have a 'get'"
 
@@ -76,11 +74,7 @@ fun MediaMetadataCompat.Builder.from(
     id = itemModel.id
     displayTitle = itemModel.name
     displaySubtitle = itemModel.metadata
-    displayIconUri = if (itemModel.icon.isEmpty()) {
-        context.getIconUri(R.drawable.ic_radio_white).toString()
-    } else {
-        itemModel.icon
-    }
+    displayIconUri = itemModel.icon
     mediaUri = itemModel.streamUrl
 
     isHls = itemModel.hsl
