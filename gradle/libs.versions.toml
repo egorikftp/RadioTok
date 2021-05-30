@@ -11,7 +11,7 @@ retrofit = "2.9.0"
 room = "2.3.0"
 
 [libraries]
-android-gradle-plugin = "com.android.tools.build:gradle:7.0.0-beta02"
+android-gradle-plugin = "com.android.tools.build:gradle:7.0.0-beta03"
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 versionsCheck-gradle-plugin = "com.github.ben-manes:gradle-versions-plugin:0.38.0"
 
@@ -28,7 +28,7 @@ exoplayer-hls = { module = "com.google.android.exoplayer:exoplayer-hls", version
 exoplayer-ui = { module = "com.google.android.exoplayer:exoplayer-ui", version.ref = "exoPlayer" }
 exoplayer-extension-mediasession = { module = "com.google.android.exoplayer:extension-mediasession", version.ref = "exoPlayer" }
 glide = "com.github.bumptech.glide:glide:4.12.0"
-gson = "com.google.code.gson:gson:2.8.6"
+gson = "com.google.code.gson:gson:2.8.7"
 koin = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koinViewModel = { module = "io.insert-koin:koin-androidx-viewmodel", version.ref = "koin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
