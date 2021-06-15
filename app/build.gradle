@@ -54,7 +54,6 @@ dependencies {
     implementation libs.core
     implementation libs.gson
     implementation libs.koin
-    implementation libs.koinViewModel
     implementation libs.lifecycle.runtime
     implementation libs.media
     implementation libs.material

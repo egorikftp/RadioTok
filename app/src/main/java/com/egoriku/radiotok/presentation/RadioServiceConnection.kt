@@ -9,8 +9,8 @@ import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
 import com.egoriku.radiotok.common.EMPTY
+import com.egoriku.radiotok.common.ext.ResultOf
 import com.egoriku.radiotok.common.model.RadioItemModel
-import com.egoriku.radiotok.extensions.ResultOf
 import com.egoriku.radiotok.presentation.state.RadioPlaybackState
 import com.egoriku.radiotok.radioplayer.RadioService
 import com.egoriku.radiotok.radioplayer.constant.CustomAction
