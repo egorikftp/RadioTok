@@ -7,6 +7,6 @@ data class RadioItemModel(
     val streamUrl: String = EMPTY,
     val name: String = EMPTY,
     val icon: String = EMPTY,
-    val hsl: Long = 0L,
+    val hls: Long = 0L,
     val metadata: String = EMPTY
 )

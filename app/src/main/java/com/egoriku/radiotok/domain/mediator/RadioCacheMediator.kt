@@ -3,8 +3,7 @@ package com.egoriku.radiotok.domain.mediator
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
 import com.egoriku.radiotok.common.ext.logD
-import com.egoriku.radiotok.common.model.RadioItemModel
-import com.egoriku.radiotok.domain.repository.IRadioFetchNetworkRepository
+import com.egoriku.radiotok.domain.usecase.IRadioCacheUseCase
 import com.egoriku.radiotok.radioplayer.data.CurrentRadioQueueHolder
 import com.egoriku.radiotok.radioplayer.data.mediator.IRadioCacheMediator
 import com.egoriku.radiotok.radioplayer.ext.createPlayableMediaItem
@@ -12,12 +11,10 @@ import com.egoriku.radiotok.radioplayer.model.MediaPath
 import com.egoriku.radiotok.radioplayer.repository.IMediaItemRepository
 
 class RadioCacheMediator(
-    private val radioFetchNetworkRepository: IRadioFetchNetworkRepository,
+    private val radioCacheUseCase: IRadioCacheUseCase,
     private val mediaItemRepository: IMediaItemRepository,
     private val currentRadioQueueHolder: CurrentRadioQueueHolder
 ) : IRadioCacheMediator {
-
-    private var _radios = emptyList<RadioItemModel>()
 
     override suspend fun loadNextRadio() {
         logD("loadNextRadio")
@@ -65,19 +62,17 @@ class RadioCacheMediator(
     }
 
     override suspend fun getMediaMetadataBy(mediaPath: MediaPath): MediaMetadataCompat {
+        checkCacheOrLoad()
+
         return when (mediaPath) {
-            is MediaPath.RandomRadio -> mediaItemRepository.getRandomItems(_radios)
+            is MediaPath.RandomRadio -> mediaItemRepository.getRandomItems()
             is MediaPath.LikedRadio -> throw IllegalArgumentException()
             else -> throw IllegalArgumentException()
         }
     }
 
     private suspend fun checkCacheOrLoad() {
-        // TODO: 2.05.21 Add DB check
-
-        if (_radios.isEmpty()) {
-            _radios = radioFetchNetworkRepository.load()
-        }
+        radioCacheUseCase.preCacheStations()
     }
 
     private suspend fun loadInitial() {

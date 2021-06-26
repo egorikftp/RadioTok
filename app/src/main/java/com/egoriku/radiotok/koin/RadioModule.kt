@@ -12,6 +12,8 @@ import com.egoriku.radiotok.domain.datasource.IRadioServerDataSource
 import com.egoriku.radiotok.domain.datasource.IStationsDataSource
 import com.egoriku.radiotok.domain.mediator.RadioCacheMediator
 import com.egoriku.radiotok.domain.repository.IRadioFetchNetworkRepository
+import com.egoriku.radiotok.domain.usecase.IRadioCacheUseCase
+import com.egoriku.radiotok.domain.usecase.RadioCacheUseCase
 import com.egoriku.radiotok.presentation.IMusicServiceConnection
 import com.egoriku.radiotok.presentation.MainActivity
 import com.egoriku.radiotok.presentation.RadioServiceConnection
@@ -39,9 +41,16 @@ val radioModule = module {
         )
     }
 
+    factory<IRadioCacheUseCase> {
+        RadioCacheUseCase(
+            radioTokDb = get(),
+            radioFetchNetworkRepository = get()
+        )
+    }
+
     single<IRadioCacheMediator> {
         RadioCacheMediator(
-            radioFetchNetworkRepository = get(),
+            radioCacheUseCase = get(),
             mediaItemRepository = get(),
             currentRadioQueueHolder = get()
         )

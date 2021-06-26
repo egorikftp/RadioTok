@@ -20,7 +20,12 @@ android {
 }
 
 dependencies {
+    implementation(projects.common)
+
     ksp(libs.room.compiler)
 
-    implementation(libs.bundles.room)
+    implementation(libs.koin)
+
+    api(libs.room.runtime)
+    implementation(libs.room.ktx)
 }

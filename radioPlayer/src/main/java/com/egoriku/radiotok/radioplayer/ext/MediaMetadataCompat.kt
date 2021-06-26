@@ -77,7 +77,7 @@ fun MediaMetadataCompat.Builder.from(
     displayIconUri = itemModel.icon
     mediaUri = itemModel.streamUrl
 
-    isHls = itemModel.hsl
+    isHls = itemModel.hls
 
     return this
 }

@@ -2,7 +2,7 @@ package com.egoriku.radiotok.data.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class StationEntity(
+data class StationNetworkEntity(
     @SerializedName("name")
     val name: String,
 
@@ -16,7 +16,7 @@ data class StationEntity(
     val homePageUrl: String,
 
     @SerializedName("favicon")
-    val favicon: String,
+    val icon: String,
 
     @SerializedName("countrycode")
     val countryCode: String,
@@ -37,5 +37,5 @@ data class StationEntity(
     val codec: String,
 
     @SerializedName("hls")
-    val hls: Int
+    val hls: Long
 )
