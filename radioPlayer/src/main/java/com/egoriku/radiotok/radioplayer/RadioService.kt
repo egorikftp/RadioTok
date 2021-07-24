@@ -195,7 +195,7 @@ class RadioService : MediaBrowserServiceCompat() {
             currentRadioQueueHolder = currentRadioQueueHolder,
             likedRadioStationsHolder = likedRadioStationsHolder
         )
-        playerNotificationManager.setSmallIcon(R.drawable.ic_radio_round)
+        playerNotificationManager.setSmallIcon(R.drawable.ic_radio)
         playerNotificationManager.setMediaSessionToken(mediaSession.sessionToken)
         playerNotificationManager.setPlayer(simpleExoPlayer)
     }
