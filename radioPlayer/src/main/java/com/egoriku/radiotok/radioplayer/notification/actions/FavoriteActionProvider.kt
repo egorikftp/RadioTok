@@ -7,7 +7,7 @@ import androidx.core.os.bundleOf
 import com.egoriku.radiotok.radioplayer.R
 import com.egoriku.radiotok.radioplayer.constant.CustomAction.ACTION_TOGGLE_FAVORITE
 import com.egoriku.radiotok.radioplayer.data.CurrentRadioQueueHolder
-import com.egoriku.radiotok.radioplayer.data.LikedRadioStationsHolder
+import com.egoriku.radiotok.radioplayer.data.RadioStateMediator
 import com.egoriku.radiotok.radioplayer.ext.id
 import com.google.android.exoplayer2.ControlDispatcher
 import com.google.android.exoplayer2.Player
@@ -15,7 +15,7 @@ import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 
 class FavoriteActionProvider(
     private val context: Context,
-    private val likedRadioStationsHolder: LikedRadioStationsHolder,
+    private val radioStateMediator: RadioStateMediator,
     private val currentRadioQueueHolder: CurrentRadioQueueHolder,
     private val onInvalidateNotification: () -> Unit
 ) : MediaSessionConnector.CustomActionProvider {
@@ -26,7 +26,7 @@ class FavoriteActionProvider(
         return if (mediaItem == null) {
             null
         } else {
-            if (likedRadioStationsHolder.likedRadioStationsIds.contains(mediaItem.id)) {
+            if (radioStateMediator.isLiked(mediaItem.id)) {
                 PlaybackStateCompat.CustomAction
                     .Builder(
                         ACTION_TOGGLE_FAVORITE,
@@ -58,13 +58,7 @@ class FavoriteActionProvider(
     ) {
         val currentMediaMetadata = currentRadioQueueHolder.currentMediaMetadata ?: return
 
-        val currentRadioId = currentMediaMetadata.id
-
-        if (likedRadioStationsHolder.likedRadioStationsIds.contains(currentRadioId)) {
-            likedRadioStationsHolder.unlike(id = currentRadioId)
-        } else {
-            likedRadioStationsHolder.like(id = currentRadioId)
-        }
+        radioStateMediator.toggleLiked(id = currentMediaMetadata.id)
 
         onInvalidateNotification()
     }

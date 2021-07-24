@@ -14,7 +14,7 @@ import com.egoriku.radiotok.radioplayer.constant.PlayerConstants.NOTIFICATION_CH
 import com.egoriku.radiotok.radioplayer.constant.PlayerConstants.NOTIFICATION_ID
 import com.egoriku.radiotok.radioplayer.constant.PlayerConstants.SERVICE_TAG
 import com.egoriku.radiotok.radioplayer.data.CurrentRadioQueueHolder
-import com.egoriku.radiotok.radioplayer.data.LikedRadioStationsHolder
+import com.egoriku.radiotok.radioplayer.data.RadioStateMediator
 import com.egoriku.radiotok.radioplayer.data.mediator.IRadioCacheMediator
 import com.egoriku.radiotok.radioplayer.listener.EventHandler
 import com.egoriku.radiotok.radioplayer.listener.RadioPlaybackPreparer
@@ -39,7 +39,7 @@ import kotlin.properties.Delegates
 
 class RadioService : MediaBrowserServiceCompat() {
 
-    private val likedRadioStationsHolder: LikedRadioStationsHolder by inject()
+    private val radioStateMediator: RadioStateMediator by inject()
     private val currentRadioQueueHolder: CurrentRadioQueueHolder by inject()
     private val radioCacheMediator: IRadioCacheMediator by inject()
     private val simpleExoPlayer: SimpleExoPlayer by inject()
@@ -97,7 +97,7 @@ class RadioService : MediaBrowserServiceCompat() {
             setCustomActionProviders(
                 FavoriteActionProvider(
                     context = this@RadioService,
-                    likedRadioStationsHolder = likedRadioStationsHolder,
+                    radioStateMediator = radioStateMediator,
                     currentRadioQueueHolder = currentRadioQueueHolder,
                     onInvalidateNotification = {
                         playerNotificationManager.invalidate()
@@ -107,7 +107,7 @@ class RadioService : MediaBrowserServiceCompat() {
                     context = this@RadioService,
                     currentRadioQueueHolder = currentRadioQueueHolder,
                     onDislike = {
-                        likedRadioStationsHolder.dislike(id = it)
+                        radioStateMediator.exclude(id = it)
                         serviceScope.launch {
                             eventHandler.playNext()
                         }
@@ -170,7 +170,7 @@ class RadioService : MediaBrowserServiceCompat() {
                 context = this,
                 currentRadioQueueHolder = currentRadioQueueHolder,
                 onLike = {
-                    likedRadioStationsHolder.like(
+                    radioStateMediator.toggleLiked(
                         playerNotificationManager = playerNotificationManager,
                         id = it
                     )
@@ -178,7 +178,7 @@ class RadioService : MediaBrowserServiceCompat() {
                     mediaSessionConnector.invalidateMediaSessionPlaybackState()
                 },
                 onUnlike = {
-                    likedRadioStationsHolder.unlike(
+                    radioStateMediator.toggleLiked(
                         playerNotificationManager = playerNotificationManager,
                         id = it
                     )
@@ -186,14 +186,14 @@ class RadioService : MediaBrowserServiceCompat() {
 
                 },
                 onDislike = {
-                    likedRadioStationsHolder.dislike(id = it)
+                    radioStateMediator.exclude(id = it)
                     serviceScope.launch {
                         eventHandler.playNext()
                     }
                 }
             ),
             currentRadioQueueHolder = currentRadioQueueHolder,
-            likedRadioStationsHolder = likedRadioStationsHolder
+            radioStateMediator = radioStateMediator
         )
         playerNotificationManager.setSmallIcon(R.drawable.ic_radio)
         playerNotificationManager.setMediaSessionToken(mediaSession.sessionToken)

@@ -6,7 +6,7 @@ import com.egoriku.radiotok.radioplayer.constant.CustomAction.CUSTOM_ACTION_LIKE
 import com.egoriku.radiotok.radioplayer.constant.CustomAction.CUSTOM_ACTION_NEXT
 import com.egoriku.radiotok.radioplayer.constant.CustomAction.CUSTOM_ACTION_UNLIKE
 import com.egoriku.radiotok.radioplayer.data.CurrentRadioQueueHolder
-import com.egoriku.radiotok.radioplayer.data.LikedRadioStationsHolder
+import com.egoriku.radiotok.radioplayer.data.RadioStateMediator
 import com.egoriku.radiotok.radioplayer.ext.id
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
@@ -19,7 +19,7 @@ class RadioPlayerNotificationManager(
     notificationListener: NotificationListener,
     customActionReceiver: CustomActionReceiver,
     private val currentRadioQueueHolder: CurrentRadioQueueHolder,
-    private val likedRadioStationsHolder: LikedRadioStationsHolder,
+    private val radioStateMediator: RadioStateMediator,
 ) : PlayerNotificationManager(
     context,
     channelId,
@@ -67,9 +67,9 @@ class RadioPlayerNotificationManager(
 
             add(CUSTOM_ACTION_NEXT)
 
-            val currentRadioId = currentRadioQueueHolder.currentMediaMetadata?.id
+            val currentRadioId = currentRadioQueueHolder.currentMediaMetadata?.id ?: return@buildList
 
-            if (likedRadioStationsHolder.likedRadioStationsIds.contains(currentRadioId)) {
+            if (radioStateMediator.isLiked(currentRadioId)) {
                 add(CUSTOM_ACTION_UNLIKE)
             } else {
                 add(CUSTOM_ACTION_LIKE)

@@ -37,18 +37,16 @@ class RadioPlaybackPreparer(
             is MediaPath.LikedRadio -> {
                 runBlocking {
                     radioCacheMediator.switchToLikedRadios()
-
-                    onPlayerPrepared()
                     logD("liked")
                 }
+                onPlayerPrepared()
             }
             is MediaPath.RandomRadio -> {
                 runBlocking {
                     radioCacheMediator.switchToRandomRadios()
-
-                    onPlayerPrepared()
                     logD("random")
                 }
+                onPlayerPrepared()
             }
             else -> logD("else")
         }

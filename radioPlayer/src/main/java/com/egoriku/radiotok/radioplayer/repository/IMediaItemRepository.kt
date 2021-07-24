@@ -7,5 +7,7 @@ interface IMediaItemRepository {
 
     fun getRootItems(): List<MediaBrowserCompat.MediaItem>
 
-    suspend fun getRandomItems(): MediaMetadataCompat
+    suspend fun getRandomItem(): MediaMetadataCompat
+
+    suspend fun getLikedItem(): MediaMetadataCompat
 }

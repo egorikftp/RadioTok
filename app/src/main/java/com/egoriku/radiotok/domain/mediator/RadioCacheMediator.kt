@@ -48,7 +48,7 @@ class RadioCacheMediator(
 
         return when (mediaPath) {
             is MediaPath.Root -> mediaItemRepository.getRootItems()
-            is MediaPath.RandomRadio -> {
+            is MediaPath.RandomRadio, MediaPath.LikedRadio -> {
                 currentRadioQueueHolder.currentPath = mediaPath
 
                 val mediaMetadata = getMediaMetadataBy(mediaPath)
@@ -57,7 +57,6 @@ class RadioCacheMediator(
 
                 listOf(createPlayableMediaItem(mediaMetadata))
             }
-            else -> throw UnsupportedOperationException()
         }
     }
 
@@ -65,8 +64,8 @@ class RadioCacheMediator(
         checkCacheOrLoad()
 
         return when (mediaPath) {
-            is MediaPath.RandomRadio -> mediaItemRepository.getRandomItems()
-            is MediaPath.LikedRadio -> throw IllegalArgumentException()
+            is MediaPath.RandomRadio -> mediaItemRepository.getRandomItem()
+            is MediaPath.LikedRadio -> mediaItemRepository.getLikedItem()
             else -> throw IllegalArgumentException()
         }
     }

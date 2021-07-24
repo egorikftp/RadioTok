@@ -1,7 +1,7 @@
 package com.egoriku.radiotok.radioplayer.koin
 
 import com.egoriku.radiotok.radioplayer.data.CurrentRadioQueueHolder
-import com.egoriku.radiotok.radioplayer.data.LikedRadioStationsHolder
+import com.egoriku.radiotok.radioplayer.data.RadioStateMediator
 import com.egoriku.radiotok.radioplayer.repository.IMediaItemRepository
 import com.egoriku.radiotok.radioplayer.repository.MediaItemRepository
 import com.google.android.exoplayer2.C
@@ -43,7 +43,7 @@ val radioPlayerModule = module {
     }
 
     single {
-        LikedRadioStationsHolder()
+        RadioStateMediator(radioTokDb = get())
     }
 
     single {
