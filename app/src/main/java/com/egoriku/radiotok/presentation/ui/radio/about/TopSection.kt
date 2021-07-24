@@ -15,9 +15,10 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.ImagePainter
+import coil.compose.rememberImagePainter
 import com.egoriku.radiotok.R
-import com.google.accompanist.coil.rememberCoilPainter
-import com.google.accompanist.imageloading.ImageLoadState
 
 @Composable
 fun TopSection(logoUrl: String, title: String) {
@@ -39,12 +40,15 @@ fun TopSection(logoUrl: String, title: String) {
     }
 }
 
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun RadioLogo(logoUrl: String) {
-    val painter = rememberCoilPainter(
-        request = logoUrl,
-        fadeIn = true,
-        shouldRefetchOnSizeChange = { _, _ -> false },
+    val painter = rememberImagePainter(
+        data = logoUrl,
+        builder = {
+            crossfade(true)
+        },
+        onExecute = { _, _ -> true }
     )
 
     Box(
@@ -67,8 +71,8 @@ fun RadioLogo(logoUrl: String) {
                 .padding(16.dp),
         )
 
-        when (painter.loadState) {
-            is ImageLoadState.Error -> {
+        when (painter.state) {
+            is ImagePainter.State.Error -> {
                 Icon(
                     modifier = Modifier.size(70.dp),
                     painter = painterResource(id = R.drawable.ic_radio),

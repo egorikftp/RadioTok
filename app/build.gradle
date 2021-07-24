@@ -39,8 +39,8 @@ dependencies {
 
     implementation libs.bundles.retrofit
 
-    implementation libs.accompanist.coil
     implementation libs.appcompat
+    implementation libs.coil
     implementation libs.core
     implementation libs.gson
     implementation libs.koin
