@@ -19,6 +19,7 @@ fun PlayerControls(
     modifier: Modifier = Modifier,
     isPlaying: Boolean,
     isLiked: Boolean,
+    isError: Boolean,
     controlsActions: ControlsActions
 ) {
     Row(
@@ -54,7 +55,11 @@ fun PlayerControls(
                 )
             }
 
-            PlayPauseButton(isPlaying = isPlaying, onClick = controlsActions.playPauseEvent)
+            PlayPauseButton(
+                enable = !isError,
+                isPlaying = isPlaying,
+                onClick = controlsActions.playPauseEvent
+            )
 
             IconButton(
                 onClick = { controlsActions.nextRadioEvent() },

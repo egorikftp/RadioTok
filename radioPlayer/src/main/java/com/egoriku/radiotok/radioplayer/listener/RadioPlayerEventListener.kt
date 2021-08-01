@@ -5,7 +5,8 @@ import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.Player
 
 class RadioPlayerEventListener(
-    private val onStopForeground: () -> Unit
+    private val onStopForeground: () -> Unit,
+    private val onError: () -> Unit
 ) : Player.Listener {
 
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
@@ -16,6 +17,8 @@ class RadioPlayerEventListener(
 
     override fun onPlayerError(error: ExoPlaybackException) {
         super.onPlayerError(error)
+
+        onError()
 
         when (error.type) {
             ExoPlaybackException.TYPE_SOURCE -> logD("onPlayerError, TYPE_SOURCE: " + error.sourceException.toString())

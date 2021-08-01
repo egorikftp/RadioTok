@@ -11,6 +11,9 @@ inline val PlaybackStateCompat.isPrepared
             state == PlaybackStateCompat.STATE_PLAYING ||
             state == PlaybackStateCompat.STATE_PAUSED
 
+inline val PlaybackStateCompat.isError
+    get() = state == PlaybackStateCompat.STATE_ERROR
+
 inline val PlaybackStateCompat.isPlayEnabled
     get() = actions and PlaybackStateCompat.ACTION_PLAY != 0L ||
             (actions and PlaybackStateCompat.ACTION_PLAY_PAUSE != 0L && state == PlaybackStateCompat.STATE_PAUSED)

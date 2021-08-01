@@ -15,6 +15,7 @@ import com.egoriku.radiotok.presentation.state.RadioPlaybackState
 import com.egoriku.radiotok.radioplayer.RadioService
 import com.egoriku.radiotok.radioplayer.constant.CustomAction
 import com.egoriku.radiotok.radioplayer.constant.PlayerConstants.NETWORK_ERROR
+import com.egoriku.radiotok.radioplayer.ext.isError
 import com.egoriku.radiotok.radioplayer.ext.isPlayEnabled
 import com.egoriku.radiotok.radioplayer.ext.isPlaying
 import com.egoriku.radiotok.radioplayer.ext.isPrepared
@@ -112,9 +113,14 @@ internal class RadioServiceConnection(context: Context) : IMusicServiceConnectio
                                 isPlaying = state.isPlaying,
                                 isPrepared = state.isPrepared,
                                 isPlayEnabled = state.isPlayEnabled,
-                                isLiked = state.customActions.first {
-                                    it.action == CustomAction.ACTION_TOGGLE_FAVORITE
-                                }.extras.getBoolean("IS_LIKED")
+                                isError = state.isError,
+                                isLiked = if (state.customActions.isNotEmpty()) {
+                                    state.customActions.first {
+                                        it.action == CustomAction.ACTION_TOGGLE_FAVORITE
+                                    }.extras.getBoolean("IS_LIKED")
+                                } else {
+                                    false
+                                }
                             )
                         }
                     }

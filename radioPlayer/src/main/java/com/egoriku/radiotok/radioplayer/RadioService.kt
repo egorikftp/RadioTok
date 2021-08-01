@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
+import android.support.v4.media.session.PlaybackStateCompat
+import android.support.v4.media.session.PlaybackStateCompat.ERROR_CODE_APP_ERROR
 import androidx.core.os.bundleOf
 import androidx.media.MediaBrowserServiceCompat
 import androidx.media.utils.MediaConstants.*
@@ -132,6 +134,14 @@ class RadioService : MediaBrowserServiceCompat() {
         radioPlayerEventListener = RadioPlayerEventListener(
             onStopForeground = {
                 stopForeground(false)
+            },
+            onError = {
+                mediaSession.setPlaybackState(
+                    PlaybackStateCompat.Builder()
+                        .setState(PlaybackStateCompat.STATE_ERROR, 0L, 0.0f)
+                        .setErrorMessage(ERROR_CODE_APP_ERROR, "Source error")
+                        .build()
+                )
             }
         )
 
