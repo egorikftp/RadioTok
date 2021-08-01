@@ -36,7 +36,7 @@ val radioPlayerModule = module {
     factory<IMediaItemRepository> {
         MediaItemRepository(
             context = androidContext(),
-            drawableResourceProvider = get(),
+            drawableProvider = get(),
             stringResource = get(),
             radioTokDb = get()
         )

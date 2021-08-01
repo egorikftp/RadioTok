@@ -27,6 +27,7 @@ dependencies {
     implementation libs.glide
     implementation libs.koin
     implementation libs.lifecycle.runtime
+    implementation libs.media
 
     implementation libs.bundles.exoPlayer
 }

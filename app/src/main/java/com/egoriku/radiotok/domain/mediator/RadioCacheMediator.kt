@@ -48,6 +48,8 @@ class RadioCacheMediator(
 
         return when (mediaPath) {
             is MediaPath.Root -> mediaItemRepository.getRootItems()
+            is MediaPath.RootForYou -> mediaItemRepository.getForYouItems()
+            is MediaPath.RootCollection -> emptyList()
             is MediaPath.RandomRadio, MediaPath.LikedRadio -> {
                 currentRadioQueueHolder.currentPath = mediaPath
 

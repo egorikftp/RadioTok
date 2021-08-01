@@ -6,6 +6,7 @@ import android.support.v4.media.MediaMetadataCompat
 interface IMediaItemRepository {
 
     fun getRootItems(): List<MediaBrowserCompat.MediaItem>
+    fun getForYouItems(): List<MediaBrowserCompat.MediaItem>
 
     suspend fun getRandomItem(): MediaMetadataCompat
 
