@@ -39,6 +39,7 @@ dependencies {
 
     implementation libs.bundles.retrofit
 
+    implementation libs.accompanist.placeholder
     implementation libs.appcompat
     implementation libs.coil
     implementation libs.core
