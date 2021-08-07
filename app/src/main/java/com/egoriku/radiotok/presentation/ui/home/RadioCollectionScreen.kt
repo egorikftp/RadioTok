@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.egoriku.radiotok.R
+import com.egoriku.radiotok.common.ext.toFlagEmoji
 import com.egoriku.radiotok.foundation.HSpacer
 
 @Composable
@@ -21,44 +22,67 @@ fun RadioCollectionScreen(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues()
 ) {
-    val forYou: List<RadioCollection> = listOf(
+    val instantPlay: List<RadioCollection> = listOf(
         RadioCollection("Random", R.drawable.ic_random),
         RadioCollection("Liked", R.drawable.ic_favorite),
-        RadioCollection("Trending Now", R.drawable.ic_trending_up)
     )
 
-    val byGenre: List<RadioCollection> = listOf(
-        RadioCollection("Folk", R.drawable.ic_random),
-        RadioCollection("Dance", R.drawable.ic_favorite),
-        RadioCollection("News", R.drawable.ic_trending_up)
+    val forYou: List<RadioCollection> = listOf(
+        RadioCollection("Liked", R.drawable.ic_favorite),
+        RadioCollection("Disliked", R.drawable.ic_favorite_border),
+    )
+
+    val smartPlaylists: List<RadioCollection> = listOf(
+        RadioCollection("Local stations"),
+        RadioCollection("Top clicks"),
+        RadioCollection("Top Vote"),
+        RadioCollection("Changed lately"),
+        RadioCollection("Playing"),
+    )
+
+    val byTags: List<RadioCollection> = listOf(
+        RadioCollection("Folk"),
+        RadioCollection("Dance"),
+        RadioCollection("News")
     )
 
     val byCountry: List<RadioCollection> = listOf(
-        RadioCollection("Poland", R.drawable.ic_random),
-        RadioCollection("USA", R.drawable.ic_favorite),
-        RadioCollection("NL", R.drawable.ic_trending_up)
+        RadioCollection("Pl".toFlagEmoji),
+        RadioCollection("US".toFlagEmoji),
+        RadioCollection("NL".toFlagEmoji)
+    )
+
+    val byLanguage: List<RadioCollection> = listOf(
+        RadioCollection("80er"),
+        RadioCollection("akan"),
+        RadioCollection("all")
     )
 
     Surface(modifier = modifier) {
         LazyColumn(contentPadding = paddingValues) {
             item {
-                CollectionHeader("For you")
+                CollectionHeader("Instant Play")
+                RadioItemsRow(items = instantPlay)
+            }
+            item {
+                CollectionHeader("Personal")
                 RadioItemsRow(items = forYou)
             }
-
+            item {
+                CollectionHeader("Smart Playlists")
+                RadioItemsRow(items = smartPlaylists)
+            }
             item {
                 CollectionHeader("By Genres")
-                RadioItemsRow(items = byGenre)
+                RadioItemsRow(items = byTags)
             }
-
             item {
                 CollectionHeader("By Country")
                 RadioItemsRow(items = byCountry)
             }
-
             item {
-                CollectionHeader("By Country")
-                RadioItemsRow(items = byCountry)
+                CollectionHeader("By Language")
+                RadioItemsRow(items = byLanguage)
             }
         }
     }
@@ -67,7 +91,7 @@ fun RadioCollectionScreen(
 @Composable
 fun CollectionHeader(title: String) {
     Text(
-        modifier = Modifier.padding(start = 16.dp, top = 8.dp),
+        modifier = Modifier.padding(start = 18.dp, top = 8.dp),
         text = title,
         style = MaterialTheme.typography.h6
     )
@@ -75,9 +99,8 @@ fun CollectionHeader(title: String) {
 
 data class RadioCollection(
     val name: String,
-    val drawableId: Int
+    val drawableId: Int = -1
 )
-
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -109,11 +132,14 @@ fun RadioItem(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(
-                painter = painterResource(id = collection.drawableId),
-                contentDescription = null
-            )
-            HSpacer(16.dp)
+            if (collection.drawableId != -1) {
+                Icon(
+                    painter = painterResource(id = collection.drawableId),
+                    contentDescription = null
+                )
+                HSpacer(16.dp)
+            }
+
             Text(text = collection.name, style = MaterialTheme.typography.h5)
         }
     }
