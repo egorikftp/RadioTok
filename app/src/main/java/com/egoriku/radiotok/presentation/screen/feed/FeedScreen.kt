@@ -10,13 +10,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.egoriku.radiotok.R
 import com.egoriku.radiotok.common.ext.toFlagEmoji
 import com.egoriku.radiotok.foundation.HSpacer
+import com.egoriku.radiotok.foundation.button.IconButton
+import com.egoriku.radiotok.presentation.screen.Navigator
 import com.egoriku.radiotok.presentation.screen.feed.model.FeedType.*
 import com.egoriku.radiotok.presentation.screen.feed.ui.FeedRow
 import com.egoriku.radiotok.presentation.screen.feed.ui.InstantRadio
+import com.egoriku.radiotok.presentation.ui.header.ScreenHeader
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.MEDIA_PATH_LIKED_RADIO
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.MEDIA_PATH_RANDOM_RADIO
 import org.koin.androidx.compose.getViewModel
@@ -24,7 +28,8 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun FeedScreen(
     modifier: Modifier = Modifier,
-    paddingValues: PaddingValues = PaddingValues()
+    paddingValues: PaddingValues = PaddingValues(),
+    navigator: Navigator
 ) {
     val feedViewModel = getViewModel<FeedViewModel>()
 
@@ -74,6 +79,19 @@ fun FeedScreen(
 
     Surface(modifier = modifier) {
         LazyColumn(contentPadding = paddingValues) {
+            item {
+                ScreenHeader(
+                    title = stringResource(id = R.string.app_name)
+                ) {
+                    IconButton(
+                        modifier = Modifier.padding(end = 8.dp),
+                        painter = painterResource(id = R.drawable.ic_settings),
+                        contentDescription = stringResource(id = R.string.cc_open_settings)
+                    ) {
+                        navigator.openSettings()
+                    }
+                }
+            }
             item {
                 FeedRow(title = "Shuffle and Play") {
                     items(shuffleAndPlay) {

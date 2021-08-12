@@ -8,4 +8,5 @@
     <string name="cc_not_interested">Not interested</string>
     <string name="cc_radio_logo_error">Radio logo error</string>
     <string name="cc_radio_logo_success">Radio logo</string>
+    <string name="cc_open_settings">Open settings</string>
 </resources>
