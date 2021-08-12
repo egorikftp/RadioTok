@@ -8,7 +8,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.egoriku.radiotok.R
 import com.egoriku.radiotok.foundation.button.CircleIconButtonLarge
-import com.egoriku.radiotok.presentation.theme.RadioTokTheme
+import com.egoriku.radiotok.presentation.ui.RadioTokTheme
 
 @Preview(showBackground = true)
 @Composable

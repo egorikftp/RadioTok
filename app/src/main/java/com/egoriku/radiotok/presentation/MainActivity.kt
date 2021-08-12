@@ -3,8 +3,10 @@ package com.egoriku.radiotok.presentation
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.core.view.WindowCompat
 import com.egoriku.radiotok.presentation.screen.main.MainScreen
-import com.egoriku.radiotok.presentation.theme.RadioTokTheme
+import com.egoriku.radiotok.presentation.ui.RadioTokTheme
+import com.google.accompanist.insets.ProvideWindowInsets
 import org.koin.androidx.scope.ScopeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -16,9 +18,13 @@ class MainActivity : ScopeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContent {
             RadioTokTheme {
-                MainScreen(viewModel)
+                ProvideWindowInsets {
+                    MainScreen(viewModel)
+                }
             }
         }
     }

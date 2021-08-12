@@ -18,7 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.egoriku.radiotok.R
-import com.egoriku.radiotok.presentation.theme.RadioTokTheme
+import com.egoriku.radiotok.presentation.ui.RadioTokTheme
 
 @Preview(showBackground = true)
 @Composable

@@ -18,6 +18,7 @@ import com.egoriku.radiotok.presentation.screen.playlist.PlaylistScreen
 import com.egoriku.radiotok.presentation.screen.settings.SettingScreen
 import com.egoriku.radiotok.presentation.ui.radio.miniplayer.RadioMiniPlayer
 import com.egoriku.radiotok.presentation.ui.radio.player.RadioPlayer
+import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -52,7 +53,9 @@ fun MainScreen(viewModel: RadioViewModel) {
     val radius = (30 * scaffoldState.currentFraction).dp
 
     BottomSheetScaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .navigationBarsPadding(),
         scaffoldState = scaffoldState,
         sheetShape = RoundedCornerShape(topStart = radius, topEnd = radius),
         sheetContent = {

@@ -1,5 +1,6 @@
-package com.egoriku.radiotok.presentation.theme
+package com.egoriku.radiotok.presentation.ui
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
@@ -16,11 +17,18 @@ val RadioColors = lightColors(
 )
 
 @Composable
-fun RadioTokTheme(content: @Composable () -> Unit) {
+fun RadioTokTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
+    val colors = if (darkTheme) {
+        RadioColors
+    } else {
+        RadioColors
+    }
+
     MaterialTheme(
-        colors = RadioColors,
-        typography = Typography,
-        shapes = Shapes,
+        colors = colors,
         content = content
     )
 }

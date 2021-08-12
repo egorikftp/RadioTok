@@ -16,8 +16,9 @@ kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", v
 versionsCheck-gradle-plugin = "com.github.ben-manes:gradle-versions-plugin:0.39.0"
 ksp-gradle-plugin = "com.google.devtools.ksp:symbol-processing-gradle-plugin:1.5.21-1.0.0-beta06"
 
-accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "accompanist"}
+accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist"}
 accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist"}
+accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "accompanist"}
 
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 

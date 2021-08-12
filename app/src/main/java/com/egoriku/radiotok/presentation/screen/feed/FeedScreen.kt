@@ -23,6 +23,8 @@ import com.egoriku.radiotok.presentation.screen.feed.ui.InstantRadio
 import com.egoriku.radiotok.presentation.ui.header.ScreenHeader
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.MEDIA_PATH_LIKED_RADIO
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.MEDIA_PATH_RANDOM_RADIO
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -78,7 +80,14 @@ fun FeedScreen(
     )
 
     Surface(modifier = modifier) {
-        LazyColumn(contentPadding = paddingValues) {
+        LazyColumn(
+            contentPadding = rememberInsetsPaddingValues(
+                insets = LocalWindowInsets.current.systemBars,
+                applyTop = true,
+                applyBottom = true,
+                additionalBottom = paddingValues.calculateBottomPadding()
+            )
+        ) {
             item {
                 ScreenHeader(
                     title = stringResource(id = R.string.app_name)
