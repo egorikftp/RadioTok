@@ -18,8 +18,10 @@ import com.egoriku.radiotok.R
 import com.egoriku.radiotok.extension.currentFraction
 import com.egoriku.radiotok.extension.noRippleClickable
 import com.egoriku.radiotok.foundation.SheetContent
+import com.egoriku.radiotok.foundation.button.LikedIconButton
 import com.egoriku.radiotok.presentation.ControlsActions
 import com.egoriku.radiotok.presentation.RadioViewModel
+import com.egoriku.radiotok.presentation.ui.feed.FeedScreen
 import com.egoriku.radiotok.presentation.ui.playlist.PlaylistScreen
 import com.egoriku.radiotok.presentation.ui.radio.RadioScreen
 import com.egoriku.radiotok.presentation.ui.radio.about.RadioLogoSmall
@@ -128,25 +130,17 @@ fun HomeScreen(viewModel: RadioViewModel) {
                         color = MaterialTheme.colors.onPrimary,
                         style = MaterialTheme.typography.caption
                     )
-                    IconButton(
-                        onClick = { controlsActions.addRemoveFavoriteEvent() },
-                        modifier = Modifier
-                            .padding(start = 8.dp, top = 8.dp, bottom = 8.dp, end = 16.dp)
-                    ) {
-                        if (playbackState.isLiked) {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_favorite),
-                                tint = MaterialTheme.colors.onPrimary,
-                                contentDescription = "Add favorite"
-                            )
-                        } else {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_favorite_border),
-                                tint = MaterialTheme.colors.onPrimary,
-                                contentDescription = "Remove favorite"
-                            )
-                        }
-                    }
+
+                    LikedIconButton(
+                        modifier = Modifier.padding(
+                            start = 8.dp,
+                            top = 8.dp,
+                            bottom = 8.dp,
+                            end = 16.dp
+                        ),
+                        onClick = { controlsActions.toggleFavoriteEvent() },
+                        isLiked = playbackState.isLiked
+                    )
                 }
             }
         },
@@ -154,10 +148,10 @@ fun HomeScreen(viewModel: RadioViewModel) {
     ) { paddingValues ->
         AnimatedNavHost(
             navController = navController,
-            startDestination = NavScreen.Home.route
+            startDestination = NavScreen.Feed.route
         ) {
-            composable(NavScreen.Home.route) {
-                RadioCollectionScreen(paddingValues = paddingValues)
+            composable(NavScreen.Feed.route) {
+                FeedScreen(paddingValues = paddingValues)
             }
             composable(NavScreen.Settings.route) {
                 SettingScreen()
@@ -171,7 +165,7 @@ fun HomeScreen(viewModel: RadioViewModel) {
 
 sealed class NavScreen(val route: String) {
 
-    object Home : NavScreen("home")
-    object Settings : NavScreen("settings")
-    object Playlist : NavScreen("playlist")
+    object Feed : NavScreen(route = "feed")
+    object Settings : NavScreen(route = "settings")
+    object Playlist : NavScreen(route = "playlist")
 }

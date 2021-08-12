@@ -1,4 +1,4 @@
-package com.egoriku.radiotok.presentation.ui.home
+package com.egoriku.radiotok.presentation.ui.feed
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
@@ -18,7 +18,7 @@ import com.egoriku.radiotok.common.ext.toFlagEmoji
 import com.egoriku.radiotok.foundation.HSpacer
 
 @Composable
-fun RadioCollectionScreen(
+fun FeedScreen(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues()
 ) {

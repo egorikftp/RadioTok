@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.egoriku.radiotok.R
+import com.egoriku.radiotok.foundation.button.LikedIconButton
 import com.egoriku.radiotok.presentation.ControlsActions
 
 @Composable
@@ -73,22 +74,15 @@ fun PlayerControls(
             }
         }
 
-        IconButton(
-            onClick = { controlsActions.addRemoveFavoriteEvent() },
-            modifier = Modifier
-                .padding(start = 8.dp, top = 8.dp, bottom = 8.dp, end = 16.dp)
-        ) {
-            if (isLiked) {
-                Image(
-                    painter = painterResource(R.drawable.ic_favorite),
-                    contentDescription = "Add favorite"
-                )
-            } else {
-                Image(
-                    painter = painterResource(R.drawable.ic_favorite_border),
-                    contentDescription = "Remove favorite"
-                )
-            }
-        }
+        LikedIconButton(
+            modifier = Modifier.padding(
+                start = 8.dp,
+                top = 8.dp,
+                bottom = 8.dp,
+                end = 16.dp
+            ),
+            onClick = { controlsActions.toggleFavoriteEvent() },
+            isLiked = isLiked
+        )
     }
 }

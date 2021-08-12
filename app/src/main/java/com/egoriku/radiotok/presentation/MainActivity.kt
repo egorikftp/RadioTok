@@ -30,5 +30,5 @@ class ControlsActions(viewModel: RadioViewModel) {
     val tuneRadiosEvent: () -> Unit = {}
     val playPauseEvent: () -> Unit = { viewModel.togglePlayPause() }
     val nextRadioEvent: () -> Unit = { viewModel.nextRadioStation() }
-    val addRemoveFavoriteEvent: () -> Unit = { viewModel.likeRadioStation() }
+    val toggleFavoriteEvent: () -> Unit = { viewModel.likeRadioStation() }
 }
