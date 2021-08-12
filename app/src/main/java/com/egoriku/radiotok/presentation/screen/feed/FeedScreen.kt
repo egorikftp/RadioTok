@@ -1,4 +1,4 @@
-package com.egoriku.radiotok.presentation.ui.feed
+package com.egoriku.radiotok.presentation.screen.feed
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
@@ -22,7 +22,7 @@ fun FeedScreen(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues()
 ) {
-    val instantPlay: List<RadioCollection> = listOf(
+    val shuffleAndPlay: List<RadioCollection> = listOf(
         RadioCollection("Random", R.drawable.ic_random),
         RadioCollection("Liked", R.drawable.ic_favorite),
     )
@@ -61,8 +61,8 @@ fun FeedScreen(
     Surface(modifier = modifier) {
         LazyColumn(contentPadding = paddingValues) {
             item {
-                CollectionHeader("Instant Play")
-                RadioItemsRow(items = instantPlay)
+                CollectionHeader("Shuffle and Play")
+                RadioItemsRow(items = shuffleAndPlay)
             }
             item {
                 CollectionHeader("Personal Playlists")

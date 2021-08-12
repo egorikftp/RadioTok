@@ -1,4 +1,4 @@
-package com.egoriku.radiotok.presentation.ui.settings
+package com.egoriku.radiotok.presentation.screen.settings
 
 import androidx.compose.runtime.Composable
 

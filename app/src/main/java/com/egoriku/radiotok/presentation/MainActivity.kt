@@ -3,8 +3,8 @@ package com.egoriku.radiotok.presentation
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import com.egoriku.radiotok.presentation.screen.main.MainScreen
 import com.egoriku.radiotok.presentation.theme.RadioTokTheme
-import com.egoriku.radiotok.presentation.ui.home.HomeScreen
 import org.koin.androidx.scope.ScopeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -18,7 +18,7 @@ class MainActivity : ScopeActivity() {
 
         setContent {
             RadioTokTheme {
-                HomeScreen(viewModel)
+                MainScreen(viewModel)
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.egoriku.radiotok.presentation.ui.home
+package com.egoriku.radiotok.presentation.screen.main
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
@@ -16,11 +16,12 @@ import com.egoriku.radiotok.extension.currentFraction
 import com.egoriku.radiotok.foundation.SheetContent
 import com.egoriku.radiotok.presentation.ControlsActions
 import com.egoriku.radiotok.presentation.RadioViewModel
-import com.egoriku.radiotok.presentation.ui.feed.FeedScreen
-import com.egoriku.radiotok.presentation.ui.playlist.PlaylistScreen
+import com.egoriku.radiotok.presentation.screen.NavScreen
+import com.egoriku.radiotok.presentation.screen.feed.FeedScreen
+import com.egoriku.radiotok.presentation.screen.playlist.PlaylistScreen
+import com.egoriku.radiotok.presentation.screen.settings.SettingScreen
 import com.egoriku.radiotok.presentation.ui.radio.miniplayer.RadioMiniPlayer
 import com.egoriku.radiotok.presentation.ui.radio.player.RadioPlayer
-import com.egoriku.radiotok.presentation.ui.settings.SettingScreen
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -28,7 +29,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialApi::class)
 @Composable
-fun HomeScreen(viewModel: RadioViewModel) {
+fun MainScreen(viewModel: RadioViewModel) {
     val currentPlayingRadio by viewModel.currentPlayingRadio.collectAsState()
     val playbackState by viewModel.playbackState.collectAsState()
 
@@ -118,11 +119,4 @@ fun HomeScreen(viewModel: RadioViewModel) {
             }
         }
     }
-}
-
-sealed class NavScreen(val route: String) {
-
-    object Feed : NavScreen(route = "feed")
-    object Settings : NavScreen(route = "settings")
-    object Playlist : NavScreen(route = "playlist")
 }

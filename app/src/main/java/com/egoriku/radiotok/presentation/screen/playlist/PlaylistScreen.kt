@@ -1,4 +1,4 @@
-package com.egoriku.radiotok.presentation.ui.playlist
+package com.egoriku.radiotok.presentation.screen.playlist
 
 import androidx.compose.runtime.Composable
 
