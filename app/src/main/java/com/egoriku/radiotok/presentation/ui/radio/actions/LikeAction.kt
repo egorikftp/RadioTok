@@ -1,4 +1,4 @@
-package com.egoriku.radiotok.foundation.button
+package com.egoriku.radiotok.presentation.ui.radio.actions
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Icon
@@ -15,14 +15,14 @@ import com.egoriku.radiotok.presentation.theme.RadioTokTheme
 
 @Preview(showBackground = true)
 @Composable
-private fun LikedIconButtonPreview() {
+private fun LikeActionPreview() {
     RadioTokTheme {
         Row {
-            LikedIconButton(
+            LikeAction(
                 tint = MaterialTheme.colors.secondary,
                 isLiked = true
             ) {}
-            LikedIconButton(
+            LikeAction(
                 tint = MaterialTheme.colors.secondary,
                 isLiked = false
             ) {}
@@ -31,7 +31,7 @@ private fun LikedIconButtonPreview() {
 }
 
 @Composable
-fun LikedIconButton(
+fun LikeAction(
     modifier: Modifier = Modifier,
     tint: Color = MaterialTheme.colors.onPrimary,
     isLiked: Boolean,

@@ -1,4 +1,4 @@
-package com.egoriku.radiotok.foundation.button
+package com.egoriku.radiotok.presentation.ui.radio.actions
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.MaterialTheme
@@ -7,23 +7,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.egoriku.radiotok.R
+import com.egoriku.radiotok.foundation.button.CircleIconButtonLarge
 import com.egoriku.radiotok.presentation.theme.RadioTokTheme
 
 @Preview(showBackground = true)
 @Composable
-private fun PlayPauseButtonPreview() {
+private fun PlayPauseActionPreview() {
     RadioTokTheme {
         Row {
-            PlayPauseButton(isPlaying = true, enable = true) {}
-            PlayPauseButton(isPlaying = false, enable = true) {}
-            PlayPauseButton(isPlaying = true, enable = false) {}
-            PlayPauseButton(isPlaying = false, enable = false) {}
+            PlayPauseAction(isPlaying = true, enable = true) {}
+            PlayPauseAction(isPlaying = false, enable = true) {}
+            PlayPauseAction(isPlaying = true, enable = false) {}
+            PlayPauseAction(isPlaying = false, enable = false) {}
         }
     }
 }
 
 @Composable
-fun PlayPauseButton(
+fun PlayPauseAction(
     isPlaying: Boolean,
     enable: Boolean = true,
     onClick: () -> Unit
