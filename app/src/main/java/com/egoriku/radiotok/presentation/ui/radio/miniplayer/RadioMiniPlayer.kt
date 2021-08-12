@@ -1,6 +1,5 @@
 package com.egoriku.radiotok.presentation.ui.radio.miniplayer
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,7 +34,6 @@ fun RadioMiniPlayer(
         modifier = modifier
             .fillMaxWidth()
             .height(72.dp)
-            .background(MaterialTheme.colors.primary)
             .graphicsLayer(alpha = 1f - fraction)
             .noRippleClickable(onClick = onClick, enabled = clickable),
         verticalAlignment = Alignment.CenterVertically

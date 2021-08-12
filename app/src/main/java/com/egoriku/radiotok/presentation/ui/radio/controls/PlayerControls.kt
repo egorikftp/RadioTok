@@ -21,9 +21,7 @@ fun PlayerControls(
     controlsActions: ControlsActions
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp, bottom = 8.dp),
+        modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         NotInterestedAction(

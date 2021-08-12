@@ -18,8 +18,8 @@ import com.egoriku.radiotok.presentation.ControlsActions
 import com.egoriku.radiotok.presentation.RadioViewModel
 import com.egoriku.radiotok.presentation.ui.feed.FeedScreen
 import com.egoriku.radiotok.presentation.ui.playlist.PlaylistScreen
-import com.egoriku.radiotok.presentation.ui.radio.RadioScreen
 import com.egoriku.radiotok.presentation.ui.radio.miniplayer.RadioMiniPlayer
+import com.egoriku.radiotok.presentation.ui.radio.player.RadioPlayer
 import com.egoriku.radiotok.presentation.ui.settings.SettingScreen
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -84,15 +84,12 @@ fun HomeScreen(viewModel: RadioViewModel) {
         },
         sheetContent = {
             SheetContent {
-                Box(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    RadioScreen(
-                        radioItemModel = currentPlayingRadio,
-                        playbackState = playbackState,
-                        controlsActions = controlsActions
-                    )
-                }
+                RadioPlayer(
+                    radioItemModel = currentPlayingRadio,
+                    playbackState = playbackState,
+                    controlsActions = controlsActions,
+                    fraction = scaffoldState.currentFraction
+                )
 
                 RadioMiniPlayer(
                     radioItem = currentPlayingRadio,
