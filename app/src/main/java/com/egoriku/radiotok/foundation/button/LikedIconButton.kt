@@ -6,19 +6,26 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.egoriku.radiotok.R
 import com.egoriku.radiotok.presentation.theme.RadioTokTheme
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun LikedIconButtonPreview() {
     RadioTokTheme {
         Row {
-            LikedIconButton(isLiked = true) {}
-            LikedIconButton(isLiked = false) {}
+            LikedIconButton(
+                tint = MaterialTheme.colors.secondary,
+                isLiked = true
+            ) {}
+            LikedIconButton(
+                tint = MaterialTheme.colors.secondary,
+                isLiked = false
+            ) {}
         }
     }
 }
@@ -26,6 +33,7 @@ private fun LikedIconButtonPreview() {
 @Composable
 fun LikedIconButton(
     modifier: Modifier = Modifier,
+    tint: Color = MaterialTheme.colors.onPrimary,
     isLiked: Boolean,
     onClick: () -> Unit,
 ) {
@@ -36,12 +44,12 @@ fun LikedIconButton(
         when {
             isLiked -> Icon(
                 painter = painterResource(R.drawable.ic_favorite),
-                tint = MaterialTheme.colors.onPrimary,
+                tint = tint,
                 contentDescription = stringResource(id = R.string.cc_remove_favorite)
             )
             else -> Icon(
                 painter = painterResource(R.drawable.ic_favorite_border),
-                tint = MaterialTheme.colors.onPrimary,
+                tint = tint,
                 contentDescription = stringResource(id = R.string.cc_add_favorite)
             )
         }

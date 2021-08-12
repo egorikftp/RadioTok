@@ -138,6 +138,7 @@ fun HomeScreen(viewModel: RadioViewModel) {
                             bottom = 8.dp,
                             end = 16.dp
                         ),
+                        tint = MaterialTheme.colors.onPrimary,
                         onClick = { controlsActions.toggleFavoriteEvent() },
                         isLiked = playbackState.isLiked
                     )
