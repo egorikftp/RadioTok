@@ -25,7 +25,7 @@ dependencies {
 
     implementation libs.core
     implementation libs.glide
-    implementation libs.koin
+    implementation libs.koin.android
     implementation libs.lifecycle.runtime
     implementation libs.media
 

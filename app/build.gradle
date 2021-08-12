@@ -45,7 +45,8 @@ dependencies {
     implementation libs.coil
     implementation libs.core
     implementation libs.gson
-    implementation libs.koin
+    implementation libs.koin.android
+    implementation libs.koin.compose
     implementation libs.lifecycle.runtime
     implementation libs.media
     implementation libs.material

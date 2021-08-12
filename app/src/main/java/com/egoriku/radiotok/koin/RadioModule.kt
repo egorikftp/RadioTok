@@ -18,6 +18,7 @@ import com.egoriku.radiotok.presentation.IMusicServiceConnection
 import com.egoriku.radiotok.presentation.MainActivity
 import com.egoriku.radiotok.presentation.RadioServiceConnection
 import com.egoriku.radiotok.presentation.RadioViewModel
+import com.egoriku.radiotok.presentation.screen.feed.FeedViewModel
 import com.egoriku.radiotok.radioplayer.data.mediator.IRadioCacheMediator
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -75,5 +76,11 @@ val radioModule = module {
         viewModel {
             RadioViewModel(serviceConnection = get())
         }
+    }
+}
+
+val feedScreenModule = module {
+    viewModel {
+        FeedViewModel(serviceConnection = get())
     }
 }

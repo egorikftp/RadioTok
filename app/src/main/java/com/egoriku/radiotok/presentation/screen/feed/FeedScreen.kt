@@ -1,10 +1,8 @@
 package com.egoriku.radiotok.presentation.screen.feed
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -16,114 +14,123 @@ import androidx.compose.ui.unit.dp
 import com.egoriku.radiotok.R
 import com.egoriku.radiotok.common.ext.toFlagEmoji
 import com.egoriku.radiotok.foundation.HSpacer
+import com.egoriku.radiotok.presentation.screen.feed.model.FeedType.*
+import com.egoriku.radiotok.presentation.screen.feed.ui.FeedRow
+import com.egoriku.radiotok.presentation.screen.feed.ui.InstantRadio
+import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.MEDIA_PATH_LIKED_RADIO
+import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.MEDIA_PATH_RANDOM_RADIO
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun FeedScreen(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues()
 ) {
-    val shuffleAndPlay: List<RadioCollection> = listOf(
-        RadioCollection("Random", R.drawable.ic_random),
-        RadioCollection("Liked", R.drawable.ic_favorite),
+    val feedViewModel = getViewModel<FeedViewModel>()
+
+    val shuffleAndPlay = listOf(
+        InstantPlay(
+            mediaId = MEDIA_PATH_RANDOM_RADIO,
+            name = "Random",
+            icon = R.drawable.ic_random
+        ),
+        InstantPlay(
+            mediaId = MEDIA_PATH_LIKED_RADIO,
+            name = "Liked",
+            icon = R.drawable.ic_favorite
+        )
     )
 
-    val forYou: List<RadioCollection> = listOf(
-        RadioCollection("Liked", R.drawable.ic_favorite),
-        RadioCollection("Disliked", R.drawable.ic_favorite_border),
+    val forYou = listOf(
+        Playlist(name = "Liked", icon = R.drawable.ic_favorite),
+        Playlist(name = "Disliked", icon = R.drawable.ic_not_interested)
     )
 
-    val smartPlaylists: List<RadioCollection> = listOf(
-        RadioCollection("Local stations"),
-        RadioCollection("Top clicks"),
-        RadioCollection("Top Vote"),
-        RadioCollection("Changed lately"),
-        RadioCollection("Playing"),
+    val smartPlaylists = listOf(
+        SimplePlaylist(name = "Local stations"),
+        SimplePlaylist(name = "Top clicks"),
+        SimplePlaylist(name = "Top Vote"),
+        SimplePlaylist(name = "Changed lately"),
+        SimplePlaylist(name = "Playing"),
     )
 
-    val byTags: List<RadioCollection> = listOf(
-        RadioCollection("Folk"),
-        RadioCollection("Dance"),
-        RadioCollection("News")
+    val byTags = listOf(
+        SimplePlaylist("Folk"),
+        SimplePlaylist("Dance"),
+        SimplePlaylist("News")
     )
 
-    val byCountry: List<RadioCollection> = listOf(
-        RadioCollection("Pl".toFlagEmoji),
-        RadioCollection("US".toFlagEmoji),
-        RadioCollection("NL".toFlagEmoji)
+    val byCountry = listOf(
+        SimplePlaylist("Pl".toFlagEmoji),
+        SimplePlaylist("US".toFlagEmoji),
+        SimplePlaylist("NL".toFlagEmoji)
     )
 
-    val byLanguage: List<RadioCollection> = listOf(
-        RadioCollection("80er"),
-        RadioCollection("akan"),
-        RadioCollection("all")
+    val byLanguage = listOf(
+        SimplePlaylist("80er"),
+        SimplePlaylist("akan"),
+        SimplePlaylist("all")
     )
 
     Surface(modifier = modifier) {
         LazyColumn(contentPadding = paddingValues) {
             item {
-                CollectionHeader("Shuffle and Play")
-                RadioItemsRow(items = shuffleAndPlay)
+                FeedRow(title = "Shuffle and Play") {
+                    items(shuffleAndPlay) {
+                        InstantRadio(feed = it) {
+                            feedViewModel.playFromMediaId(it.mediaId)
+                        }
+                    }
+                }
             }
             item {
-                CollectionHeader("Personal Playlists")
-                RadioItemsRow(items = forYou)
+                FeedRow(title = "Personal Playlists") {
+                    items(forYou) {
+                        RadioItemPlaylist(collection = it)
+                    }
+                }
             }
             item {
-                CollectionHeader("Smart Playlists")
-                RadioItemsRow(items = smartPlaylists)
+                FeedRow(title = "Smart Playlists") {
+                    items(smartPlaylists) {
+                        RadioItemSimplePlaylist(collection = it)
+                    }
+                }
             }
             item {
-                CollectionHeader("By Genres")
-                RadioItemsRow(items = byTags)
+                FeedRow(title = "By Genres") {
+                    items(byTags) {
+                        RadioItemSimplePlaylist(collection = it)
+                    }
+                }
             }
             item {
-                CollectionHeader("By Country")
-                RadioItemsRow(items = byCountry)
+                FeedRow(title = "By Country") {
+                    items(byCountry) {
+                        RadioItemSimplePlaylist(collection = it)
+                    }
+                }
             }
             item {
-                CollectionHeader("By Language")
-                RadioItemsRow(items = byLanguage)
+                FeedRow(title = "By Language") {
+                    items(byLanguage) {
+                        RadioItemSimplePlaylist(collection = it)
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun CollectionHeader(title: String) {
-    Text(
-        modifier = Modifier.padding(start = 18.dp, top = 8.dp),
-        text = title,
-        style = MaterialTheme.typography.h6
-    )
-}
-
-data class RadioCollection(
-    val name: String,
-    val drawableId: Int = -1
-)
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun RadioItemsRow(items: List<RadioCollection>) {
-    LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(16.dp)
-    ) {
-        items(items) {
-            RadioItem(collection = it)
-        }
-    }
-}
-
-@Composable
-fun RadioItem(
+fun RadioItemPlaylist(
     modifier: Modifier = Modifier,
-    collection: RadioCollection
+    collection: Playlist
 ) {
     Card(
         shape = RoundedCornerShape(20.dp),
         backgroundColor = MaterialTheme.colors.secondary,
-        modifier = modifier.size(200.dp)
+        modifier = modifier.size(150.dp)
     ) {
         Column(
             modifier = Modifier
@@ -132,15 +139,37 @@ fun RadioItem(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (collection.drawableId != -1) {
+            if (collection.icon != -1) {
                 Icon(
-                    painter = painterResource(id = collection.drawableId),
+                    painter = painterResource(id = collection.icon),
                     contentDescription = null
                 )
                 HSpacer(16.dp)
             }
 
-            Text(text = collection.name, style = MaterialTheme.typography.h5)
+            Text(text = collection.name, style = MaterialTheme.typography.body1)
+        }
+    }
+}
+
+@Composable
+fun RadioItemSimplePlaylist(
+    modifier: Modifier = Modifier,
+    collection: SimplePlaylist
+) {
+    Card(
+        shape = RoundedCornerShape(20.dp),
+        backgroundColor = MaterialTheme.colors.secondary,
+        modifier = modifier.size(150.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .clickable { },
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = collection.name, style = MaterialTheme.typography.body1)
         }
     }
 }

@@ -24,7 +24,7 @@ dependencies {
 
     ksp(libs.room.compiler)
 
-    implementation(libs.koin)
+    implementation(libs.koin.android)
 
     api(libs.room.runtime)
     implementation(libs.room.ktx)

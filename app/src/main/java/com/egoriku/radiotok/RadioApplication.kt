@@ -5,6 +5,7 @@ package com.egoriku.radiotok
 import android.app.Application
 import com.egoriku.radiotok.db.koin.dbModule
 import com.egoriku.radiotok.koin.appScope
+import com.egoriku.radiotok.koin.feedScreenModule
 import com.egoriku.radiotok.koin.radioModule
 import com.egoriku.radiotok.radioplayer.koin.exoPlayerModule
 import com.egoriku.radiotok.radioplayer.koin.radioPlayerModule
@@ -22,6 +23,7 @@ class RadioApplication : Application() {
                 appScope,
                 dbModule,
                 exoPlayerModule,
+                feedScreenModule,
                 radioModule,
                 radioPlayerModule
             )

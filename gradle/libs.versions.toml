@@ -39,7 +39,9 @@ exoplayer-extension-mediasession = { module = "com.google.android.exoplayer:exte
 glide = "com.github.bumptech.glide:glide:4.12.0"
 gson = "com.google.code.gson:gson:2.8.7"
 
-koin = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 
 lifecycle-runtime = "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
