@@ -1,5 +1,6 @@
 package com.egoriku.radiotok.presentation.ui.home
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,12 +20,17 @@ import com.egoriku.radiotok.extension.noRippleClickable
 import com.egoriku.radiotok.foundation.SheetContent
 import com.egoriku.radiotok.presentation.ControlsActions
 import com.egoriku.radiotok.presentation.RadioViewModel
+import com.egoriku.radiotok.presentation.ui.playlist.PlaylistScreen
 import com.egoriku.radiotok.presentation.ui.radio.RadioScreen
 import com.egoriku.radiotok.presentation.ui.radio.about.RadioLogoSmall
+import com.egoriku.radiotok.presentation.ui.settings.SettingScreen
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.placeholder.material.placeholder
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(viewModel: RadioViewModel) {
     val currentPlayingRadio by viewModel.currentPlayingRadio.collectAsState()
@@ -48,10 +54,14 @@ fun HomeScreen(viewModel: RadioViewModel) {
         }
     }
 
+    val radius = (30 * scaffoldState.currentFraction).dp
+
+    val navController = rememberAnimatedNavController()
+
     BottomSheetScaffold(
         modifier = Modifier.fillMaxSize(),
         scaffoldState = scaffoldState,
-        sheetShape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
+        sheetShape = RoundedCornerShape(topStart = radius, topEnd = radius),
         topBar = {
             Row(
                 modifier = Modifier
@@ -141,7 +151,27 @@ fun HomeScreen(viewModel: RadioViewModel) {
             }
         },
         sheetPeekHeight = 72.dp
-    ) {
-        RadioCollectionScreen(paddingValues = it)
+    ) { paddingValues ->
+        AnimatedNavHost(
+            navController = navController,
+            startDestination = NavScreen.Home.route
+        ) {
+            composable(NavScreen.Home.route) {
+                RadioCollectionScreen(paddingValues = paddingValues)
+            }
+            composable(NavScreen.Settings.route) {
+                SettingScreen()
+            }
+            composable(NavScreen.Playlist.route) {
+                PlaylistScreen()
+            }
+        }
     }
+}
+
+sealed class NavScreen(val route: String) {
+
+    object Home : NavScreen("home")
+    object Settings : NavScreen("settings")
+    object Playlist : NavScreen("playlist")
 }

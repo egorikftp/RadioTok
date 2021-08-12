@@ -65,7 +65,7 @@ fun RadioCollectionScreen(
                 RadioItemsRow(items = instantPlay)
             }
             item {
-                CollectionHeader("Personal")
+                CollectionHeader("Personal Playlists")
                 RadioItemsRow(items = forYou)
             }
             item {
