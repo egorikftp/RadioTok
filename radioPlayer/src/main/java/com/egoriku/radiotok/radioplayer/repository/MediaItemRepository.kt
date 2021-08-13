@@ -70,17 +70,18 @@ internal class MediaItemRepository(
     override fun getPersonalPlaylistsItems() = listOf(
         createBrowsableMediaItem(
             id = PersonalPlaylists.Random.path,
-            title = "Random",
-            bitmap = bitmapProvider.icShuffleRounded
-        ),
-        createBrowsableMediaItem(
-            id = PersonalPlaylists.Liked.path,
             title = "Liked",
             bitmap = bitmapProvider.icLikedRounded
         ),
         createBrowsableMediaItem(
             id = PersonalPlaylists.RecentlyPlayed.path,
-            title = "Recently Played"
+            title = "Recently Played",
+            bitmap = bitmapProvider.icHistoryRounded
+        ),
+        createBrowsableMediaItem(
+            id = PersonalPlaylists.Liked.path,
+            title = "Disliked",
+            bitmap = bitmapProvider.icDislikedRounded
         )
     )
 

@@ -22,6 +22,18 @@ internal class BitmapProvider(private val context: Context) : IBitmapProvider {
     override val icSmartPlaylist: Bitmap
         get() = context.drawableCompat(R.drawable.ic_auto_smart_playlist).toBitmap()
 
+    override val icDislikedRounded: Bitmap
+        get() = context
+            .drawableCompat(R.drawable.ic_auto_not_interested)
+            .toBitmap()
+            .roundWithBorder()
+
+    override val icHistoryRounded: Bitmap
+        get() = context
+            .drawableCompat(R.drawable.ic_auto_history)
+            .toBitmap()
+            .roundWithBorder()
+
     override val icLikedRounded: Bitmap
         get() = context
             .drawableCompat(R.drawable.ic_auto_liked)

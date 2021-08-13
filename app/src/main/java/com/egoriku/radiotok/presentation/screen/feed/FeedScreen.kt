@@ -50,6 +50,7 @@ fun FeedScreen(
 
     val forYou = listOf(
         Playlist(name = "Liked", icon = R.drawable.ic_favorite),
+        Playlist(name = "Recent Played", icon = R.drawable.ic_history),
         Playlist(name = "Disliked", icon = R.drawable.ic_not_interested)
     )
 
