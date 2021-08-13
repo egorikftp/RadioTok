@@ -7,9 +7,9 @@ import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
-import android.util.Log
 import com.egoriku.radiotok.common.EMPTY
 import com.egoriku.radiotok.common.ext.ResultOf
+import com.egoriku.radiotok.common.ext.logD
 import com.egoriku.radiotok.common.model.RadioItemModel
 import com.egoriku.radiotok.presentation.state.RadioPlaybackState
 import com.egoriku.radiotok.radioplayer.RadioService
@@ -103,7 +103,7 @@ internal class RadioServiceConnection(context: Context) : IMusicServiceConnectio
     private inner class MediaControllerCallback : MediaControllerCompat.Callback() {
 
         override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
-            Log.d("MediaControllerCallback", "onPlaybackStateChanged = $state")
+            logD("MediaControllerCallback: onPlaybackStateChanged = $state")
             scope.launch {
                 _playbackState.emit(
                     when (state) {
