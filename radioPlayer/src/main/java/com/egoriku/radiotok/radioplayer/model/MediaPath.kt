@@ -19,16 +19,16 @@ import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_S
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_TOP_CLICKS
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_TOP_VOTE
 
-sealed class MediaPath(val path: String) {
+sealed class MediaPath(val path: String, val isPlayable: Boolean = false) {
 
-    object Root : MediaPath(path = PATH_ROOT)
+    object Root : MediaPath(path = PATH_ROOT, isPlayable = false)
 
     object ShuffleAndPlay : MediaPath(path = PATH_ROOT_SHUFFLE_AND_PLAY) {
-        object ShuffleRandom : MediaPath(path = SUB_PATH_SHUFFLE_RANDOM)
-        object ShuffleLiked : MediaPath(path = SUB_PATH_SHUFFLE_LIKED)
+        object ShuffleRandom : MediaPath(path = SUB_PATH_SHUFFLE_RANDOM, isPlayable = true)
+        object ShuffleLiked : MediaPath(path = SUB_PATH_SHUFFLE_LIKED, isPlayable = true)
     }
 
-    object PersonalPlaylists : MediaPath(path = PATH_ROOT_PERSONAL_COLLECTION) {
+    object PersonalPlaylists : MediaPath(path = PATH_ROOT_PERSONAL_COLLECTION, ) {
         object Random : MediaPath(path = SUB_PATH_RANDOM)
         object Liked : MediaPath(path = SUB_PATH_LIKED)
         object RecentlyPlayed : MediaPath(path = SUB_PATH_RECENTLY_PLAYED)

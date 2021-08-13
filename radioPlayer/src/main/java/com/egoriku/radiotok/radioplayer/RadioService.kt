@@ -264,21 +264,20 @@ class RadioService : MediaBrowserServiceCompat() {
                 mediaPath = mediaPath
             )
 
-            when (mediaPath) {
-                is MediaPath.Root -> result.sendResult(mediaBrowseItems)
-                else -> {
-                    if (mediaBrowseItems.isEmpty()) {
-                        logD("onLoadChildren empty")
+            if (mediaPath.isPlayable) {
+                if (mediaBrowseItems.isEmpty()) {
+                    logD("onLoadChildren empty")
 
-                        mediaSession.sendSessionEvent(NETWORK_ERROR, null)
-                        result.detach()
-                    } else {
-                        logD("onLoadChildren not empty")
+                    mediaSession.sendSessionEvent(NETWORK_ERROR, null)
+                    result.detach()
+                } else {
+                    logD("onLoadChildren not empty")
 
-                        result.sendResult(mediaBrowseItems)
-                        preparePlayer()
-                    }
+                    result.sendResult(mediaBrowseItems)
+                    preparePlayer()
                 }
+            } else {
+                result.sendResult(mediaBrowseItems)
             }
         }
     }
