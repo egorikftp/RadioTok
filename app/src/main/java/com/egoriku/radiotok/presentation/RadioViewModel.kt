@@ -4,7 +4,7 @@ import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaControllerCompat
 import androidx.lifecycle.ViewModel
 import com.egoriku.radiotok.common.ext.logD
-import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.MEDIA_PATH_RANDOM_RADIO
+import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_SHUFFLE_RANDOM
 import com.egoriku.radiotok.radioplayer.ext.sendDislikeAction
 import com.egoriku.radiotok.radioplayer.ext.sendLikeAction
 
@@ -36,7 +36,7 @@ class RadioViewModel(
     }
 
     init {
-        serviceConnection.subscribe(MEDIA_PATH_RANDOM_RADIO, subscriptionCallback)
+        serviceConnection.subscribe(SUB_PATH_SHUFFLE_RANDOM, subscriptionCallback)
     }
 
     fun nextRadioStation() = _transportControls.skipToNext()

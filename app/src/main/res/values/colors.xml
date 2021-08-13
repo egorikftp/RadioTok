@@ -3,7 +3,4 @@
     <color name="immersive_sys_ui">#33393939</color>
     <color name="nav_bar">@color/immersive_sys_ui</color>
     <color name="windowBackground">#F2F2F7</color>
-
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
 </resources>

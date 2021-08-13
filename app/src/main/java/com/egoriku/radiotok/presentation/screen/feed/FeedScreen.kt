@@ -21,8 +21,8 @@ import com.egoriku.radiotok.presentation.screen.feed.model.FeedType.*
 import com.egoriku.radiotok.presentation.screen.feed.ui.FeedRow
 import com.egoriku.radiotok.presentation.screen.feed.ui.InstantRadio
 import com.egoriku.radiotok.presentation.ui.header.ScreenHeader
-import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.MEDIA_PATH_LIKED_RADIO
-import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.MEDIA_PATH_RANDOM_RADIO
+import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_SHUFFLE_LIKED
+import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_SHUFFLE_RANDOM
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import org.koin.androidx.compose.getViewModel
@@ -37,12 +37,12 @@ fun FeedScreen(
 
     val shuffleAndPlay = listOf(
         InstantPlay(
-            mediaId = MEDIA_PATH_RANDOM_RADIO,
+            mediaId = SUB_PATH_SHUFFLE_RANDOM,
             name = "Random",
             icon = R.drawable.ic_random
         ),
         InstantPlay(
-            mediaId = MEDIA_PATH_LIKED_RADIO,
+            mediaId = SUB_PATH_SHUFFLE_LIKED,
             name = "Liked",
             icon = R.drawable.ic_favorite
         )
@@ -102,7 +102,7 @@ fun FeedScreen(
                 }
             }
             item {
-                FeedRow(title = "Shuffle and Play") {
+                FeedRow(title = stringResource(id = R.string.media_item_path_shuffle_and_play)) {
                     items(shuffleAndPlay) {
                         InstantRadio(feed = it) {
                             feedViewModel.playFromMediaId(it.mediaId)
@@ -111,35 +111,35 @@ fun FeedScreen(
                 }
             }
             item {
-                FeedRow(title = "Personal Playlists") {
+                FeedRow(title = stringResource(id = R.string.media_item_path_personal_playlists)) {
                     items(forYou) {
                         RadioItemPlaylist(collection = it)
                     }
                 }
             }
             item {
-                FeedRow(title = "Smart Playlists") {
+                FeedRow(title = stringResource(id = R.string.media_item_path_smart_playlists)) {
                     items(smartPlaylists) {
                         RadioItemSimplePlaylist(collection = it)
                     }
                 }
             }
             item {
-                FeedRow(title = "By Genres") {
+                FeedRow(title = stringResource(id = R.string.media_item_path_by_genres)) {
                     items(byTags) {
                         RadioItemSimplePlaylist(collection = it)
                     }
                 }
             }
             item {
-                FeedRow(title = "By Country") {
+                FeedRow(title = stringResource(id = R.string.media_item_path_by_country)) {
                     items(byCountry) {
                         RadioItemSimplePlaylist(collection = it)
                     }
                 }
             }
             item {
-                FeedRow(title = "By Language") {
+                FeedRow(title = stringResource(id = R.string.media_item_path_by_language)) {
                     items(byLanguage) {
                         RadioItemSimplePlaylist(collection = it)
                     }

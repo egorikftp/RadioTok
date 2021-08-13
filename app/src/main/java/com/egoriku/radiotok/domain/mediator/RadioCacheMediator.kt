@@ -8,6 +8,7 @@ import com.egoriku.radiotok.radioplayer.data.CurrentRadioQueueHolder
 import com.egoriku.radiotok.radioplayer.data.mediator.IRadioCacheMediator
 import com.egoriku.radiotok.radioplayer.ext.createPlayableMediaItem
 import com.egoriku.radiotok.radioplayer.model.MediaPath
+import com.egoriku.radiotok.radioplayer.model.MediaPath.*
 import com.egoriku.radiotok.radioplayer.repository.IMediaItemRepository
 
 class RadioCacheMediator(
@@ -30,7 +31,7 @@ class RadioCacheMediator(
 
         checkCacheOrLoad()
 
-        currentRadioQueueHolder.currentPath = MediaPath.RandomRadio
+        currentRadioQueueHolder.currentPath = ShuffleAndPlay.ShuffleRandom
         loadInitial()
     }
 
@@ -39,7 +40,7 @@ class RadioCacheMediator(
 
         checkCacheOrLoad()
 
-        currentRadioQueueHolder.currentPath = MediaPath.LikedRadio
+        currentRadioQueueHolder.currentPath = ShuffleAndPlay.ShuffleLiked
         loadInitial()
     }
 
@@ -47,10 +48,12 @@ class RadioCacheMediator(
         checkCacheOrLoad()
 
         return when (mediaPath) {
-            is MediaPath.Root -> mediaItemRepository.getRootItems()
-            is MediaPath.RootForYou -> mediaItemRepository.getForYouItems()
-            is MediaPath.RootCollection -> emptyList()
-            is MediaPath.RandomRadio, MediaPath.LikedRadio -> {
+            is Root -> mediaItemRepository.getRootItems()
+            is ShuffleAndPlay -> mediaItemRepository.getShuffleAndPlayItems()
+            is PersonalPlaylists -> mediaItemRepository.getPersonalPlaylistsItems()
+            is SmartPlaylists -> mediaItemRepository.getSmartPlaylistsItems()
+            is Catalog -> mediaItemRepository.getCatalogItems()
+            else -> {
                 currentRadioQueueHolder.currentPath = mediaPath
 
                 val mediaMetadata = getMediaMetadataBy(mediaPath)
@@ -66,8 +69,8 @@ class RadioCacheMediator(
         checkCacheOrLoad()
 
         return when (mediaPath) {
-            is MediaPath.RandomRadio -> mediaItemRepository.getRandomItem()
-            is MediaPath.LikedRadio -> mediaItemRepository.getLikedItem()
+            is ShuffleAndPlay.ShuffleRandom -> mediaItemRepository.getRandomItem()
+            is ShuffleAndPlay.ShuffleLiked -> mediaItemRepository.getLikedItem()
             else -> throw IllegalArgumentException()
         }
     }

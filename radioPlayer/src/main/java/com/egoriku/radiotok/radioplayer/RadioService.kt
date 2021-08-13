@@ -12,7 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.media.MediaBrowserServiceCompat
 import androidx.media.utils.MediaConstants.*
 import com.egoriku.radiotok.common.ext.logD
-import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.MEDIA_PATH_ROOT
+import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.PATH_ROOT
 import com.egoriku.radiotok.radioplayer.constant.PlayerConstants.NETWORK_ERROR
 import com.egoriku.radiotok.radioplayer.constant.PlayerConstants.NOTIFICATION_CHANNEL_ID
 import com.egoriku.radiotok.radioplayer.constant.PlayerConstants.NOTIFICATION_ID
@@ -247,7 +247,7 @@ class RadioService : MediaBrowserServiceCompat() {
             DESCRIPTION_EXTRAS_KEY_CONTENT_STYLE_BROWSABLE to DESCRIPTION_EXTRAS_VALUE_CONTENT_STYLE_GRID_ITEM,
             DESCRIPTION_EXTRAS_KEY_CONTENT_STYLE_PLAYABLE to DESCRIPTION_EXTRAS_VALUE_CONTENT_STYLE_LIST_ITEM
         )
-        return BrowserRoot(MEDIA_PATH_ROOT, rootExtras)
+        return BrowserRoot(PATH_ROOT, rootExtras)
     }
 
     override fun onLoadChildren(

@@ -1,12 +1,12 @@
 package com.egoriku.radiotok.koin
 
-import com.egoriku.radiotok.common.provider.IDrawableProvider
+import com.egoriku.radiotok.common.provider.IBitmapProvider
 import com.egoriku.radiotok.common.provider.IStringResourceProvider
 import com.egoriku.radiotok.data.Api
 import com.egoriku.radiotok.data.datasource.RadioServerDataSource
 import com.egoriku.radiotok.data.datasource.StationsDataSource
 import com.egoriku.radiotok.data.repository.RadioFetchNetworkRepository
-import com.egoriku.radiotok.domain.common.internal.DrawableProvider
+import com.egoriku.radiotok.domain.common.internal.BitmapProvider
 import com.egoriku.radiotok.domain.common.internal.StringResourceProvider
 import com.egoriku.radiotok.domain.datasource.IRadioServerDataSource
 import com.egoriku.radiotok.domain.datasource.IStationsDataSource
@@ -27,7 +27,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 val appScope = module {
-    single<IDrawableProvider> { DrawableProvider(context = androidContext()) }
+    single<IBitmapProvider> { BitmapProvider(context = androidContext()) }
     single<IStringResourceProvider> { StringResourceProvider(context = androidContext()) }
 }
 

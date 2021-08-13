@@ -34,14 +34,14 @@ class RadioPlaybackPreparer(
         logD("onPrepareFromMediaId = $mediaId")
 
         when (MediaPath.fromParentIdOrNull(mediaId)) {
-            is MediaPath.LikedRadio -> {
+            is MediaPath.ShuffleAndPlay.ShuffleLiked -> {
                 runBlocking {
                     radioCacheMediator.switchToLikedRadios()
                     logD("liked")
                 }
                 onPlayerPrepared()
             }
-            is MediaPath.RandomRadio -> {
+            is MediaPath.ShuffleAndPlay.ShuffleRandom -> {
                 runBlocking {
                     radioCacheMediator.switchToRandomRadios()
                     logD("random")

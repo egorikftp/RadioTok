@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">RadioTok</string>
+
+    <!-- Content Description -->
+    <string name="cc_add_favorite">Add favorite</string>
+    <string name="cc_remove_favorite">Remove favorite</string>
+    <string name="cc_skip_next">Skip Next</string>
+    <string name="cc_tune">Tune</string>
+    <string name="cc_not_interested">Not interested</string>
+    <string name="cc_radio_logo_error">Radio logo error</string>
+    <string name="cc_radio_logo_success">Radio logo</string>
+    <string name="cc_open_settings">Open settings</string>
+
+    <!-- Categories  -->
+    <string name="media_item_path_shuffle_and_play">Shuffle and Play</string>
+    <string name="media_item_path_personal_playlists">Personal Playlists</string>
+    <string name="media_item_path_smart_playlists">Smart Playlists</string>
+    <string name="media_item_path_by_genres">By Genres</string>
+    <string name="media_item_path_by_country">By Country</string>
+    <string name="media_item_path_by_language">By Language</string>
+    <string name="media_item_path_catalog">Catalog</string>
+
+    <string name="media_item_path_random_radio">Random radio</string>
+    <string name="media_item_path_liked_radio">Liked radio</string>
+
+
+    <string name="notification_channel_name">Radio Channel</string>
+    <string name="notification_channel_description">Shows the currently playing radio</string>
+
+    <string name="custom_action_favorite_remove">Remove from favorites</string>
+    <string name="custom_action_favorite_add">Add to favorites</string>
+    <string name="custom_action_dislike">Do not recommend this track</string>
+    <string name="custom_action_skip_to_next">Skip to next</string>
+
+    <string name="playback_action_skip_to_previous">Skip to previous track</string>
+    <string name="playback_action_skip_to_next">Skip to next track</string>
+    <string name="playback_action_play">Play</string>
+    <string name="playback_action_pause">Pause</string>
+    <string name="playback_action_like">Like</string>
+    <string name="playback_action_unlike">Unlike</string>
+    <string name="playback_action_dislike">Dislike</string>
+</resources>
