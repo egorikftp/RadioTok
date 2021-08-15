@@ -1,7 +1,9 @@
 package com.egoriku.radiotok.radioplayer.repository
 
 import android.content.Context
+import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
+import androidx.core.net.toUri
 import com.egoriku.radiotok.common.provider.IBitmapProvider
 import com.egoriku.radiotok.common.provider.IStringResourceProvider
 import com.egoriku.radiotok.db.RadioTokDb
@@ -69,7 +71,7 @@ internal class MediaItemRepository(
 
     override fun getPersonalPlaylistsItems() = listOf(
         createBrowsableMediaItem(
-            id = PersonalPlaylists.Random.path,
+            id = PersonalPlaylists.Liked.path,
             title = "Liked",
             bitmap = bitmapProvider.icLikedRounded
         ),
@@ -79,11 +81,29 @@ internal class MediaItemRepository(
             bitmap = bitmapProvider.icHistoryRounded
         ),
         createBrowsableMediaItem(
-            id = PersonalPlaylists.Liked.path,
+            id = PersonalPlaylists.Disliked.path,
             title = "Disliked",
             bitmap = bitmapProvider.icDislikedRounded
         )
     )
+
+    override fun getLikedItems(): List<MediaBrowserCompat.MediaItem> {
+        return runBlocking {
+            radioTokDb.stationDao().getLikedStations().map {
+                createPlayableMediaItem(
+                    showAsList = true,
+                    id = it.stationUuid,
+                    title = it.name,
+                    subtitle = it.tags,
+                    icon = it.icon.toUri()
+                )
+            }
+        }
+    }
+
+    override fun getRecentlyPlayedItems(): List<MediaBrowserCompat.MediaItem> {
+        return emptyList()
+    }
 
     override fun getSmartPlaylistsItems() = listOf(
         createBrowsableMediaItem(

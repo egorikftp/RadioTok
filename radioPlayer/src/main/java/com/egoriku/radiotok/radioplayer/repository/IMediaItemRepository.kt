@@ -7,7 +7,11 @@ interface IMediaItemRepository {
 
     fun getRootItems(): List<MediaBrowserCompat.MediaItem>
     fun getShuffleAndPlayItems(): List<MediaBrowserCompat.MediaItem>
+
     fun getPersonalPlaylistsItems(): List<MediaBrowserCompat.MediaItem>
+    fun getLikedItems(): List<MediaBrowserCompat.MediaItem>
+    fun getRecentlyPlayedItems(): List<MediaBrowserCompat.MediaItem>
+
     fun getSmartPlaylistsItems(): List<MediaBrowserCompat.MediaItem>
     fun getCatalogItems(): List<MediaBrowserCompat.MediaItem>
 

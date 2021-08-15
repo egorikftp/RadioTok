@@ -9,10 +9,10 @@ import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_B
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_BY_GENRES
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_BY_LANGUAGE
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_CHANGED_LATELY
+import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_DISLIKED
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_LIKED
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_LOCAL_STATIONS
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_PLAYING
-import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_RANDOM
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_RECENTLY_PLAYED
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_SHUFFLE_LIKED
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_SHUFFLE_RANDOM
@@ -28,10 +28,10 @@ sealed class MediaPath(val path: String, val isPlayable: Boolean = false) {
         object ShuffleLiked : MediaPath(path = SUB_PATH_SHUFFLE_LIKED, isPlayable = true)
     }
 
-    object PersonalPlaylists : MediaPath(path = PATH_ROOT_PERSONAL_COLLECTION, ) {
-        object Random : MediaPath(path = SUB_PATH_RANDOM)
+    object PersonalPlaylists : MediaPath(path = PATH_ROOT_PERSONAL_COLLECTION) {
         object Liked : MediaPath(path = SUB_PATH_LIKED)
         object RecentlyPlayed : MediaPath(path = SUB_PATH_RECENTLY_PLAYED)
+        object Disliked : MediaPath(path = SUB_PATH_DISLIKED)
     }
 
     object SmartPlaylists : MediaPath(path = PATH_ROOT_SMART_COLLECTION) {
@@ -57,7 +57,7 @@ sealed class MediaPath(val path: String, val isPlayable: Boolean = false) {
                 ShuffleAndPlay.ShuffleRandom,
                 ShuffleAndPlay.ShuffleLiked,
                 PersonalPlaylists,
-                PersonalPlaylists.Random,
+                PersonalPlaylists.Disliked,
                 PersonalPlaylists.Liked,
                 PersonalPlaylists.RecentlyPlayed,
                 SmartPlaylists,

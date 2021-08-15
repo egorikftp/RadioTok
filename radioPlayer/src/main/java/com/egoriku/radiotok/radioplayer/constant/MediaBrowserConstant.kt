@@ -11,9 +11,9 @@ object MediaBrowserConstant {
     const val SUB_PATH_SHUFFLE_RANDOM = "/shuffle_random"
     const val SUB_PATH_SHUFFLE_LIKED = "/shuffle_liked"
 
-    const val SUB_PATH_RANDOM = "/random"
     const val SUB_PATH_LIKED = "/liked"
     const val SUB_PATH_RECENTLY_PLAYED = "/recently_played"
+    const val SUB_PATH_DISLIKED = "/disliked"
 
     const val SUB_PATH_LOCAL_STATIONS = "/local_stations"
     const val SUB_PATH_TOP_CLICKS = "/top_clicks"

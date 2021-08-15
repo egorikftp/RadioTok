@@ -7,6 +7,9 @@ import android.net.Uri
 import android.support.v4.media.MediaBrowserCompat.MediaItem
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
+import androidx.core.os.bundleOf
+import androidx.media.utils.MediaConstants.DESCRIPTION_EXTRAS_KEY_CONTENT_STYLE_BROWSABLE
+import androidx.media.utils.MediaConstants.DESCRIPTION_EXTRAS_VALUE_CONTENT_STYLE_LIST_ITEM
 
 fun createPlayableMediaItem(metadata: MediaMetadataCompat): MediaItem {
     return MediaItem(metadata.description, MediaItem.FLAG_PLAYABLE)
@@ -17,7 +20,8 @@ fun createPlayableMediaItem(
     title: String,
     subtitle: String = "",
     icon: Uri? = null,
-    bitmap: Bitmap? = null
+    bitmap: Bitmap? = null,
+    showAsList: Boolean = false
 ): MediaItem {
     val mediaDescription = MediaDescriptionCompat.Builder()
         .setMediaId(id)
@@ -25,6 +29,7 @@ fun createPlayableMediaItem(
         .appendSubtitle(subtitle)
         .appendIcon(icon)
         .appendBitmap(bitmap)
+        .appendExtras(showAsList)
         .build()
 
     return MediaItem(
@@ -57,3 +62,14 @@ inline fun MediaDescriptionCompat.Builder.appendBitmap(bitmap: Bitmap?): MediaDe
     return this
 }
 
+inline fun MediaDescriptionCompat.Builder.appendExtras(isListItems: Boolean): MediaDescriptionCompat.Builder {
+    if (isListItems) {
+        val bundle = bundleOf(
+            DESCRIPTION_EXTRAS_KEY_CONTENT_STYLE_BROWSABLE to DESCRIPTION_EXTRAS_VALUE_CONTENT_STYLE_LIST_ITEM,
+        )
+
+        setExtras(bundle)
+    }
+
+    return this
+}

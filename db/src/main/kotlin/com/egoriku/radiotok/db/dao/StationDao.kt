@@ -15,6 +15,9 @@ interface StationDao {
     @Query("SELECT * FROM stationdbentity WHERE isExcluded = 0 AND isLiked = 1 ORDER BY RANDOM() LIMIT 1")
     suspend fun getRandomLikedStation(): StationDbEntity
 
+    @Query("SELECT * FROM stationdbentity WHERE isExcluded = 0 AND isLiked = 1")
+    suspend fun getLikedStations(): List<StationDbEntity>
+
     @Query("SELECT COUNT(*) FROM stationdbentity")
     suspend fun getStationsCount(): Int
 

@@ -51,6 +51,8 @@ class RadioCacheMediator(
             is Root -> mediaItemRepository.getRootItems()
             is ShuffleAndPlay -> mediaItemRepository.getShuffleAndPlayItems()
             is PersonalPlaylists -> mediaItemRepository.getPersonalPlaylistsItems()
+            is PersonalPlaylists.Liked -> mediaItemRepository.getLikedItems()
+            is PersonalPlaylists.RecentlyPlayed -> mediaItemRepository.getRecentlyPlayedItems()
             is SmartPlaylists -> mediaItemRepository.getSmartPlaylistsItems()
             is Catalog -> mediaItemRepository.getCatalogItems()
             else -> {
