@@ -51,6 +51,7 @@ dependencies {
     implementation libs.lifecycle.runtime
     implementation libs.media
     implementation libs.material
+    implementation libs.storage
 
     debugImplementation libs.compose.tooling
     debugImplementation libs.kotlin.reflect

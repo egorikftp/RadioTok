@@ -19,16 +19,26 @@ import com.egoriku.radiotok.presentation.MainActivity
 import com.egoriku.radiotok.presentation.RadioServiceConnection
 import com.egoriku.radiotok.presentation.RadioViewModel
 import com.egoriku.radiotok.presentation.screen.feed.FeedViewModel
+import com.egoriku.radiotok.presentation.screen.settings.SettingsViewModel
 import com.egoriku.radiotok.radioplayer.data.mediator.IRadioCacheMediator
+import com.egoriku.radiotok.util.BackupManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.bind
 import org.koin.dsl.module
+import org.koin.dsl.single
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 val appScope = module {
-    single<IBitmapProvider> { BitmapProvider(context = androidContext()) }
-    single<IStringResourceProvider> { StringResourceProvider(context = androidContext()) }
+    single<BitmapProvider>() bind IBitmapProvider::class
+    single<StringResourceProvider>() bind IStringResourceProvider::class
+    single {
+        BackupManager(
+            context = androidContext(),
+            db = get()
+        )
+    }
 }
 
 val radioModule = module {
@@ -82,5 +92,11 @@ val radioModule = module {
 val feedScreenModule = module {
     viewModel {
         FeedViewModel(serviceConnection = get())
+    }
+}
+
+val settingsScreenModule = module {
+    viewModel {
+        SettingsViewModel(backupManager = get())
     }
 }

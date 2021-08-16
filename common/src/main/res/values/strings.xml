@@ -19,9 +19,16 @@
     <string name="media_item_path_by_country">By Country</string>
     <string name="media_item_path_by_language">By Language</string>
     <string name="media_item_path_catalog">Catalog</string>
-
     <string name="media_item_path_random_radio">Random radio</string>
     <string name="media_item_path_liked_radio">Liked radio</string>
+
+    <!-- Settings  -->
+    <string name="settings_screen_header">Settings</string>
+    <string name="settings_section_backup_header">Backup/Restore</string>
+    <string name="settings_section_backup_title">Backup</string>
+    <string name="settings_section_backup_description">Backup settings and liked/disliked radio stations</string>
+    <string name="settings_section_restore_title">Restore</string>
+    <string name="settings_section_restore_description">Restore settings from last backup/disliked radio stations</string>
 
 
     <string name="notification_channel_name">Radio Channel</string>

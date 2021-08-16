@@ -18,6 +18,9 @@ interface StationDao {
     @Query("SELECT * FROM stationdbentity WHERE isExcluded = 0 AND isLiked = 1")
     suspend fun getLikedStations(): List<StationDbEntity>
 
+    @Query("SELECT * FROM stationdbentity WHERE isExcluded = 1")
+    suspend fun getDislikedStations(): List<StationDbEntity>
+
     @Query("SELECT COUNT(*) FROM stationdbentity")
     suspend fun getStationsCount(): Int
 
@@ -32,6 +35,12 @@ interface StationDao {
 
     @Query("UPDATE stationdbentity SET isExcluded = NOT isExcluded WHERE stationUuid = :stationId")
     suspend fun toggleExcludedState(stationId: String)
+
+    @Query("UPDATE stationdbentity SET isLiked = 1 WHERE stationUuid IN (:liked) ")
+    fun updateLiked(liked: List<String>)
+
+    @Query("UPDATE stationdbentity SET isExcluded = 1 WHERE stationUuid IN (:disliked) ")
+    fun updateDisliked(disliked: List<String>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(stations: List<StationDbEntity>)
