@@ -50,7 +50,8 @@ fun MainScreen(viewModel: RadioViewModel) {
         }
     }
 
-    val radius = (30 * scaffoldState.currentFraction).dp
+    val fraction = scaffoldState.currentFraction
+    val radius = (30 * fraction).dp
 
     BottomSheetScaffold(
         modifier = Modifier
@@ -64,14 +65,14 @@ fun MainScreen(viewModel: RadioViewModel) {
                     radioItemModel = currentPlayingRadio,
                     playbackState = playbackState,
                     controlsActions = controlsActions,
-                    fraction = scaffoldState.currentFraction
+                    fraction = fraction
                 )
 
                 RadioMiniPlayer(
                     radioItem = currentPlayingRadio,
                     playbackState = playbackState,
                     controlsActions = controlsActions,
-                    fraction = scaffoldState.currentFraction,
+                    fraction = fraction,
                     clickable = scaffoldState.bottomSheetState.isCollapsed,
                     onClick = sheetToggle
                 )
