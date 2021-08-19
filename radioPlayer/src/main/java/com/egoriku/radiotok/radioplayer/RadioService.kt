@@ -8,6 +8,7 @@ import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.support.v4.media.session.PlaybackStateCompat.ERROR_CODE_APP_ERROR
+import android.util.Pair
 import androidx.core.os.bundleOf
 import androidx.media.MediaBrowserServiceCompat
 import androidx.media.utils.MediaConstants.*
@@ -32,6 +33,7 @@ import com.egoriku.radiotok.radioplayer.notification.description.DescriptionAdap
 import com.egoriku.radiotok.radioplayer.notification.listener.NotificationMediaButtonEventHandler
 import com.egoriku.radiotok.radioplayer.notification.listener.RadioPlayerNotificationListener
 import com.egoriku.radiotok.radioplayer.queue.RadioQueueNavigator
+import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
@@ -83,6 +85,24 @@ class RadioService : MediaBrowserServiceCompat() {
 
         mediaSessionConnector = MediaSessionConnector(mediaSession).apply {
             setPlayer(simpleExoPlayer)
+
+            setErrorMessageProvider { error ->
+                when (error.type) {
+                    ExoPlaybackException.TYPE_SOURCE -> Pair(
+                        0,
+                        "TYPE_SOURCE: " + error.sourceException.toString()
+                    )
+                    ExoPlaybackException.TYPE_RENDERER -> Pair(
+                        0,
+                        "TYPE_RENDERER: " + error.rendererException.toString()
+                    )
+                    ExoPlaybackException.TYPE_UNEXPECTED -> Pair(
+                        0,
+                        "TYPE_UNEXPECTED: " + error.unexpectedException.toString()
+                    )
+                    else -> Pair(0, "ETC: " + error.sourceException.toString())
+                }
+            }
 
             setMediaButtonEventHandler(
                 NotificationMediaButtonEventHandler(
@@ -259,10 +279,14 @@ class RadioService : MediaBrowserServiceCompat() {
         result.detach()
 
         serviceScope.launch {
+            logD("onLoadChildren: start load")
+
             val mediaPath = MediaPath.fromParentIdOrThrow(parentId)
             val mediaBrowseItems = radioCacheMediator.getMediaBrowserItemsBy(
                 mediaPath = mediaPath
             )
+
+            logD("onLoadChildren: mediaPath = $mediaPath, mediaBrowseItems = $mediaBrowseItems")
 
             if (mediaPath.isPlayable) {
                 if (mediaBrowseItems.isEmpty()) {
