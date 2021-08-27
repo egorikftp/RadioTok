@@ -35,7 +35,6 @@ val exoPlayerModule = module {
 val radioPlayerModule = module {
     factory<IMediaItemRepository> {
         MediaItemRepository(
-            context = androidContext(),
             bitmapProvider = get(),
             stringResource = get(),
             radioTokDb = get()
