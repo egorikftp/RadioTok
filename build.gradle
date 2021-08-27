@@ -8,10 +8,10 @@ buildscript {
     }
 
     dependencies {
-        classpath libs.android.gradle.plugin
-        classpath libs.kotlin.gradle.plugin
-        classpath libs.versionsCheck.gradle.plugin
-        classpath libs.ksp.gradle.plugin
+        classpath libs.gradle.build.tools
+        classpath libs.gradle.kotlin
+        classpath libs.gradle.versioncheck
+        classpath libs.gradle.ksp
     }
 }
 
