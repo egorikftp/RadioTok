@@ -29,7 +29,9 @@ fun RadioPlayer(
     RadioPlayerContent(
         modifier = Modifier
             .fillMaxSize()
-            .graphicsLayer(alpha = fraction),
+            .graphicsLayer {
+                alpha = fraction
+            },
         topSection = {
             Column(
                 modifier = Modifier.fillMaxWidth(),

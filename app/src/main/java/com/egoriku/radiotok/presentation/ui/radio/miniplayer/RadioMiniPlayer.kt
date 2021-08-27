@@ -34,7 +34,9 @@ fun RadioMiniPlayer(
         modifier = modifier
             .fillMaxWidth()
             .height(72.dp)
-            .graphicsLayer(alpha = 1f - fraction)
+            .graphicsLayer {
+                alpha = 1f - fraction
+            }
             .noRippleClickable(onClick = onClick, enabled = clickable),
         verticalAlignment = Alignment.CenterVertically
     ) {
