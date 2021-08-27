@@ -11,7 +11,7 @@ retrofit = "2.9.0"
 room = "2.4.0-alpha04"
 
 [libraries]
-android-gradle-plugin = "com.android.tools.build:gradle:7.0.0"
+android-gradle-plugin = "com.android.tools.build:gradle:7.0.1"
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 versionsCheck-gradle-plugin = "com.github.ben-manes:gradle-versions-plugin:0.39.0"
 ksp-gradle-plugin = "com.google.devtools.ksp:symbol-processing-gradle-plugin:1.5.21-1.0.0-beta06"

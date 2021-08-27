@@ -1,6 +1,5 @@
 package com.egoriku.radiotok.radioplayer.repository
 
-import android.content.Context
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
 import androidx.core.net.toUri
@@ -15,7 +14,6 @@ import com.egoriku.radiotok.radioplayer.model.MediaPath.*
 import kotlinx.coroutines.runBlocking
 
 internal class MediaItemRepository(
-    private val context: Context,
     private val bitmapProvider: IBitmapProvider,
     private val stringResource: IStringResourceProvider,
     private val radioTokDb: RadioTokDb
@@ -147,8 +145,7 @@ internal class MediaItemRepository(
         val randomStation = radioTokDb.stationDao().getRandomStation()
 
         return MediaMetadataCompat.Builder().from(
-            itemModel = mapper.invoke(randomStation),
-            context = context
+            itemModel = mapper.invoke(randomStation)
         ).build()
     }
 
@@ -156,8 +153,7 @@ internal class MediaItemRepository(
         val randomStation = radioTokDb.stationDao().getRandomLikedStation()
 
         return MediaMetadataCompat.Builder().from(
-            itemModel = mapper.invoke(randomStation),
-            context = context
+            itemModel = mapper.invoke(randomStation)
         ).build()
     }
 }
