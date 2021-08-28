@@ -4,5 +4,5 @@ import com.egoriku.radiotok.data.entity.StationNetworkEntity
 
 interface IStationsDataSource {
 
-    suspend fun load(baseUrl: String): List<StationNetworkEntity>
+    suspend fun loadAll(): List<StationNetworkEntity>
 }

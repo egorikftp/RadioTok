@@ -9,6 +9,7 @@ exoPlayer = "2.14.2"
 koin = "3.1.2"
 kotlin = "1.5.21"
 retrofit = "2.9.0"
+okhttp = "4.9.0"
 room = "2.4.0-alpha04"
 
 [libraries]
@@ -44,12 +45,12 @@ gson = "com.google.code.gson:gson:2.8.8"
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 
-kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
-
 lifecycle-runtime = "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
 
 material = "com.google.android.material:material:1.4.0"
 media = "androidx.media:media:1.4.1"
+
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofitGson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }

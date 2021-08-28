@@ -1,7 +1,7 @@
 package com.egoriku.radiotok.data.datasource
 
 import com.egoriku.radiotok.common.ext.logD
-import com.egoriku.radiotok.domain.datasource.IRadioServerDataSource
+import com.egoriku.radiotok.domain.datasource.IRadioDnsServer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.InetAddress
@@ -9,9 +9,9 @@ import java.net.InetAddress
 private const val DNS_LOOKUP_SERVER = "all.api.radio-browser.info"
 private const val FALLBACK_SERVER = "de1.api.radio-browser.info"
 
-internal class RadioServerDataSource : IRadioServerDataSource {
+internal class RadioDnsServer : IRadioDnsServer {
 
-    override suspend fun loadRadioServices() = withContext(Dispatchers.IO) {
+    override suspend fun lookup() = withContext(Dispatchers.IO) {
         val listResult = mutableListOf<String>()
 
         runCatching {

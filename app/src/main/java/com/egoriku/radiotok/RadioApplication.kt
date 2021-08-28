@@ -4,10 +4,7 @@ package com.egoriku.radiotok
 
 import android.app.Application
 import com.egoriku.radiotok.db.koin.dbModule
-import com.egoriku.radiotok.koin.appScope
-import com.egoriku.radiotok.koin.feedScreenModule
-import com.egoriku.radiotok.koin.radioModule
-import com.egoriku.radiotok.koin.settingsScreenModule
+import com.egoriku.radiotok.koin.*
 import com.egoriku.radiotok.radioplayer.koin.exoPlayerModule
 import com.egoriku.radiotok.radioplayer.koin.radioPlayerModule
 import org.koin.android.ext.koin.androidContext
@@ -25,6 +22,7 @@ class RadioApplication : Application() {
                 dbModule,
                 exoPlayerModule,
                 feedScreenModule,
+                network,
                 radioModule,
                 radioPlayerModule,
                 settingsScreenModule

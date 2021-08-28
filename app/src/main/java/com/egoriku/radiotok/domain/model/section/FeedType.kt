@@ -1,4 +1,4 @@
-package com.egoriku.radiotok.presentation.screen.feed.model
+package com.egoriku.radiotok.domain.model.section
 
 sealed class FeedType {
 
@@ -13,5 +13,8 @@ sealed class FeedType {
         val icon: Int
     ) : FeedType()
 
-    data class SimplePlaylist(val name: String) : FeedType()
+    data class SimplePlaylist(
+        val name: String,
+        val count: String
+    ) : FeedType()
 }

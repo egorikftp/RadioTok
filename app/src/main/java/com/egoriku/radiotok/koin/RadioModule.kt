@@ -2,16 +2,18 @@ package com.egoriku.radiotok.koin
 
 import com.egoriku.radiotok.common.provider.IBitmapProvider
 import com.egoriku.radiotok.common.provider.IStringResourceProvider
-import com.egoriku.radiotok.data.Api
-import com.egoriku.radiotok.data.datasource.RadioServerDataSource
+import com.egoriku.radiotok.data.datasource.RadioDnsServer
 import com.egoriku.radiotok.data.datasource.StationsDataSource
 import com.egoriku.radiotok.data.repository.RadioFetchNetworkRepository
+import com.egoriku.radiotok.data.retrofit.ApiEndpoint
+import com.egoriku.radiotok.data.retrofit.HostSelectionInterceptor
 import com.egoriku.radiotok.domain.common.internal.BitmapProvider
 import com.egoriku.radiotok.domain.common.internal.StringResourceProvider
-import com.egoriku.radiotok.domain.datasource.IRadioServerDataSource
+import com.egoriku.radiotok.domain.datasource.IRadioDnsServer
 import com.egoriku.radiotok.domain.datasource.IStationsDataSource
 import com.egoriku.radiotok.domain.mediator.RadioCacheMediator
 import com.egoriku.radiotok.domain.repository.IRadioFetchNetworkRepository
+import com.egoriku.radiotok.domain.usecase.FeedUseCase
 import com.egoriku.radiotok.domain.usecase.IRadioCacheUseCase
 import com.egoriku.radiotok.domain.usecase.RadioCacheUseCase
 import com.egoriku.radiotok.presentation.IMusicServiceConnection
@@ -27,8 +29,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import org.koin.dsl.single
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 val appScope = module {
     single<BitmapProvider>() bind IBitmapProvider::class
@@ -41,15 +41,17 @@ val appScope = module {
     }
 }
 
+val network = module {
+    single { ApiEndpoint(hostSelectionInterceptor = get()).create() }
+    single { HostSelectionInterceptor(radioDnsServer = get()) }
+}
+
 val radioModule = module {
-    factory<IRadioServerDataSource> { RadioServerDataSource() }
+    factory<IRadioDnsServer> { RadioDnsServer() }
     factory<IStationsDataSource> { StationsDataSource(api = get()) }
 
     factory<IRadioFetchNetworkRepository> {
-        RadioFetchNetworkRepository(
-            radioServerDataSource = get(),
-            stationsDataSource = get()
-        )
+        RadioFetchNetworkRepository(stationsDataSource = get())
     }
 
     factory<IRadioCacheUseCase> {
@@ -67,17 +69,6 @@ val radioModule = module {
         )
     }
 
-    single {
-        Retrofit.Builder()
-            .baseUrl("https://github.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    single<Api> {
-        get<Retrofit>().create(Api::class.java)
-    }
-
     single<IMusicServiceConnection> {
         RadioServiceConnection(context = androidContext())
     }
@@ -90,8 +81,12 @@ val radioModule = module {
 }
 
 val feedScreenModule = module {
+    factory {
+        FeedUseCase(api = get())
+    }
+
     viewModel {
-        FeedViewModel(serviceConnection = get())
+        FeedViewModel(serviceConnection = get(), feedUseCase = get())
     }
 }
 
