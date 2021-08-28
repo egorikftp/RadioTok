@@ -28,6 +28,16 @@ internal class StringResourceProvider(
     override val byLanguage by ResourceDelegate(R.string.media_item_path_by_language)
     override val catalog by ResourceDelegate(R.string.media_item_path_catalog)
 
-    override val liked by ResourceDelegate(R.string.media_item_path_liked_radio)
-    override val random by ResourceDelegate(R.string.media_item_path_random_radio)
+    override val likedRadio by ResourceDelegate(R.string.media_item_path_liked_radio)
+    override val randomRadio by ResourceDelegate(R.string.media_item_path_random_radio)
+
+    override val liked: String by ResourceDelegate(R.string.media_item_path_liked)
+    override val recentlyPlayed: String by ResourceDelegate(R.string.media_item_path_recently_played)
+    override val disliked: String by ResourceDelegate(R.string.media_item_path_disliked)
+
+    override val localStations: String by ResourceDelegate(R.string.media_item_path_local_stations)
+    override val topClicks: String by ResourceDelegate(R.string.media_item_path_top_clicks)
+    override val topVote: String by ResourceDelegate(R.string.media_item_path_top_vote)
+    override val changedLately: String by ResourceDelegate(R.string.media_item_path_changed_lately)
+    override val playing: String by ResourceDelegate(R.string.media_item_path_playing)
 }

@@ -10,6 +10,16 @@ interface IStringResourceProvider {
     val byLanguage: String
     val catalog: String
 
+    val likedRadio: String
+    val randomRadio: String
+
     val liked: String
-    val random: String
+    val recentlyPlayed: String
+    val disliked: String
+
+    val localStations: String
+    val topClicks: String
+    val topVote: String
+    val changedLately: String
+    val playing: String
 }

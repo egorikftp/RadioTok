@@ -2,6 +2,7 @@ package com.egoriku.radiotok.domain.usecase
 
 import com.egoriku.radiotok.R
 import com.egoriku.radiotok.common.ext.toFlagEmoji
+import com.egoriku.radiotok.common.provider.IStringResourceProvider
 import com.egoriku.radiotok.data.Api
 import com.egoriku.radiotok.domain.model.Feed
 import com.egoriku.radiotok.domain.model.section.FeedType
@@ -13,7 +14,10 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 
-class FeedUseCase(private val api: Api) {
+class FeedUseCase(
+    private val stringResource: IStringResourceProvider,
+    private val api: Api,
+) {
 
     suspend fun loadFeed(): Feed = coroutineScope {
 
@@ -65,28 +69,28 @@ class FeedUseCase(private val api: Api) {
     }
 
     private fun getSmartPlaylists() = listOf(
-        Playlist(name = "Local stations", icon = R.drawable.ic_local),
-        Playlist(name = "Top clicks", icon = R.drawable.ic_top_clicks),
-        Playlist(name = "Top Vote", icon = R.drawable.ic_top_vote),
-        Playlist(name = "Changed lately", icon = R.drawable.ic_changed_lately),
-        Playlist(name = "Playing", icon = R.drawable.ic_playing)
+        Playlist(name = stringResource.localStations, icon = R.drawable.ic_local),
+        Playlist(name = stringResource.topClicks, icon = R.drawable.ic_top_clicks),
+        Playlist(name = stringResource.topVote, icon = R.drawable.ic_top_vote),
+        Playlist(name = stringResource.changedLately, icon = R.drawable.ic_changed_lately),
+        Playlist(name = stringResource.playing, icon = R.drawable.ic_playing)
     )
 
     private fun getForYou() = listOf(
-        Playlist(name = "Liked", icon = R.drawable.ic_favorite),
-        Playlist(name = "Recent Played", icon = R.drawable.ic_history),
-        Playlist(name = "Disliked", icon = R.drawable.ic_not_interested)
+        Playlist(name = stringResource.liked, icon = R.drawable.ic_favorite),
+        Playlist(name = stringResource.recentlyPlayed, icon = R.drawable.ic_history),
+        Playlist(name = stringResource.disliked, icon = R.drawable.ic_not_interested)
     )
 
     private fun getShuffleAndPlay() = listOf(
         FeedType.InstantPlay(
             mediaId = MediaBrowserConstant.SUB_PATH_SHUFFLE_RANDOM,
-            name = "Random",
+            name = stringResource.randomRadio,
             icon = R.drawable.ic_random
         ),
         FeedType.InstantPlay(
             mediaId = MediaBrowserConstant.SUB_PATH_SHUFFLE_LIKED,
-            name = "Liked",
+            name = stringResource.likedRadio,
             icon = R.drawable.ic_favorite
         )
     )

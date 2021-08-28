@@ -49,39 +49,45 @@ internal class MediaItemRepository(
         add(
             createPlayableMediaItem(
                 id = ShuffleAndPlay.ShuffleRandom.path,
-                title = stringResource.random,
-                bitmap = bitmapProvider.icShuffleRounded
+                title = stringResource.randomRadio,
+                bitmap = bitmapProvider.icShuffleRound
             )
         )
 
         runBlocking {
-            if (radioTokDb.stationDao().likedStationsCount() > 0) {
-                add(
-                    createPlayableMediaItem(
-                        id = ShuffleAndPlay.ShuffleLiked.path,
-                        title = stringResource.liked,
-                        bitmap = bitmapProvider.icLikedRounded
-                    )
+            val mediaItem = if (radioTokDb.stationDao().likedStationsCount() > 0) {
+                createPlayableMediaItem(
+                    id = ShuffleAndPlay.ShuffleLiked.path,
+                    title = stringResource.likedRadio,
+                    bitmap = bitmapProvider.icLikedRound
+                )
+            } else {
+                createBrowsableMediaItem(
+                    id = ShuffleAndPlay.ShuffleLiked.path,
+                    title = stringResource.likedRadio,
+                    bitmap = bitmapProvider.icLikedRound
                 )
             }
+
+            add(mediaItem)
         }
     }
 
     override fun getPersonalPlaylistsItems() = listOf(
         createBrowsableMediaItem(
             id = PersonalPlaylists.Liked.path,
-            title = "Liked",
-            bitmap = bitmapProvider.icLikedRounded
+            title = stringResource.liked,
+            bitmap = bitmapProvider.icLikedRound
         ),
         createBrowsableMediaItem(
             id = PersonalPlaylists.RecentlyPlayed.path,
-            title = "Recently Played",
-            bitmap = bitmapProvider.icHistoryRounded
+            title = stringResource.recentlyPlayed,
+            bitmap = bitmapProvider.icHistoryRound
         ),
         createBrowsableMediaItem(
             id = PersonalPlaylists.Disliked.path,
-            title = "Disliked",
-            bitmap = bitmapProvider.icDislikedRounded
+            title = stringResource.disliked,
+            bitmap = bitmapProvider.icDislikedRound
         )
     )
 
@@ -106,38 +112,43 @@ internal class MediaItemRepository(
     override fun getSmartPlaylistsItems() = listOf(
         createBrowsableMediaItem(
             id = SmartPlaylists.LocalStations.path,
-            title = "Local Stations"
+            title = stringResource.localStations,
+            bitmap = bitmapProvider.icLocalRound
         ),
         createBrowsableMediaItem(
             id = SmartPlaylists.TopClicks.path,
-            title = "Top Clicks"
+            title = stringResource.topClicks,
+            bitmap = bitmapProvider.icTopClicksRound
         ),
         createBrowsableMediaItem(
             id = SmartPlaylists.TopVote.path,
-            title = "TopVote"
+            title = stringResource.topVote,
+            bitmap = bitmapProvider.icTopVoteRound
         ),
         createBrowsableMediaItem(
             id = SmartPlaylists.ChangedLately.path,
-            title = "Changed Lately"
+            title = stringResource.changedLately,
+            bitmap = bitmapProvider.icChangedLatelyRound
         ),
         createBrowsableMediaItem(
             id = SmartPlaylists.Playing.path,
-            title = "Playing"
+            title = stringResource.playing,
+            bitmap = bitmapProvider.icPlayingRound
         )
     )
 
     override fun getCatalogItems() = listOf(
         createBrowsableMediaItem(
             id = Catalog.ByGenres.path,
-            title = "By Genres"
+            title = stringResource.byGenres
         ),
         createBrowsableMediaItem(
             id = Catalog.ByCountry.path,
-            title = "By Country"
+            title = stringResource.byCountry
         ),
         createBrowsableMediaItem(
             id = Catalog.ByLanguage.path,
-            title = "By Language"
+            title = stringResource.byLanguage
         )
     )
 

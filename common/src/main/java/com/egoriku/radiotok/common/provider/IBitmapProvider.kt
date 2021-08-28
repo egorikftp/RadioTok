@@ -9,8 +9,13 @@ interface IBitmapProvider {
     val icRadioWaves: Bitmap
     val icSmartPlaylist: Bitmap
 
-    val icDislikedRounded: Bitmap
-    val icHistoryRounded: Bitmap
-    val icLikedRounded: Bitmap
-    val icShuffleRounded: Bitmap
+    val icChangedLatelyRound: Bitmap
+    val icDislikedRound: Bitmap
+    val icHistoryRound: Bitmap
+    val icLikedRound: Bitmap
+    val icLocalRound: Bitmap
+    val icPlayingRound: Bitmap
+    val icShuffleRound: Bitmap
+    val icTopClicksRound: Bitmap
+    val icTopVoteRound: Bitmap
 }

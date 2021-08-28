@@ -19,8 +19,19 @@
     <string name="media_item_path_by_country">By Country</string>
     <string name="media_item_path_by_language">By Language</string>
     <string name="media_item_path_catalog">Catalog</string>
+
     <string name="media_item_path_random_radio">Random radio</string>
     <string name="media_item_path_liked_radio">Liked radio</string>
+
+    <string name="media_item_path_liked">Liked</string>
+    <string name="media_item_path_recently_played">Recently Played</string>
+    <string name="media_item_path_disliked">Disliked</string>
+
+    <string name="media_item_path_local_stations">Local Stations</string>
+    <string name="media_item_path_top_clicks">Top Clicks</string>
+    <string name="media_item_path_top_vote">Top Vote</string>
+    <string name="media_item_path_changed_lately">Changed Lately</string>
+    <string name="media_item_path_playing">Playing</string>
 
     <!-- Settings  -->
     <string name="settings_screen_header">Settings</string>

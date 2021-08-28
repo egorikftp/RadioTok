@@ -22,27 +22,57 @@ internal class BitmapProvider(private val context: Context) : IBitmapProvider {
     override val icSmartPlaylist: Bitmap
         get() = context.drawableCompat(R.drawable.ic_auto_smart_playlist).toBitmap()
 
-    override val icDislikedRounded: Bitmap
+    override val icChangedLatelyRound: Bitmap
+        get() = context
+            .drawableCompat(R.drawable.ic_auto_changed_lately)
+            .toBitmap()
+            .roundWithBorder()
+
+    override val icDislikedRound: Bitmap
         get() = context
             .drawableCompat(R.drawable.ic_auto_not_interested)
             .toBitmap()
             .roundWithBorder()
 
-    override val icHistoryRounded: Bitmap
+    override val icHistoryRound: Bitmap
         get() = context
             .drawableCompat(R.drawable.ic_auto_history)
             .toBitmap()
             .roundWithBorder()
 
-    override val icLikedRounded: Bitmap
+    override val icLikedRound: Bitmap
         get() = context
             .drawableCompat(R.drawable.ic_auto_liked)
             .toBitmap()
             .roundWithBorder()
 
-    override val icShuffleRounded: Bitmap
+    override val icLocalRound: Bitmap
+        get() = context
+            .drawableCompat(R.drawable.ic_auto_local)
+            .toBitmap()
+            .roundWithBorder()
+
+    override val icPlayingRound: Bitmap
+        get() = context
+            .drawableCompat(R.drawable.ic_auto_playing)
+            .toBitmap()
+            .roundWithBorder()
+
+    override val icShuffleRound: Bitmap
         get() = context
             .drawableCompat(R.drawable.ic_auto_shuffle)
+            .toBitmap()
+            .roundWithBorder()
+
+    override val icTopClicksRound: Bitmap
+        get() = context
+            .drawableCompat(R.drawable.ic_auto_top_clicks)
+            .toBitmap()
+            .roundWithBorder()
+
+    override val icTopVoteRound: Bitmap
+        get() = context
+            .drawableCompat(R.drawable.ic_auto_top_vote)
             .toBitmap()
             .roundWithBorder()
 }
