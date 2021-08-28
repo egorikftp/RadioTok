@@ -140,15 +140,18 @@ internal class MediaItemRepository(
     override fun getCatalogItems() = listOf(
         createBrowsableMediaItem(
             id = Catalog.ByGenres.path,
-            title = stringResource.byGenres
+            title = stringResource.byGenres,
+            bitmap = bitmapProvider.icGenresRound
         ),
         createBrowsableMediaItem(
             id = Catalog.ByCountry.path,
-            title = stringResource.byCountry
+            title = stringResource.byCountry,
+            bitmap = bitmapProvider.icCountryRounded
         ),
         createBrowsableMediaItem(
             id = Catalog.ByLanguage.path,
-            title = stringResource.byLanguage
+            title = stringResource.byLanguage,
+            bitmap = bitmapProvider.icLanguageRound
         )
     )
 

@@ -28,15 +28,33 @@ internal class BitmapProvider(private val context: Context) : IBitmapProvider {
             .toBitmap()
             .roundWithBorder()
 
+    override val icCountryRounded: Bitmap
+        get() = context
+            .drawableCompat(R.drawable.ic_auto_country)
+            .toBitmap()
+            .roundWithBorder()
+
     override val icDislikedRound: Bitmap
         get() = context
             .drawableCompat(R.drawable.ic_auto_not_interested)
             .toBitmap()
             .roundWithBorder()
 
+    override val icGenresRound: Bitmap
+        get() = context
+            .drawableCompat(R.drawable.ic_auto_genres)
+            .toBitmap()
+            .roundWithBorder()
+
     override val icHistoryRound: Bitmap
         get() = context
             .drawableCompat(R.drawable.ic_auto_history)
+            .toBitmap()
+            .roundWithBorder()
+
+    override val icLanguageRound: Bitmap
+        get() = context
+            .drawableCompat(R.drawable.ic_auto_language)
             .toBitmap()
             .roundWithBorder()
 

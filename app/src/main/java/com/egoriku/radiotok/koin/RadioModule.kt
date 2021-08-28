@@ -82,7 +82,7 @@ val radioModule = module {
 
 val feedScreenModule = module {
     factory {
-        FeedUseCase(api = get())
+        FeedUseCase(api = get(), stringResource = get())
     }
 
     viewModel {

@@ -10,8 +10,11 @@ interface IBitmapProvider {
     val icSmartPlaylist: Bitmap
 
     val icChangedLatelyRound: Bitmap
+    val icCountryRounded: Bitmap
     val icDislikedRound: Bitmap
+    val icGenresRound: Bitmap
     val icHistoryRound: Bitmap
+    val icLanguageRound: Bitmap
     val icLikedRound: Bitmap
     val icLocalRound: Bitmap
     val icPlayingRound: Bitmap
