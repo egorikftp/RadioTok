@@ -31,7 +31,7 @@ class RadioCacheMediator(
 
         checkCacheOrLoad()
 
-        currentRadioQueueHolder.currentPath = ShuffleAndPlay.ShuffleRandom
+        currentRadioQueueHolder.currentPath = ShuffleAndPlayRoot.ShuffleRandom
         loadInitial()
     }
 
@@ -40,7 +40,7 @@ class RadioCacheMediator(
 
         checkCacheOrLoad()
 
-        currentRadioQueueHolder.currentPath = ShuffleAndPlay.ShuffleLiked
+        currentRadioQueueHolder.currentPath = ShuffleAndPlayRoot.ShuffleLiked
         loadInitial()
     }
 
@@ -49,12 +49,13 @@ class RadioCacheMediator(
 
         return when (mediaPath) {
             is Root -> mediaItemRepository.getRootItems()
-            is ShuffleAndPlay -> mediaItemRepository.getShuffleAndPlayItems()
-            is PersonalPlaylists -> mediaItemRepository.getPersonalPlaylistsItems()
-            is PersonalPlaylists.Liked -> mediaItemRepository.getLikedItems()
-            is PersonalPlaylists.RecentlyPlayed -> mediaItemRepository.getRecentlyPlayedItems()
-            is SmartPlaylists -> mediaItemRepository.getSmartPlaylistsItems()
-            is Catalog -> mediaItemRepository.getCatalogItems()
+            is ShuffleAndPlayRoot -> mediaItemRepository.getShuffleAndPlayItems()
+            is PersonalPlaylistsRoot -> mediaItemRepository.getPersonalPlaylistsItems()
+            is PersonalPlaylistsRoot.Liked -> mediaItemRepository.getLikedItems()
+            is PersonalPlaylistsRoot.RecentlyPlayed -> mediaItemRepository.getRecentlyPlayedItems()
+            is SmartPlaylistsRoot -> mediaItemRepository.getSmartPlaylistsItems()
+            is CatalogRoot -> mediaItemRepository.getCatalogItems()
+            is CatalogRoot.ByTags -> mediaItemRepository.getCatalogTags()
             else -> {
                 currentRadioQueueHolder.currentPath = mediaPath
 
@@ -71,8 +72,8 @@ class RadioCacheMediator(
         checkCacheOrLoad()
 
         return when (mediaPath) {
-            is ShuffleAndPlay.ShuffleRandom -> mediaItemRepository.getRandomItem()
-            is ShuffleAndPlay.ShuffleLiked -> mediaItemRepository.getLikedItem()
+            is ShuffleAndPlayRoot.ShuffleRandom -> mediaItemRepository.getRandomItem()
+            is ShuffleAndPlayRoot.ShuffleLiked -> mediaItemRepository.getLikedItem()
             else -> throw IllegalArgumentException()
         }
     }

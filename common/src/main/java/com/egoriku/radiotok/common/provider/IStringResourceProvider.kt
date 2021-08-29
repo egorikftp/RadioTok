@@ -5,7 +5,7 @@ interface IStringResourceProvider {
     val shuffleAndPlay: String
     val personalPlaylists: String
     val smartPlaylists: String
-    val byGenres: String
+    val byTags: String
     val byCountry: String
     val byLanguage: String
     val catalog: String

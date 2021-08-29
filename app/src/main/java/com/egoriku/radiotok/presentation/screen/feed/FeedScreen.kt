@@ -99,7 +99,7 @@ fun FeedScreen(
                         }
                     }
                     item {
-                        FeedRow(title = stringResource(id = R.string.media_item_path_by_genres)) {
+                        FeedRow(title = stringResource(id = R.string.media_item_path_by_tags)) {
                             items(state.feed.byTags) {
                                 SimplePlaylist(collection = it)
                             }

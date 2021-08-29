@@ -1,9 +1,11 @@
 package com.egoriku.radiotok.koin
 
+import com.egoriku.radiotok.common.datasource.ITagsDataSource
 import com.egoriku.radiotok.common.provider.IBitmapProvider
 import com.egoriku.radiotok.common.provider.IStringResourceProvider
 import com.egoriku.radiotok.data.datasource.RadioDnsServer
 import com.egoriku.radiotok.data.datasource.StationsDataSource
+import com.egoriku.radiotok.data.datasource.TagsDataSource
 import com.egoriku.radiotok.data.repository.RadioFetchNetworkRepository
 import com.egoriku.radiotok.data.retrofit.ApiEndpoint
 import com.egoriku.radiotok.data.retrofit.HostSelectionInterceptor
@@ -27,6 +29,7 @@ import com.egoriku.radiotok.util.BackupManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.bind
+import org.koin.dsl.factory
 import org.koin.dsl.module
 import org.koin.dsl.single
 
@@ -44,6 +47,8 @@ val appScope = module {
 val network = module {
     single { ApiEndpoint(hostSelectionInterceptor = get()).create() }
     single { HostSelectionInterceptor(radioDnsServer = get()) }
+
+    factory<TagsDataSource>() bind ITagsDataSource::class
 }
 
 val radioModule = module {
@@ -82,7 +87,11 @@ val radioModule = module {
 
 val feedScreenModule = module {
     factory {
-        FeedUseCase(api = get(), stringResource = get())
+        FeedUseCase(
+            tagsDataSource = get(),
+            api = get(),
+            stringResource = get()
+        )
     }
 
     viewModel {

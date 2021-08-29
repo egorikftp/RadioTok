@@ -40,12 +40,6 @@ internal class BitmapProvider(private val context: Context) : IBitmapProvider {
             .toBitmap()
             .roundWithBorder()
 
-    override val icGenresRound: Bitmap
-        get() = context
-            .drawableCompat(R.drawable.ic_auto_genres)
-            .toBitmap()
-            .roundWithBorder()
-
     override val icHistoryRound: Bitmap
         get() = context
             .drawableCompat(R.drawable.ic_auto_history)
@@ -79,6 +73,12 @@ internal class BitmapProvider(private val context: Context) : IBitmapProvider {
     override val icShuffleRound: Bitmap
         get() = context
             .drawableCompat(R.drawable.ic_auto_shuffle)
+            .toBitmap()
+            .roundWithBorder()
+
+    override val icTagsRound: Bitmap
+        get() = context
+            .drawableCompat(R.drawable.ic_auto_genres)
             .toBitmap()
             .roundWithBorder()
 

@@ -6,8 +6,8 @@ import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.PATH_ROOT_
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.PATH_ROOT_SMART_CATALOG
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.PATH_ROOT_SMART_COLLECTION
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_BY_COUNTRY
-import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_BY_GENRES
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_BY_LANGUAGE
+import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_BY_TAGS
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_CHANGED_LATELY
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_DISLIKED
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_LIKED
@@ -23,18 +23,18 @@ sealed class MediaPath(val path: String, val isPlayable: Boolean = false) {
 
     object Root : MediaPath(path = PATH_ROOT, isPlayable = false)
 
-    object ShuffleAndPlay : MediaPath(path = PATH_ROOT_SHUFFLE_AND_PLAY) {
+    object ShuffleAndPlayRoot : MediaPath(path = PATH_ROOT_SHUFFLE_AND_PLAY) {
         object ShuffleRandom : MediaPath(path = SUB_PATH_SHUFFLE_RANDOM, isPlayable = true)
         object ShuffleLiked : MediaPath(path = SUB_PATH_SHUFFLE_LIKED, isPlayable = true)
     }
 
-    object PersonalPlaylists : MediaPath(path = PATH_ROOT_PERSONAL_COLLECTION) {
+    object PersonalPlaylistsRoot : MediaPath(path = PATH_ROOT_PERSONAL_COLLECTION) {
         object Liked : MediaPath(path = SUB_PATH_LIKED)
         object RecentlyPlayed : MediaPath(path = SUB_PATH_RECENTLY_PLAYED)
         object Disliked : MediaPath(path = SUB_PATH_DISLIKED)
     }
 
-    object SmartPlaylists : MediaPath(path = PATH_ROOT_SMART_COLLECTION) {
+    object SmartPlaylistsRoot : MediaPath(path = PATH_ROOT_SMART_COLLECTION) {
         object LocalStations : MediaPath(path = SUB_PATH_LOCAL_STATIONS)
         object TopClicks : MediaPath(path = SUB_PATH_TOP_CLICKS)
         object TopVote : MediaPath(path = SUB_PATH_TOP_VOTE)
@@ -42,8 +42,8 @@ sealed class MediaPath(val path: String, val isPlayable: Boolean = false) {
         object Playing : MediaPath(path = SUB_PATH_PLAYING)
     }
 
-    object Catalog : MediaPath(path = PATH_ROOT_SMART_CATALOG) {
-        object ByGenres : MediaPath(path = SUB_PATH_BY_GENRES)
+    object CatalogRoot : MediaPath(path = PATH_ROOT_SMART_CATALOG) {
+        object ByTags : MediaPath(path = SUB_PATH_BY_TAGS)
         object ByCountry : MediaPath(path = SUB_PATH_BY_COUNTRY)
         object ByLanguage : MediaPath(path = SUB_PATH_BY_LANGUAGE)
     }
@@ -53,23 +53,23 @@ sealed class MediaPath(val path: String, val isPlayable: Boolean = false) {
         private val availableMedia by lazy {
             listOf(
                 Root,
-                ShuffleAndPlay,
-                ShuffleAndPlay.ShuffleRandom,
-                ShuffleAndPlay.ShuffleLiked,
-                PersonalPlaylists,
-                PersonalPlaylists.Disliked,
-                PersonalPlaylists.Liked,
-                PersonalPlaylists.RecentlyPlayed,
-                SmartPlaylists,
-                SmartPlaylists.LocalStations,
-                SmartPlaylists.TopClicks,
-                SmartPlaylists.TopVote,
-                SmartPlaylists.ChangedLately,
-                SmartPlaylists.Playing,
-                Catalog,
-                Catalog.ByGenres,
-                Catalog.ByCountry,
-                Catalog.ByLanguage
+                ShuffleAndPlayRoot,
+                ShuffleAndPlayRoot.ShuffleRandom,
+                ShuffleAndPlayRoot.ShuffleLiked,
+                PersonalPlaylistsRoot,
+                PersonalPlaylistsRoot.Disliked,
+                PersonalPlaylistsRoot.Liked,
+                PersonalPlaylistsRoot.RecentlyPlayed,
+                SmartPlaylistsRoot,
+                SmartPlaylistsRoot.LocalStations,
+                SmartPlaylistsRoot.TopClicks,
+                SmartPlaylistsRoot.TopVote,
+                SmartPlaylistsRoot.ChangedLately,
+                SmartPlaylistsRoot.Playing,
+                CatalogRoot,
+                CatalogRoot.ByTags,
+                CatalogRoot.ByCountry,
+                CatalogRoot.ByLanguage
             )
         }
 

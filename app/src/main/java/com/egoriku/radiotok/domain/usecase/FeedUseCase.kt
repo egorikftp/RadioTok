@@ -1,6 +1,7 @@
 package com.egoriku.radiotok.domain.usecase
 
 import com.egoriku.radiotok.R
+import com.egoriku.radiotok.common.datasource.ITagsDataSource
 import com.egoriku.radiotok.common.ext.toFlagEmoji
 import com.egoriku.radiotok.common.provider.IStringResourceProvider
 import com.egoriku.radiotok.data.Api
@@ -15,7 +16,10 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 
 class FeedUseCase(
+    private val tagsDataSource: ITagsDataSource,
     private val stringResource: IStringResourceProvider,
+
+    @Deprecated("Should be used DataSource")
     private val api: Api,
 ) {
 
@@ -26,13 +30,11 @@ class FeedUseCase(
         val smartPlaylists = getSmartPlaylists()
 
         val tagsDeferred = async {
-            withContext(Dispatchers.IO) {
-                api.allTags().map {
-                    SimplePlaylist(
-                        name = it.name,
-                        count = it.count.toString()
-                    )
-                }
+            tagsDataSource.load().map {
+                SimplePlaylist(
+                    name = it.name,
+                    count = it.count.toString()
+                )
             }
         }
 

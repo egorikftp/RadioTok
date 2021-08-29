@@ -10,9 +10,11 @@ fun createBrowsableMediaItem(
     title: String,
     subtitle: String = "",
     icon: Uri? = null,
-    bitmap: Bitmap? = null
+    bitmap: Bitmap? = null,
+    showAsList: Boolean = false
 ): MediaBrowserCompat.MediaItem {
     val mediaDescriptionBuilder = MediaDescriptionCompat.Builder()
+        .appendExtras(showAsList)
         .setMediaId(id)
         .setTitle(title)
 

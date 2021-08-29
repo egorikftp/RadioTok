@@ -37,7 +37,8 @@ val radioPlayerModule = module {
         MediaItemRepository(
             bitmapProvider = get(),
             stringResource = get(),
-            radioTokDb = get()
+            radioTokDb = get(),
+            tagsDataSource = get()
         )
     }
 

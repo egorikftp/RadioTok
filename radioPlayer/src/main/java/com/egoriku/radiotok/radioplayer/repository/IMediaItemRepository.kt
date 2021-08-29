@@ -13,7 +13,9 @@ interface IMediaItemRepository {
     fun getRecentlyPlayedItems(): List<MediaBrowserCompat.MediaItem>
 
     fun getSmartPlaylistsItems(): List<MediaBrowserCompat.MediaItem>
+
     fun getCatalogItems(): List<MediaBrowserCompat.MediaItem>
+    fun getCatalogTags(): List<MediaBrowserCompat.MediaItem>
 
     suspend fun getRandomItem(): MediaMetadataCompat
 

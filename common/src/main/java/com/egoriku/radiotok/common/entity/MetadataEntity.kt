@@ -1,4 +1,4 @@
-package com.egoriku.radiotok.data.entity
+package com.egoriku.radiotok.common.entity
 
 import com.google.gson.annotations.SerializedName
 

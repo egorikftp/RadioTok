@@ -15,7 +15,7 @@
     <string name="media_item_path_shuffle_and_play">Shuffle and Play</string>
     <string name="media_item_path_personal_playlists">Personal Playlists</string>
     <string name="media_item_path_smart_playlists">Smart Playlists</string>
-    <string name="media_item_path_by_genres">By Genres</string>
+    <string name="media_item_path_by_tags">By Tags</string>
     <string name="media_item_path_by_country">By Country</string>
     <string name="media_item_path_by_language">By Language</string>
     <string name="media_item_path_catalog">Catalog</string>

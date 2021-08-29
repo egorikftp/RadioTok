@@ -1,6 +1,6 @@
 package com.egoriku.radiotok.data
 
-import com.egoriku.radiotok.data.entity.MetadataEntity
+import com.egoriku.radiotok.common.entity.MetadataEntity
 import com.egoriku.radiotok.data.entity.StationNetworkEntity
 import retrofit2.http.GET
 

@@ -23,7 +23,7 @@ internal class StringResourceProvider(
     override val shuffleAndPlay by ResourceDelegate(R.string.media_item_path_shuffle_and_play)
     override val personalPlaylists by ResourceDelegate(R.string.media_item_path_personal_playlists)
     override val smartPlaylists by ResourceDelegate(R.string.media_item_path_smart_playlists)
-    override val byGenres by ResourceDelegate(R.string.media_item_path_by_genres)
+    override val byTags by ResourceDelegate(R.string.media_item_path_by_tags)
     override val byCountry by ResourceDelegate(R.string.media_item_path_by_country)
     override val byLanguage by ResourceDelegate(R.string.media_item_path_by_language)
     override val catalog by ResourceDelegate(R.string.media_item_path_catalog)
