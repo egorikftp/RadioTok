@@ -2,11 +2,11 @@ package com.egoriku.radiotok.domain.mediator
 
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
+import com.egoriku.mediaitemdsl.playableMediaItem
 import com.egoriku.radiotok.common.ext.logD
 import com.egoriku.radiotok.domain.usecase.IRadioCacheUseCase
 import com.egoriku.radiotok.radioplayer.data.CurrentRadioQueueHolder
 import com.egoriku.radiotok.radioplayer.data.mediator.IRadioCacheMediator
-import com.egoriku.radiotok.radioplayer.ext.createPlayableMediaItem
 import com.egoriku.radiotok.radioplayer.model.MediaPath
 import com.egoriku.radiotok.radioplayer.model.MediaPath.*
 import com.egoriku.radiotok.radioplayer.repository.IMediaItemRepository
@@ -63,7 +63,7 @@ class RadioCacheMediator(
 
                 currentRadioQueueHolder.set(mediaMetadata)
 
-                listOf(createPlayableMediaItem(mediaMetadata))
+                listOf(playableMediaItem(mediaMetadata))
             }
         }
     }

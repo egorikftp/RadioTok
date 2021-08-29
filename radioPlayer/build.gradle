@@ -22,6 +22,7 @@ android {
 dependencies {
     implementation projects.common
     implementation projects.db
+    implementation projects.mediaItemDsl
 
     implementation libs.core
     implementation libs.glide

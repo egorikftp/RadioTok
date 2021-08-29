@@ -13,6 +13,8 @@ dependencyResolutionManagement {
 rootProject.name = "RadioTok"
 
 include ':app'
-include ':radioPlayer'
+
 include ':common'
 include ':db'
+include ':mediaItemDsl'
+include ':radioPlayer'
