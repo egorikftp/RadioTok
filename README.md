@@ -1,14 +1,16 @@
+<div align="center">
+    <img alt="Icon" src="app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" width="200" />
+</div>
+
 <h2 align="center">
     RadioTok - listen to the radio from over the world
 </h2>
 
 
-## Under active development ✏️
-
-### - Android phone UI
+## Android phone UI
 <img alt="Icon" src="assets/android_app.png" width="300" />
 
-### - Android Auto UI
+## Android Auto UI
 <img alt="Icon" src="assets/android_auto_shuffle.jpg" width="520" height="300"/> <img alt="Icon" src="assets/android_auto_personal.jpg" width="520" height="300" />
 
 
