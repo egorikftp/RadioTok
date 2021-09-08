@@ -13,9 +13,10 @@ A simple way to listen to the radio from over the world.
 
 
 ## Key features: 
-- Full support Android Auto
 - Simple approach for listening radio
-- Build with jetpack compose
+- Full support Android Auto, able to like/dislike radio stations, playlists and etc
+- Build with Jetpack Compose
+- Custom MediaItem DSL library
 
 ## Roadmap
 
