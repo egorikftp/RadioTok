@@ -1,9 +1,9 @@
-# RadioTok
+<h2 align="center">
+    RadioTok - listen to the radio from over the world
+</h2>
 
-A simple way to listen to the radio from over the world. 
 
-
-## Current status: Active development ✏️✏️✏️
+## Under active development ✏️
 
 ### - Android phone UI
 <img alt="Icon" src="assets/android_app.png" width="300" />
