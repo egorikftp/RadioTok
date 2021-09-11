@@ -1,15 +1,24 @@
-# RadioTok
+<div align="center">
+    <img alt="Icon" src="app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" width="200" />
+</div>
 
-A new way to listen to the radio from over the world.
+<h2 align="center">
+    RadioTok - listen to the radio from over the world
+</h2>
 
-## Current status: Active development
 
-<img alt="Icon" src="assets/img.png" width="300" />
+## Android phone UI
+<img alt="Icon" src="assets/android_app.png" width="300" />
+
+## Android Auto UI
+<img alt="Icon" src="assets/android_auto_shuffle.jpg" width="520" height="300"/> <img alt="Icon" src="assets/android_auto_personal.jpg" width="520" height="300" />
+
 
 ## Key features: 
-- Full support Android Auto
 - Simple approach for listening radio
-- Build with jetpack compose
+- Full support Android Auto, able to like/dislike radio stations, playlists and etc
+- Build with Jetpack Compose
+- Custom MediaItem DSL library
 
 ## Roadmap
 
