@@ -1,26 +1,24 @@
 package com.egoriku.radiotok.domain.usecase
 
 import com.egoriku.radiotok.R
+import com.egoriku.radiotok.common.datasource.ICountriesDataSource
+import com.egoriku.radiotok.common.datasource.ILanguagesDataSource
 import com.egoriku.radiotok.common.datasource.ITagsDataSource
 import com.egoriku.radiotok.common.ext.toFlagEmoji
 import com.egoriku.radiotok.common.provider.IStringResourceProvider
-import com.egoriku.radiotok.data.Api
 import com.egoriku.radiotok.domain.model.Feed
 import com.egoriku.radiotok.domain.model.section.FeedType
 import com.egoriku.radiotok.domain.model.section.FeedType.Playlist
 import com.egoriku.radiotok.domain.model.section.FeedType.SimplePlaylist
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.withContext
 
 class FeedUseCase(
     private val tagsDataSource: ITagsDataSource,
-    private val stringResource: IStringResourceProvider,
-
-    @Deprecated("Should be used DataSource")
-    private val api: Api,
+    private val languagesDataSource: ILanguagesDataSource,
+    private val countriesDataSource: ICountriesDataSource,
+    private val stringResource: IStringResourceProvider
 ) {
 
     suspend fun loadFeed(): Feed = coroutineScope {
@@ -39,24 +37,20 @@ class FeedUseCase(
         }
 
         val languagesDeferred = async {
-            withContext(Dispatchers.IO) {
-                api.allLanguages().map {
-                    SimplePlaylist(
-                        name = it.name,
-                        count = it.count.toString()
-                    )
-                }
+            languagesDataSource.load().map {
+                SimplePlaylist(
+                    name = it.name,
+                    count = it.count.toString()
+                )
             }
         }
 
         val countryCodesDeferred = async {
-            withContext(Dispatchers.IO) {
-                api.allCountryCodes().map {
-                    SimplePlaylist(
-                        name = it.name.toFlagEmoji,
-                        count = it.count.toString()
-                    )
-                }
+            countriesDataSource.load().map {
+                SimplePlaylist(
+                    name = it.name.toFlagEmoji,
+                    count = it.count.toString()
+                )
             }
         }
 

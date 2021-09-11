@@ -5,6 +5,8 @@ import android.support.v4.media.MediaMetadataCompat
 import androidx.core.net.toUri
 import com.egoriku.mediaitemdsl.browsableMediaItem
 import com.egoriku.mediaitemdsl.playableMediaItem
+import com.egoriku.radiotok.common.datasource.ICountriesDataSource
+import com.egoriku.radiotok.common.datasource.ILanguagesDataSource
 import com.egoriku.radiotok.common.datasource.ITagsDataSource
 import com.egoriku.radiotok.common.provider.IBitmapProvider
 import com.egoriku.radiotok.common.provider.IStringResourceProvider
@@ -18,7 +20,9 @@ internal class MediaItemRepository(
     private val bitmapProvider: IBitmapProvider,
     private val stringResource: IStringResourceProvider,
     private val radioTokDb: RadioTokDb,
-    private val tagsDataSource: ITagsDataSource
+    private val tagsDataSource: ITagsDataSource,
+    private val languagesDataSource: ILanguagesDataSource,
+    private val countriesDataSource: ICountriesDataSource
 ) : IMediaItemRepository {
 
     private val mapper = DbStationToModelMapper()
@@ -147,25 +151,51 @@ internal class MediaItemRepository(
             iconBitmap = bitmapProvider.icTagsRound
         },
         browsableMediaItem {
-            id = CatalogRoot.ByCountry.path
+            id = CatalogRoot.ByCountries.path
             title = stringResource.byCountry
             iconBitmap = bitmapProvider.icCountryRounded
         },
         browsableMediaItem {
-            id = CatalogRoot.ByLanguage.path
+            id = CatalogRoot.ByLanguages.path
             title = stringResource.byLanguage
             iconBitmap = bitmapProvider.icLanguageRound
         }
     )
 
     override fun getCatalogTags() = runBlocking {
-        val groupedTags = tagsDataSource.getGroupedTags()
-
-        groupedTags.map {
+        tagsDataSource.getGroupedTags().map {
             browsableMediaItem {
                 id = it.key
                 title = it.key
                 subTitle = "${it.value.size} stations"
+
+                appearance {
+                    showAsList = true
+                }
+            }
+        }
+    }
+
+    override fun getCatalogCountries() = runBlocking {
+        countriesDataSource.load().map {
+            browsableMediaItem {
+                id = it.name
+                title = it.name
+                subTitle = "${it.count} stations"
+
+                appearance {
+                    showAsList = true
+                }
+            }
+        }
+    }
+
+    override fun getCatalogLanguages() = runBlocking {
+        languagesDataSource.load().map {
+            browsableMediaItem {
+                id = it.name
+                title = it.name
+                subTitle = "${it.count} stations"
 
                 appearance {
                     showAsList = true

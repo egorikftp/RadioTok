@@ -5,8 +5,8 @@ import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.PATH_ROOT_
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.PATH_ROOT_SHUFFLE_AND_PLAY
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.PATH_ROOT_SMART_CATALOG
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.PATH_ROOT_SMART_COLLECTION
-import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_BY_COUNTRY
-import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_BY_LANGUAGE
+import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_BY_COUNTRIES
+import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_BY_LANGUAGES
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_BY_TAGS
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_CHANGED_LATELY
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_DISLIKED
@@ -44,8 +44,8 @@ sealed class MediaPath(val path: String, val isPlayable: Boolean = false) {
 
     object CatalogRoot : MediaPath(path = PATH_ROOT_SMART_CATALOG) {
         object ByTags : MediaPath(path = SUB_PATH_BY_TAGS)
-        object ByCountry : MediaPath(path = SUB_PATH_BY_COUNTRY)
-        object ByLanguage : MediaPath(path = SUB_PATH_BY_LANGUAGE)
+        object ByCountries : MediaPath(path = SUB_PATH_BY_COUNTRIES)
+        object ByLanguages : MediaPath(path = SUB_PATH_BY_LANGUAGES)
     }
 
     companion object {
@@ -68,8 +68,8 @@ sealed class MediaPath(val path: String, val isPlayable: Boolean = false) {
                 SmartPlaylistsRoot.Playing,
                 CatalogRoot,
                 CatalogRoot.ByTags,
-                CatalogRoot.ByCountry,
-                CatalogRoot.ByLanguage
+                CatalogRoot.ByCountries,
+                CatalogRoot.ByLanguages
             )
         }
 

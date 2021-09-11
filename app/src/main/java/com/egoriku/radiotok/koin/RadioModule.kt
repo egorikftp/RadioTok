@@ -1,11 +1,11 @@
 package com.egoriku.radiotok.koin
 
+import com.egoriku.radiotok.common.datasource.ICountriesDataSource
+import com.egoriku.radiotok.common.datasource.ILanguagesDataSource
 import com.egoriku.radiotok.common.datasource.ITagsDataSource
 import com.egoriku.radiotok.common.provider.IBitmapProvider
 import com.egoriku.radiotok.common.provider.IStringResourceProvider
-import com.egoriku.radiotok.data.datasource.RadioDnsServer
-import com.egoriku.radiotok.data.datasource.StationsDataSource
-import com.egoriku.radiotok.data.datasource.TagsDataSource
+import com.egoriku.radiotok.data.datasource.*
 import com.egoriku.radiotok.data.repository.RadioFetchNetworkRepository
 import com.egoriku.radiotok.data.retrofit.ApiEndpoint
 import com.egoriku.radiotok.data.retrofit.HostSelectionInterceptor
@@ -49,6 +49,8 @@ val network = module {
     single { HostSelectionInterceptor(radioDnsServer = get()) }
 
     factory<TagsDataSource>() bind ITagsDataSource::class
+    factory<LanguagesDataSource>() bind ILanguagesDataSource::class
+    factory<CountriesDataSource>() bind ICountriesDataSource::class
 }
 
 val radioModule = module {
@@ -89,7 +91,8 @@ val feedScreenModule = module {
     factory {
         FeedUseCase(
             tagsDataSource = get(),
-            api = get(),
+            languagesDataSource = get(),
+            countriesDataSource = get(),
             stringResource = get()
         )
     }

@@ -38,7 +38,9 @@ val radioPlayerModule = module {
             bitmapProvider = get(),
             stringResource = get(),
             radioTokDb = get(),
-            tagsDataSource = get()
+            tagsDataSource = get(),
+            languagesDataSource = get(),
+            countriesDataSource = get()
         )
     }
 

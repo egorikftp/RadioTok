@@ -16,6 +16,8 @@ interface IMediaItemRepository {
 
     fun getCatalogItems(): List<MediaBrowserCompat.MediaItem>
     fun getCatalogTags(): List<MediaBrowserCompat.MediaItem>
+    fun getCatalogCountries(): List<MediaBrowserCompat.MediaItem>
+    fun getCatalogLanguages(): List<MediaBrowserCompat.MediaItem>
 
     suspend fun getRandomItem(): MediaMetadataCompat
 

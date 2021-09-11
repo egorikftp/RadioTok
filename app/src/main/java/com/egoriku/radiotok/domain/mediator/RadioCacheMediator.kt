@@ -56,6 +56,8 @@ class RadioCacheMediator(
             is SmartPlaylistsRoot -> mediaItemRepository.getSmartPlaylistsItems()
             is CatalogRoot -> mediaItemRepository.getCatalogItems()
             is CatalogRoot.ByTags -> mediaItemRepository.getCatalogTags()
+            is CatalogRoot.ByCountries -> mediaItemRepository.getCatalogCountries()
+            is CatalogRoot.ByLanguages -> mediaItemRepository.getCatalogLanguages()
             else -> {
                 currentRadioQueueHolder.currentPath = mediaPath
 
