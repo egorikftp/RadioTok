@@ -9,6 +9,9 @@ import com.egoriku.radiotok.db.entity.StationDbEntity
 @Dao
 interface StationDao {
 
+    @Query("SELECT * FROM stationdbentity WHERE stationUuid = :id")
+    suspend fun getStationById(id: String): StationDbEntity
+
     @Query("SELECT * FROM stationdbentity WHERE isExcluded = 0 ORDER BY RANDOM() LIMIT 1")
     suspend fun getRandomStation(): StationDbEntity
 

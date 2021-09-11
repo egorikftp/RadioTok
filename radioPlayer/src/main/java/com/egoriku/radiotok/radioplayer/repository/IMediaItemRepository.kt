@@ -11,6 +11,7 @@ interface IMediaItemRepository {
     fun getPersonalPlaylistsItems(): List<MediaBrowserCompat.MediaItem>
     fun getLikedItems(): List<MediaBrowserCompat.MediaItem>
     fun getRecentlyPlayedItems(): List<MediaBrowserCompat.MediaItem>
+    fun getDislikedItems(): List<MediaBrowserCompat.MediaItem>
 
     fun getSmartPlaylistsItems(): List<MediaBrowserCompat.MediaItem>
 
@@ -20,6 +21,6 @@ interface IMediaItemRepository {
     fun getCatalogLanguages(): List<MediaBrowserCompat.MediaItem>
 
     suspend fun getRandomItem(): MediaMetadataCompat
-
     suspend fun getLikedItem(): MediaMetadataCompat
+    suspend fun loadByStationId(id: String): MediaMetadataCompat
 }

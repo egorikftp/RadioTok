@@ -48,7 +48,14 @@ class RadioPlaybackPreparer(
                 }
                 onPlayerPrepared()
             }
-            else -> logD("else")
+            else -> {
+                logD("else")
+
+                runBlocking {
+                    radioCacheMediator.playSingle(id = mediaId)
+                }
+                onPlayerPrepared()
+            }
         }
     }
 

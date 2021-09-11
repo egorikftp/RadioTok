@@ -44,6 +44,15 @@ class RadioCacheMediator(
         loadInitial()
     }
 
+    override suspend fun playSingle(id : String) {
+        logD("playSingle")
+        checkCacheOrLoad()
+
+        currentRadioQueueHolder.currentPath = Single
+
+        currentRadioQueueHolder.set(mediaItemRepository.loadByStationId(id))
+    }
+
     override suspend fun getMediaBrowserItemsBy(mediaPath: MediaPath): List<MediaBrowserCompat.MediaItem> {
         checkCacheOrLoad()
 
@@ -53,6 +62,7 @@ class RadioCacheMediator(
             is PersonalPlaylistsRoot -> mediaItemRepository.getPersonalPlaylistsItems()
             is PersonalPlaylistsRoot.Liked -> mediaItemRepository.getLikedItems()
             is PersonalPlaylistsRoot.RecentlyPlayed -> mediaItemRepository.getRecentlyPlayedItems()
+            is PersonalPlaylistsRoot.Disliked -> mediaItemRepository.getDislikedItems()
             is SmartPlaylistsRoot -> mediaItemRepository.getSmartPlaylistsItems()
             is CatalogRoot -> mediaItemRepository.getCatalogItems()
             is CatalogRoot.ByTags -> mediaItemRepository.getCatalogTags()

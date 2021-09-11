@@ -23,6 +23,8 @@ sealed class MediaPath(val path: String, val isPlayable: Boolean = false) {
 
     object Root : MediaPath(path = PATH_ROOT, isPlayable = false)
 
+    object Single: MediaPath(path = "", isPlayable = true)
+
     object ShuffleAndPlayRoot : MediaPath(path = PATH_ROOT_SHUFFLE_AND_PLAY) {
         object ShuffleRandom : MediaPath(path = SUB_PATH_SHUFFLE_RANDOM, isPlayable = true)
         object ShuffleLiked : MediaPath(path = SUB_PATH_SHUFFLE_LIKED, isPlayable = true)

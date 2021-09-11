@@ -116,6 +116,17 @@ internal class MediaItemRepository(
         return emptyList()
     }
 
+    override fun getDislikedItems() = runBlocking {
+        radioTokDb.stationDao().getDislikedStations().map {
+            playableMediaItem {
+                id = it.stationUuid
+                title = it.name
+                iconUri = it.icon.toUri()
+                subTitle = it.tags
+            }
+        }
+    }
+
     override fun getSmartPlaylistsItems() = listOf(
         browsableMediaItem {
             id = SmartPlaylistsRoot.LocalStations.path
@@ -219,4 +230,13 @@ internal class MediaItemRepository(
             itemModel = mapper.invoke(randomStation)
         ).build()
     }
+
+    override suspend fun loadByStationId(id: String): MediaMetadataCompat =
+        runBlocking {
+            val stationById = radioTokDb.stationDao().getStationById(id)
+
+            MediaMetadataCompat.Builder().from(
+                itemModel = mapper.invoke(stationById)
+            ).build()
+        }
 }

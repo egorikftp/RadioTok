@@ -12,6 +12,8 @@ interface IRadioCacheMediator {
 
     suspend fun switchToLikedRadios()
 
+    suspend fun playSingle(id: String)
+
     suspend fun getMediaBrowserItemsBy(mediaPath: MediaPath): List<MediaBrowserCompat.MediaItem>
 
     suspend fun getMediaMetadataBy(mediaPath: MediaPath): MediaMetadataCompat
