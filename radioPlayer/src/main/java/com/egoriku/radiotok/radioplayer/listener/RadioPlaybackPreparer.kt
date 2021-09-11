@@ -26,7 +26,10 @@ class RadioPlaybackPreparer(
     ) = false
 
     override fun getSupportedPrepareActions() =
-        PlaybackStateCompat.ACTION_PREPARE_FROM_MEDIA_ID or PlaybackStateCompat.ACTION_PLAY_FROM_MEDIA_ID
+        PlaybackStateCompat.ACTION_PREPARE_FROM_MEDIA_ID or
+                PlaybackStateCompat.ACTION_PLAY_FROM_MEDIA_ID or
+                PlaybackStateCompat.ACTION_PLAY_FROM_SEARCH or
+                PlaybackStateCompat.ACTION_PREPARE_FROM_SEARCH
 
     override fun onPrepare(playWhenReady: Boolean) = Unit
 
@@ -59,7 +62,9 @@ class RadioPlaybackPreparer(
         }
     }
 
-    override fun onPrepareFromSearch(query: String, playWhenReady: Boolean, extras: Bundle?) = Unit
+    override fun onPrepareFromSearch(query: String, playWhenReady: Boolean, extras: Bundle?) {
+        logD("onPrepareFromSearch: $query")
+    }
 
     override fun onPrepareFromUri(uri: Uri, playWhenReady: Boolean, extras: Bundle?) = Unit
 }

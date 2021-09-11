@@ -43,6 +43,8 @@ import kotlinx.coroutines.flow.collect
 import org.koin.android.ext.android.inject
 import kotlin.properties.Delegates
 
+private const val MEDIA_SEARCH_SUPPORTED = "android.media.browse.SEARCH_SUPPORTED"
+
 class RadioService : MediaBrowserServiceCompat() {
 
     private val radioStateMediator: RadioStateMediator by inject()
@@ -264,10 +266,20 @@ class RadioService : MediaBrowserServiceCompat() {
         rootHints: Bundle?
     ): BrowserRoot {
         val rootExtras = bundleOf(
+            MEDIA_SEARCH_SUPPORTED to true,
             DESCRIPTION_EXTRAS_KEY_CONTENT_STYLE_BROWSABLE to DESCRIPTION_EXTRAS_VALUE_CONTENT_STYLE_GRID_ITEM,
             DESCRIPTION_EXTRAS_KEY_CONTENT_STYLE_PLAYABLE to DESCRIPTION_EXTRAS_VALUE_CONTENT_STYLE_LIST_ITEM
         )
         return BrowserRoot(PATH_ROOT, rootExtras)
+    }
+
+    override fun onSearch(
+        query: String,
+        extras: Bundle?,
+        result: Result<MutableList<MediaBrowserCompat.MediaItem>>
+    ) {
+        logD("onSearch: $query")
+        super.onSearch(query, extras, result)
     }
 
     override fun onLoadChildren(
