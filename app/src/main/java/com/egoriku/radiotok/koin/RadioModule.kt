@@ -1,9 +1,6 @@
 package com.egoriku.radiotok.koin
 
-import com.egoriku.radiotok.common.datasource.ICountriesDataSource
-import com.egoriku.radiotok.common.datasource.ILanguagesDataSource
-import com.egoriku.radiotok.common.datasource.IRadioMetadataDataSource
-import com.egoriku.radiotok.common.datasource.ITagsDataSource
+import com.egoriku.radiotok.common.datasource.*
 import com.egoriku.radiotok.common.provider.IBitmapProvider
 import com.egoriku.radiotok.common.provider.IStringResourceProvider
 import com.egoriku.radiotok.data.datasource.*
@@ -53,6 +50,11 @@ val network = module {
     factory<LanguagesDataSource>() bind ILanguagesDataSource::class
     factory<CountriesDataSource>() bind ICountriesDataSource::class
     factory<RadioMetadataDataSource>() bind IRadioMetadataDataSource::class
+    factory<TopClicksDataSource>() bind ITopClicksDataSource::class
+    factory<TopVoteDataSource>() bind ITopVoteDataSource::class
+    factory<LocalStationsDataSource>() bind ILocalStationsDataSource::class
+    factory<ChangedLatelyDataSource>() bind IChangedLatelyDataSource::class
+    factory<PlayingStationsDataSource>() bind IPlayingStationsDataSource::class
 }
 
 val radioModule = module {

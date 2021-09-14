@@ -14,6 +14,11 @@ interface IMediaItemRepository {
     fun getDislikedItems(): List<MediaBrowserCompat.MediaItem>
 
     fun getSmartPlaylistsItems(): List<MediaBrowserCompat.MediaItem>
+    fun getLocalItems(): List<MediaBrowserCompat.MediaItem>
+    fun getTopClicksItems(): List<MediaBrowserCompat.MediaItem>
+    fun getTopVoteItems(): List<MediaBrowserCompat.MediaItem>
+    fun getChangedLatelyItems(): List<MediaBrowserCompat.MediaItem>
+    fun getPlayingItems(): List<MediaBrowserCompat.MediaItem>
 
     fun getCatalogItems(): List<MediaBrowserCompat.MediaItem>
     fun getCatalogTags(): List<MediaBrowserCompat.MediaItem>

@@ -3,6 +3,7 @@ package com.egoriku.radiotok.data
 import com.egoriku.radiotok.common.entity.MetadataEntity
 import com.egoriku.radiotok.common.entity.RadioEntity
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface Api {
@@ -16,8 +17,20 @@ interface Api {
     @GET("json/countries")
     suspend fun allCountries(): List<MetadataEntity>
 
-    @GET("json/countrycodes")
-    suspend fun allCountryCodes(): List<MetadataEntity>
+    @GET("json/stations/topclick")
+    suspend fun topClicks(@Query("limit") limit: Int): List<RadioEntity>
+
+    @GET("json/stations/bycountrycodeexact/{countryCode}")
+    suspend fun byCountyCode(@Path("countryCode") countryCode: String): List<RadioEntity>
+
+    @GET("json/stations/lastchange")
+    suspend fun changedLately(@Query("limit") limit: Int): List<RadioEntity>
+
+    @GET("json/stations/lastclick")
+    suspend fun playingNow(@Query("limit") limit: Int): List<RadioEntity>
+
+    @GET("json/stations/topvote")
+    suspend fun topVote(@Query("limit") limit: Int): List<RadioEntity>
 
     @GET("json/languages")
     suspend fun allLanguages(

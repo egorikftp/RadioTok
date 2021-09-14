@@ -5,10 +5,7 @@ import android.support.v4.media.MediaMetadataCompat
 import androidx.core.net.toUri
 import com.egoriku.mediaitemdsl.browsableMediaItem
 import com.egoriku.mediaitemdsl.playableMediaItem
-import com.egoriku.radiotok.common.datasource.ICountriesDataSource
-import com.egoriku.radiotok.common.datasource.ILanguagesDataSource
-import com.egoriku.radiotok.common.datasource.IRadioMetadataDataSource
-import com.egoriku.radiotok.common.datasource.ITagsDataSource
+import com.egoriku.radiotok.common.datasource.*
 import com.egoriku.radiotok.common.provider.IBitmapProvider
 import com.egoriku.radiotok.common.provider.IStringResourceProvider
 import com.egoriku.radiotok.db.RadioTokDb
@@ -25,7 +22,12 @@ internal class MediaItemRepository(
     private val tagsDataSource: ITagsDataSource,
     private val languagesDataSource: ILanguagesDataSource,
     private val countriesDataSource: ICountriesDataSource,
-    private val radioMetadataDataSource: IRadioMetadataDataSource
+    private val radioMetadataDataSource: IRadioMetadataDataSource,
+    private val topClicksDataSource: ITopClicksDataSource,
+    private val topVoteDataSource: ITopVoteDataSource,
+    private val localStationsDataSource: ILocalStationsDataSource,
+    private val changedLatelyDataSource: IChangedLatelyDataSource,
+    private val playingStationsDataSource: IPlayingStationsDataSource
 ) : IMediaItemRepository {
 
     private val dbMapper = DbStationToModelMapper()
@@ -161,6 +163,16 @@ internal class MediaItemRepository(
         }
     )
 
+    override fun getLocalItems() = runBlocking {
+        localStationsDataSource.load().map { radioEntity ->
+            playableMediaItem {
+                id = radioEntity.stationUuid
+                title = radioEntity.name
+                iconUri = radioEntity.icon.toUri()
+            }
+        }
+    }
+
     override fun getCatalogItems() = listOf(
         browsableMediaItem {
             id = CatalogRoot.ByTags.path
@@ -178,6 +190,46 @@ internal class MediaItemRepository(
             iconBitmap = bitmapProvider.icLanguageRound
         }
     )
+
+    override fun getTopClicksItems() = runBlocking {
+        topClicksDataSource.load().map { radioEntity ->
+            playableMediaItem {
+                id = radioEntity.stationUuid
+                title = radioEntity.name
+                iconUri = radioEntity.icon.toUri()
+            }
+        }
+    }
+
+    override fun getTopVoteItems() = runBlocking {
+        topVoteDataSource.load().map { radioEntity ->
+            playableMediaItem {
+                id = radioEntity.stationUuid
+                title = radioEntity.name
+                iconUri = radioEntity.icon.toUri()
+            }
+        }
+    }
+
+    override fun getChangedLatelyItems() = runBlocking {
+        changedLatelyDataSource.load().map { radioEntity ->
+            playableMediaItem {
+                id = radioEntity.stationUuid
+                title = radioEntity.name
+                iconUri = radioEntity.icon.toUri()
+            }
+        }
+    }
+
+    override fun getPlayingItems() = runBlocking {
+        playingStationsDataSource.load().map { radioEntity ->
+            playableMediaItem {
+                id = radioEntity.stationUuid
+                title = radioEntity.name
+                iconUri = radioEntity.icon.toUri()
+            }
+        }
+    }
 
     override fun getCatalogTags() = runBlocking {
         tagsDataSource.getGroupedTags().map {
