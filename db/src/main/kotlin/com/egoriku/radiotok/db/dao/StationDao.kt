@@ -9,20 +9,20 @@ import com.egoriku.radiotok.db.entity.StationDbEntity
 @Dao
 interface StationDao {
 
-    @Query("SELECT * FROM stationdbentity WHERE stationUuid = :id")
-    suspend fun getStationById(id: String): StationDbEntity
-
     @Query("SELECT * FROM stationdbentity WHERE isExcluded = 0 ORDER BY RANDOM() LIMIT 1")
     suspend fun getRandomStation(): StationDbEntity
 
     @Query("SELECT * FROM stationdbentity WHERE isExcluded = 0 AND isLiked = 1 ORDER BY RANDOM() LIMIT 1")
     suspend fun getRandomLikedStation(): StationDbEntity
 
-    @Query("SELECT * FROM stationdbentity WHERE isExcluded = 0 AND isLiked = 1")
-    suspend fun getLikedStations(): List<StationDbEntity>
+    @Query("SELECT stationUuid FROM stationdbentity WHERE isExcluded = 0 AND isLiked = 1")
+    suspend fun getLikedStationsIds(): List<String>
 
     @Query("SELECT * FROM stationdbentity WHERE isExcluded = 1")
     suspend fun getDislikedStations(): List<StationDbEntity>
+
+    @Query("SELECT stationUuid FROM stationdbentity WHERE isExcluded = 1")
+    suspend fun getDislikedStationsIds(): List<String>
 
     @Query("SELECT COUNT(*) FROM stationdbentity")
     suspend fun getStationsCount(): Int

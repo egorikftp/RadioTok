@@ -1,12 +1,12 @@
 package com.egoriku.radiotok.data.mapper
 
+import com.egoriku.radiotok.common.entity.RadioEntity
 import com.egoriku.radiotok.common.ext.IMapper
-import com.egoriku.radiotok.data.entity.StationNetworkEntity
 import com.egoriku.radiotok.db.entity.StationDbEntity
 
-class NetworkStationToDbMapper : IMapper<StationNetworkEntity, StationDbEntity> {
+class NetworkStationToDbMapper : IMapper<RadioEntity, StationDbEntity> {
 
-    override fun invoke(networkEntity: StationNetworkEntity) =
+    override fun invoke(networkEntity: RadioEntity) =
         StationDbEntity(
             stationUuid = networkEntity.stationUuid,
             name = networkEntity.name,

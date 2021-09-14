@@ -1,14 +1,17 @@
 package com.egoriku.radiotok.data
 
 import com.egoriku.radiotok.common.entity.MetadataEntity
-import com.egoriku.radiotok.data.entity.StationNetworkEntity
+import com.egoriku.radiotok.common.entity.RadioEntity
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface Api {
 
+    @GET("json/stations/byuuid")
+    suspend fun stationsById(@Query("uuids") ids: String): List<RadioEntity>
+
     @GET("json/stations")
-    suspend fun allStations(): List<StationNetworkEntity>
+    suspend fun allStations(): List<RadioEntity>
 
     @GET("json/countries")
     suspend fun allCountries(): List<MetadataEntity>

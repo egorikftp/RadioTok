@@ -1,8 +1,8 @@
 package com.egoriku.radiotok.domain.repository
 
-import com.egoriku.radiotok.data.entity.StationNetworkEntity
+import com.egoriku.radiotok.common.entity.RadioEntity
 
 interface IRadioFetchNetworkRepository {
 
-    suspend fun load(): List<StationNetworkEntity>
+    suspend fun load(): List<RadioEntity>
 }

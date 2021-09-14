@@ -7,11 +7,13 @@ import com.egoriku.mediaitemdsl.browsableMediaItem
 import com.egoriku.mediaitemdsl.playableMediaItem
 import com.egoriku.radiotok.common.datasource.ICountriesDataSource
 import com.egoriku.radiotok.common.datasource.ILanguagesDataSource
+import com.egoriku.radiotok.common.datasource.IRadioMetadataDataSource
 import com.egoriku.radiotok.common.datasource.ITagsDataSource
 import com.egoriku.radiotok.common.provider.IBitmapProvider
 import com.egoriku.radiotok.common.provider.IStringResourceProvider
 import com.egoriku.radiotok.db.RadioTokDb
 import com.egoriku.radiotok.db.mapper.DbStationToModelMapper
+import com.egoriku.radiotok.db.mapper.RadioEntityToModelMapper
 import com.egoriku.radiotok.radioplayer.ext.from
 import com.egoriku.radiotok.radioplayer.model.MediaPath.*
 import kotlinx.coroutines.runBlocking
@@ -22,10 +24,12 @@ internal class MediaItemRepository(
     private val radioTokDb: RadioTokDb,
     private val tagsDataSource: ITagsDataSource,
     private val languagesDataSource: ILanguagesDataSource,
-    private val countriesDataSource: ICountriesDataSource
+    private val countriesDataSource: ICountriesDataSource,
+    private val radioMetadataDataSource: IRadioMetadataDataSource
 ) : IMediaItemRepository {
 
-    private val mapper = DbStationToModelMapper()
+    private val dbMapper = DbStationToModelMapper()
+    private val entityMapper = RadioEntityToModelMapper()
 
     override fun getRootItems() = listOf(
         browsableMediaItem {
@@ -98,7 +102,9 @@ internal class MediaItemRepository(
     )
 
     override fun getLikedItems() = runBlocking {
-        radioTokDb.stationDao().getLikedStations().map {
+        radioMetadataDataSource.loadByIds(
+            ids = radioTokDb.stationDao().getLikedStationsIds()
+        ).map {
             playableMediaItem {
                 id = it.stationUuid
                 title = it.name
@@ -220,7 +226,7 @@ internal class MediaItemRepository(
         val randomStation = radioTokDb.stationDao().getRandomStation()
 
         return MediaMetadataCompat.Builder().from(
-            itemModel = mapper.invoke(randomStation)
+            itemModel = dbMapper.invoke(randomStation)
         ).build()
     }
 
@@ -228,16 +234,16 @@ internal class MediaItemRepository(
         val randomStation = radioTokDb.stationDao().getRandomLikedStation()
 
         return MediaMetadataCompat.Builder().from(
-            itemModel = mapper.invoke(randomStation)
+            itemModel = dbMapper.invoke(randomStation)
         ).build()
     }
 
     override suspend fun loadByStationId(id: String): MediaMetadataCompat =
         runBlocking {
-            val stationById = radioTokDb.stationDao().getStationById(id)
+            val stationById = radioMetadataDataSource.loadByIds(listOf(id)).first()
 
             MediaMetadataCompat.Builder().from(
-                itemModel = mapper.invoke(stationById)
+                itemModel = entityMapper.invoke(stationById)
             ).build()
         }
 }

@@ -40,7 +40,8 @@ val radioPlayerModule = module {
             radioTokDb = get(),
             tagsDataSource = get(),
             languagesDataSource = get(),
-            countriesDataSource = get()
+            countriesDataSource = get(),
+            radioMetadataDataSource = get()
         )
     }
 

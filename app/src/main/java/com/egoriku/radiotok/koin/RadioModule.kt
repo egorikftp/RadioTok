@@ -2,6 +2,7 @@ package com.egoriku.radiotok.koin
 
 import com.egoriku.radiotok.common.datasource.ICountriesDataSource
 import com.egoriku.radiotok.common.datasource.ILanguagesDataSource
+import com.egoriku.radiotok.common.datasource.IRadioMetadataDataSource
 import com.egoriku.radiotok.common.datasource.ITagsDataSource
 import com.egoriku.radiotok.common.provider.IBitmapProvider
 import com.egoriku.radiotok.common.provider.IStringResourceProvider
@@ -51,6 +52,7 @@ val network = module {
     factory<TagsDataSource>() bind ITagsDataSource::class
     factory<LanguagesDataSource>() bind ILanguagesDataSource::class
     factory<CountriesDataSource>() bind ICountriesDataSource::class
+    factory<RadioMetadataDataSource>() bind IRadioMetadataDataSource::class
 }
 
 val radioModule = module {

@@ -30,10 +30,8 @@ class BackupManager(
                 ?.openOutputStream(context)
                 ?.use { stream ->
                     val backup = Backup(
-                        likedIds = db.stationDao().getLikedStations()
-                            .map { entity -> entity.stationUuid },
-                        dislikedIds = db.stationDao().getDislikedStations()
-                            .map { entity -> entity.stationUuid }
+                        likedIds = db.stationDao().getLikedStationsIds(),
+                        dislikedIds = db.stationDao().getDislikedStationsIds()
                     )
 
                     stream.write(gson.toJson(backup).toByteArray())

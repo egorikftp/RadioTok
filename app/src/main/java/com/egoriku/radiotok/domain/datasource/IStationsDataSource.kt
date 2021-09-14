@@ -1,8 +1,8 @@
 package com.egoriku.radiotok.domain.datasource
 
-import com.egoriku.radiotok.data.entity.StationNetworkEntity
+import com.egoriku.radiotok.common.entity.RadioEntity
 
 interface IStationsDataSource {
 
-    suspend fun loadAll(): List<StationNetworkEntity>
+    suspend fun loadAll(): List<RadioEntity>
 }

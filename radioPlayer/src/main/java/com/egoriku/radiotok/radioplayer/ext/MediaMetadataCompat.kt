@@ -63,8 +63,10 @@ inline var MediaMetadataCompat.Builder.isHls: Long
 
 fun MediaMetadataCompat.Builder.from(itemModel: RadioItemModel): MediaMetadataCompat.Builder {
 
-    logD(itemModel.name)
-    logD(itemModel.icon)
+    logD("_____")
+    logD("name: ${itemModel.name}")
+    logD("icon: ${itemModel.icon}")
+    logD("id: ${itemModel.id}")
     logD("_____")
 
     id = itemModel.id
