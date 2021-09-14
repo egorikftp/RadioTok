@@ -206,7 +206,8 @@ internal class MediaItemRepository(
             browsableMediaItem {
                 id = it.name
                 title = it.name
-                subTitle = "${it.count} stations"
+                subTitle = stringResource.getStationsCount(it.count)
+                iconUri = bitmapProvider.bgRadioGradient
 
                 appearance {
                     showAsList = true

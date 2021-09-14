@@ -41,6 +41,15 @@
     <string name="settings_section_restore_title">Restore</string>
     <string name="settings_section_restore_description">Restore settings from last backup/disliked radio stations</string>
 
+    <!-- Common -->
+    <plurals name="radio_station_count">
+        <item quantity="zero">No stations</item>
+        <item quantity="one">%1$d station</item>
+        <item quantity="two">%1$d stations</item>
+        <item quantity="few">%1$d stations</item>
+        <item quantity="many">%1$d stations</item>
+        <item quantity="other">%1$d stations</item>
+    </plurals>
 
     <string name="notification_channel_name">Radio Channel</string>
     <string name="notification_channel_description">Shows the currently playing radio</string>

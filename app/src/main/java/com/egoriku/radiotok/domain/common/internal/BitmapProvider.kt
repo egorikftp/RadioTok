@@ -2,9 +2,11 @@ package com.egoriku.radiotok.domain.common.internal
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.core.graphics.drawable.toBitmap
 import com.egoriku.radiotok.R
 import com.egoriku.radiotok.common.ext.drawableCompat
+import com.egoriku.radiotok.common.ext.getIconUri
 import com.egoriku.radiotok.common.provider.IBitmapProvider
 import com.egoriku.radiotok.extension.roundWithBorder
 
@@ -93,4 +95,7 @@ internal class BitmapProvider(private val context: Context) : IBitmapProvider {
             .drawableCompat(R.drawable.ic_auto_top_vote)
             .toBitmap()
             .roundWithBorder()
+
+    override val bgRadioGradient: Uri
+        get() = context.getIconUri(R.drawable.bg_radio_gradient)
 }

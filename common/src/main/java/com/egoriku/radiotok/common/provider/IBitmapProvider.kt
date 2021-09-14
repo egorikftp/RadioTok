@@ -1,6 +1,7 @@
 package com.egoriku.radiotok.common.provider
 
 import android.graphics.Bitmap
+import android.net.Uri
 
 interface IBitmapProvider {
 
@@ -21,4 +22,6 @@ interface IBitmapProvider {
     val icShuffleRound: Bitmap
     val icTopClicksRound: Bitmap
     val icTopVoteRound: Bitmap
+
+    val bgRadioGradient: Uri
 }

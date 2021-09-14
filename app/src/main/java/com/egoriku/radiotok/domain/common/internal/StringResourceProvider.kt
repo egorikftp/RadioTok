@@ -40,4 +40,7 @@ internal class StringResourceProvider(
     override val topVote: String by ResourceDelegate(R.string.media_item_path_top_vote)
     override val changedLately: String by ResourceDelegate(R.string.media_item_path_changed_lately)
     override val playing: String by ResourceDelegate(R.string.media_item_path_playing)
+
+    override fun getStationsCount(count: Int) =
+        context.resources.getQuantityString(R.plurals.radio_station_count, count, count)
 }

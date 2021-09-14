@@ -22,4 +22,6 @@ interface IStringResourceProvider {
     val topVote: String
     val changedLately: String
     val playing: String
+
+    fun getStationsCount(count: Int): String
 }
