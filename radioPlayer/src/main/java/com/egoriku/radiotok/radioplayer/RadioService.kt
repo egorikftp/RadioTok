@@ -90,10 +90,10 @@ class RadioService : MediaBrowserServiceCompat() {
 
             setErrorMessageProvider { error ->
                 when (error.type) {
-                    ExoPlaybackException.TYPE_SOURCE -> Pair(
-                        0,
-                        "TYPE_SOURCE: " + error.sourceException.toString()
-                    )
+                    ExoPlaybackException.TYPE_SOURCE -> {
+                        logD("TYPE_SOURCE: " + error.sourceException.toString())
+                        Pair(0, applicationContext.getString(R.string.playback_error_source))
+                    }
                     ExoPlaybackException.TYPE_RENDERER -> Pair(
                         0,
                         "TYPE_RENDERER: " + error.rendererException.toString()

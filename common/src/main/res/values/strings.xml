@@ -51,6 +51,9 @@
         <item quantity="other">%1$d stations</item>
     </plurals>
 
+    <!-- Radio Service -->
+    <string name="playback_error_source">Looks like this station not available right now.\nJust try to play Next station or start this playlist again</string>
+
     <string name="notification_channel_name">Radio Channel</string>
     <string name="notification_channel_description">Shows the currently playing radio</string>
 

@@ -178,7 +178,7 @@ internal class MediaItemRepository(
             browsableMediaItem {
                 id = it.key
                 title = it.key
-                subTitle = "${it.value.size} stations"
+                subTitle = stringResource.getStationsCount(it.value.size)
 
                 appearance {
                     showAsList = true
@@ -192,7 +192,7 @@ internal class MediaItemRepository(
             browsableMediaItem {
                 id = it.name
                 title = it.name
-                subTitle = "${it.count} stations"
+                subTitle = stringResource.getStationsCount(it.count)
 
                 appearance {
                     showAsList = true
