@@ -2,7 +2,7 @@ package com.egoriku.radiotok.db.mapper
 
 import com.egoriku.radiotok.common.entity.RadioEntity
 import com.egoriku.radiotok.common.ext.IMapper
-import com.egoriku.radiotok.common.ext.toFlagEmoji
+import com.egoriku.radiotok.common.mapper.MetadataBuilder
 import com.egoriku.radiotok.common.model.RadioItemModel
 
 class RadioEntityToModelMapper : IMapper<RadioEntity, RadioItemModel> {
@@ -14,17 +14,9 @@ class RadioEntityToModelMapper : IMapper<RadioEntity, RadioItemModel> {
             streamUrl = radioEntity.streamUrl,
             icon = radioEntity.icon,
             hls = radioEntity.hls,
-            metadata = buildMetadata(radioEntity)
+            metadata = MetadataBuilder.build(
+                countryCode = radioEntity.countryCode,
+                tags = radioEntity.tags
+            )
         )
-
-    @OptIn(ExperimentalStdlibApi::class)
-    private fun buildMetadata(radioEntity: RadioEntity) = buildList {
-        if (radioEntity.countryCode.isNotEmpty()) {
-            add(radioEntity.countryCode.toFlagEmoji)
-        }
-
-        if (radioEntity.tags.isNotEmpty()) {
-            add(radioEntity.tags.replace(",", ", "))
-        }
-    }.joinToString(" / ")
 }

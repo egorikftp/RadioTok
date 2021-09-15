@@ -1,14 +1,16 @@
 package com.egoriku.radiotok.domain.mediator
 
-import android.support.v4.media.MediaBrowserCompat
+import android.support.v4.media.MediaBrowserCompat.MediaItem
 import android.support.v4.media.MediaMetadataCompat
-import com.egoriku.mediaitemdsl.playableMediaItem
 import com.egoriku.radiotok.common.ext.logD
 import com.egoriku.radiotok.domain.usecase.IRadioCacheUseCase
 import com.egoriku.radiotok.radioplayer.data.CurrentRadioQueueHolder
 import com.egoriku.radiotok.radioplayer.data.mediator.IRadioCacheMediator
+import com.egoriku.radiotok.radioplayer.ext.from
 import com.egoriku.radiotok.radioplayer.model.MediaPath
 import com.egoriku.radiotok.radioplayer.model.MediaPath.*
+import com.egoriku.radiotok.radioplayer.model.MediaPath.ShuffleAndPlayRoot.ShuffleLiked
+import com.egoriku.radiotok.radioplayer.model.MediaPath.ShuffleAndPlayRoot.ShuffleRandom
 import com.egoriku.radiotok.radioplayer.repository.IMediaItemRepository
 
 class RadioCacheMediator(
@@ -17,43 +19,21 @@ class RadioCacheMediator(
     private val currentRadioQueueHolder: CurrentRadioQueueHolder
 ) : IRadioCacheMediator {
 
-    override suspend fun loadNextRadio() {
-        logD("loadNextRadio")
+    override suspend fun playSingle(id: String) {
+        logD("playSingle with id: $id")
         checkCacheOrLoad()
 
-        val items = getMediaMetadataBy(mediaPath = currentRadioQueueHolder.currentPath)
-
-        currentRadioQueueHolder.set(items)
+        currentRadioQueueHolder.updateQueue(
+            mediaPath = Single,
+            stations = listOf(mediaItemRepository.loadByStationId(id))
+        )
     }
 
-    override suspend fun switchToRandomRadios() {
-        logD("switchToRandomRadios")
-
-        checkCacheOrLoad()
-
-        currentRadioQueueHolder.currentPath = ShuffleAndPlayRoot.ShuffleRandom
-        loadInitial()
+    override suspend fun playNextRandom() {
+        updatePlaylist(mediaPath = currentRadioQueueHolder.currentMediaPath)
     }
 
-    override suspend fun switchToLikedRadios() {
-        logD("switchToLikedRadios")
-
-        checkCacheOrLoad()
-
-        currentRadioQueueHolder.currentPath = ShuffleAndPlayRoot.ShuffleLiked
-        loadInitial()
-    }
-
-    override suspend fun playSingle(id : String) {
-        logD("playSingle")
-        checkCacheOrLoad()
-
-        currentRadioQueueHolder.currentPath = Single
-
-        currentRadioQueueHolder.set(mediaItemRepository.loadByStationId(id))
-    }
-
-    override suspend fun getMediaBrowserItemsBy(mediaPath: MediaPath): List<MediaBrowserCompat.MediaItem> {
+    override suspend fun getMediaBrowserItemsBy(mediaPath: MediaPath): List<MediaItem> {
         checkCacheOrLoad()
 
         return when (mediaPath) {
@@ -73,15 +53,7 @@ class RadioCacheMediator(
             is CatalogRoot.ByTags -> mediaItemRepository.getCatalogTags()
             is CatalogRoot.ByCountries -> mediaItemRepository.getCatalogCountries()
             is CatalogRoot.ByLanguages -> mediaItemRepository.getCatalogLanguages()
-            else -> {
-                currentRadioQueueHolder.currentPath = mediaPath
-
-                val mediaMetadata = getMediaMetadataBy(mediaPath)
-
-                currentRadioQueueHolder.set(mediaMetadata)
-
-                listOf(playableMediaItem(mediaMetadata))
-            }
+            else -> throw IllegalArgumentException()
         }
     }
 
@@ -89,19 +61,33 @@ class RadioCacheMediator(
         checkCacheOrLoad()
 
         return when (mediaPath) {
-            is ShuffleAndPlayRoot.ShuffleRandom -> mediaItemRepository.getRandomItem()
-            is ShuffleAndPlayRoot.ShuffleLiked -> mediaItemRepository.getLikedItem()
+            is ShuffleRandom -> mediaItemRepository.getRandomItem()
+            is ShuffleLiked -> mediaItemRepository.getLikedItem()
             else -> throw IllegalArgumentException()
+        }
+    }
+
+    override suspend fun updatePlaylist(mediaPath: MediaPath) {
+        when (mediaPath) {
+            PlayLiked -> {
+                val likedItems = mediaItemRepository.getLikedItemsTest().map {
+                    MediaMetadataCompat.Builder().from(entity = it).build()
+                }
+
+                currentRadioQueueHolder.updateQueue(mediaPath = mediaPath, stations = likedItems)
+            }
+            ShuffleRandom, ShuffleLiked -> {
+                checkCacheOrLoad()
+
+                currentRadioQueueHolder.updateQueue(
+                    mediaPath = mediaPath,
+                    stations = listOf(getMediaMetadataBy(mediaPath = mediaPath))
+                )
+            }
         }
     }
 
     private suspend fun checkCacheOrLoad() {
         radioCacheUseCase.preCacheStations()
-    }
-
-    private suspend fun loadInitial() {
-        val items = getMediaMetadataBy(mediaPath = currentRadioQueueHolder.currentPath)
-
-        currentRadioQueueHolder.set(items)
     }
 }

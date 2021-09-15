@@ -8,11 +8,11 @@ class EventHandler {
     private val _event = MutableSharedFlow<Event>()
     val event = _event.asSharedFlow()
 
-    suspend fun playNext() {
-        _event.emit(Event.PlayNext)
+    suspend fun playNextRandom() {
+        _event.emit(Event.PlayNextRandom)
     }
 
     sealed class Event {
-        object PlayNext : Event()
+        object PlayNextRandom : Event()
     }
 }

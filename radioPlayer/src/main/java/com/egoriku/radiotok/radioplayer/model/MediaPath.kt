@@ -5,6 +5,7 @@ import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.PATH_ROOT_
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.PATH_ROOT_SHUFFLE_AND_PLAY
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.PATH_ROOT_SMART_CATALOG
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.PATH_ROOT_SMART_COLLECTION
+import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.PLAY_LIKED
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_BY_COUNTRIES
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_BY_LANGUAGES
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.SUB_PATH_BY_TAGS
@@ -50,6 +51,8 @@ sealed class MediaPath(val path: String, val isPlayable: Boolean = false) {
         object ByLanguages : MediaPath(path = SUB_PATH_BY_LANGUAGES)
     }
 
+    object PlayLiked: MediaPath(path = PLAY_LIKED)
+
     companion object {
 
         private val availableMedia by lazy {
@@ -71,7 +74,8 @@ sealed class MediaPath(val path: String, val isPlayable: Boolean = false) {
                 CatalogRoot,
                 CatalogRoot.ByTags,
                 CatalogRoot.ByCountries,
-                CatalogRoot.ByLanguages
+                CatalogRoot.ByLanguages,
+                PlayLiked
             )
         }
 

@@ -6,15 +6,13 @@ import com.egoriku.radiotok.radioplayer.model.MediaPath
 
 interface IRadioCacheMediator {
 
-    suspend fun loadNextRadio()
-
-    suspend fun switchToRandomRadios()
-
-    suspend fun switchToLikedRadios()
-
     suspend fun playSingle(id: String)
+
+    suspend fun playNextRandom()
 
     suspend fun getMediaBrowserItemsBy(mediaPath: MediaPath): List<MediaBrowserCompat.MediaItem>
 
     suspend fun getMediaMetadataBy(mediaPath: MediaPath): MediaMetadataCompat
+
+    suspend fun updatePlaylist(mediaPath: MediaPath)
 }

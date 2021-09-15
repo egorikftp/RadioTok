@@ -7,6 +7,9 @@ import android.support.v4.media.session.PlaybackStateCompat
 import com.egoriku.radiotok.common.ext.logD
 import com.egoriku.radiotok.radioplayer.data.mediator.IRadioCacheMediator
 import com.egoriku.radiotok.radioplayer.model.MediaPath
+import com.egoriku.radiotok.radioplayer.model.MediaPath.PlayLiked
+import com.egoriku.radiotok.radioplayer.model.MediaPath.ShuffleAndPlayRoot.ShuffleLiked
+import com.egoriku.radiotok.radioplayer.model.MediaPath.ShuffleAndPlayRoot.ShuffleRandom
 import com.google.android.exoplayer2.ControlDispatcher
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
@@ -36,28 +39,24 @@ class RadioPlaybackPreparer(
     override fun onPrepareFromMediaId(mediaId: String, playWhenReady: Boolean, extras: Bundle?) {
         logD("onPrepareFromMediaId = $mediaId")
 
-        when (MediaPath.fromParentIdOrNull(mediaId)) {
-            is MediaPath.ShuffleAndPlayRoot.ShuffleLiked -> {
-                runBlocking {
-                    radioCacheMediator.switchToLikedRadios()
-                    logD("liked")
+        runBlocking {
+            when (val mediaPath = MediaPath.fromParentIdOrNull(mediaId)) {
+                is ShuffleLiked -> {
+                    radioCacheMediator.updatePlaylist(mediaPath = mediaPath)
+                    onPlayerPrepared()
                 }
-                onPlayerPrepared()
-            }
-            is MediaPath.ShuffleAndPlayRoot.ShuffleRandom -> {
-                runBlocking {
-                    radioCacheMediator.switchToRandomRadios()
-                    logD("random")
+                is ShuffleRandom -> {
+                    radioCacheMediator.updatePlaylist(mediaPath = mediaPath)
+                    onPlayerPrepared()
                 }
-                onPlayerPrepared()
-            }
-            else -> {
-                logD("else")
-
-                runBlocking {
+                is PlayLiked -> {
+                    radioCacheMediator.updatePlaylist(mediaPath = mediaPath)
+                    onPlayerPrepared()
+                }
+                else -> {
                     radioCacheMediator.playSingle(id = mediaId)
+                    onPlayerPrepared()
                 }
-                onPlayerPrepared()
             }
         }
     }

@@ -3,7 +3,9 @@ package com.egoriku.radiotok.radioplayer.ext
 import android.net.Uri
 import android.support.v4.media.MediaMetadataCompat
 import androidx.core.net.toUri
+import com.egoriku.radiotok.common.entity.RadioEntity
 import com.egoriku.radiotok.common.ext.logD
+import com.egoriku.radiotok.common.mapper.MetadataBuilder
 import com.egoriku.radiotok.common.model.RadioItemModel
 
 const val NO_GET = "Property does not have a 'get'"
@@ -76,6 +78,28 @@ fun MediaMetadataCompat.Builder.from(itemModel: RadioItemModel): MediaMetadataCo
     mediaUri = itemModel.streamUrl
 
     isHls = itemModel.hls
+
+    return this
+}
+
+fun MediaMetadataCompat.Builder.from(entity: RadioEntity): MediaMetadataCompat.Builder {
+
+    logD("_____")
+    logD("name: ${entity.name}")
+    logD("icon: ${entity.icon}")
+    logD("id: ${entity.stationUuid}")
+    logD("_____")
+
+    id = entity.stationUuid
+    displayTitle = entity.name
+    displaySubtitle = MetadataBuilder.build(
+        countryCode = entity.countryCode,
+        tags = entity.tags
+    )
+    displayIconUri = entity.icon
+    mediaUri = entity.streamUrl
+
+    isHls = entity.hls
 
     return this
 }

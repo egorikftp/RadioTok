@@ -110,7 +110,7 @@ class RadioService : MediaBrowserServiceCompat() {
                 NotificationMediaButtonEventHandler(
                     onNext = {
                         serviceScope.launch {
-                            eventHandler.playNext()
+                            eventHandler.playNextRandom()
                         }
                     }
                 )
@@ -135,7 +135,7 @@ class RadioService : MediaBrowserServiceCompat() {
                     onDislike = {
                         radioStateMediator.exclude(id = it)
                         serviceScope.launch {
-                            eventHandler.playNext()
+                            eventHandler.playNextRandom()
                         }
                     }
                 )
@@ -144,9 +144,9 @@ class RadioService : MediaBrowserServiceCompat() {
                 RadioQueueNavigator(
                     mediaSession = mediaSession,
                     currentRadioQueueHolder = currentRadioQueueHolder,
-                    onNext = {
+                    onNextRandom = {
                         serviceScope.launch {
-                            eventHandler.playNext()
+                            eventHandler.playNextRandom()
                         }
                     }
                 )
@@ -172,8 +172,8 @@ class RadioService : MediaBrowserServiceCompat() {
         serviceScope.launch {
             eventHandler.event.collect {
                 when (it) {
-                    EventHandler.Event.PlayNext -> {
-                        radioCacheMediator.loadNextRadio()
+                    EventHandler.Event.PlayNextRandom -> {
+                        radioCacheMediator.playNextRandom()
                         preparePlayer()
                     }
                 }
@@ -222,7 +222,7 @@ class RadioService : MediaBrowserServiceCompat() {
                 onDislike = {
                     radioStateMediator.exclude(id = it)
                     serviceScope.launch {
-                        eventHandler.playNext()
+                        eventHandler.playNextRandom()
                     }
                 }
             ),
@@ -235,18 +235,21 @@ class RadioService : MediaBrowserServiceCompat() {
     }
 
     private fun preparePlayer() {
+        logD("preparePlayer, queue size: ${currentRadioQueueHolder.currentMediaSource.size}")
         simpleExoPlayer.setMediaSource(currentRadioQueueHolder.currentMediaSource)
-        simpleExoPlayer.playWhenReady = true
         simpleExoPlayer.prepare()
+        simpleExoPlayer.playWhenReady = true
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         super.onTaskRemoved(rootIntent)
         simpleExoPlayer.stop()
+        simpleExoPlayer.clearMediaItems()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        logD("onDestroy service")
         mediaSession.run {
             isActive = false
             release()

@@ -21,7 +21,9 @@ class FavoriteActionProvider(
 ) : MediaSessionConnector.CustomActionProvider {
 
     override fun getCustomAction(player: Player): PlaybackStateCompat.CustomAction? {
-        val mediaItem = currentRadioQueueHolder.currentMediaMetadata
+        val mediaItem = currentRadioQueueHolder.getMediaMetadataOrNull(
+            position = player.currentWindowIndex
+        )
 
         return if (mediaItem == null) {
             null
@@ -56,7 +58,9 @@ class FavoriteActionProvider(
         action: String,
         extras: Bundle?
     ) {
-        val currentMediaMetadata = currentRadioQueueHolder.currentMediaMetadata ?: return
+        val currentMediaMetadata = currentRadioQueueHolder.getMediaMetadataOrNull(
+            position = player.currentWindowIndex
+        ) ?: return
 
         radioStateMediator.toggleLiked(id = currentMediaMetadata.id)
 

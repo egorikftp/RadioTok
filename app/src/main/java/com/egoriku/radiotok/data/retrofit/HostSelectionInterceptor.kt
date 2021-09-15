@@ -11,15 +11,19 @@ class HostSelectionInterceptor(
     private val radioDnsServer: IRadioDnsServer
 ) : Interceptor {
 
+    private val host: String by lazy {
+        runBlocking {
+            radioDnsServer.lookup().random()
+        }
+    }
+
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
         return if (request.url.host == "github.com") {
             runBlocking {
-                val host = radioDnsServer.lookup().random()
                 logD("base host: $host")
-
                 val newUrl = request.url.newBuilder().host(host).build()
 
                 chain.proceed(request.newBuilder().url(newUrl).build())

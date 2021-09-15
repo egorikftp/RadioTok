@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.session.MediaControllerCompat
 import com.bumptech.glide.Glide
 import com.egoriku.radiotok.radioplayer.R
@@ -29,19 +28,19 @@ class DescriptionAdapter(
     private var currentBitmap: Bitmap? = null
 
     override fun getCurrentContentTitle(player: Player) =
-        getDescription().title.toString()
+        getDescription(index = player.currentWindowIndex)?.title.toString()
 
     override fun createCurrentContentIntent(player: Player): PendingIntent? =
         mediaController.sessionActivity
 
     override fun getCurrentContentText(player: Player) =
-        getDescription().subtitle.toString()
+        getDescription(index = player.currentWindowIndex)?.subtitle.toString()
 
     override fun getCurrentLargeIcon(
         player: Player,
         callback: PlayerNotificationManager.BitmapCallback
     ): Bitmap? {
-        val iconUri = getDescription().iconUri
+        val iconUri = getDescription(index = player.currentWindowIndex)?.iconUri
 
         return if (currentIconUri != iconUri || currentBitmap == null) {
             currentBitmap = null
@@ -58,11 +57,8 @@ class DescriptionAdapter(
         }
     }
 
-    private fun getDescription(): MediaDescriptionCompat {
-        val currentMediaMetadata = requireNotNull(currentRadioQueueHolder.currentMediaMetadata)
-
-        return currentMediaMetadata.description
-    }
+    private fun getDescription(index: Int) =
+        currentRadioQueueHolder.getMediaMetadataOrNull(index)?.description
 
     private suspend fun loadBitmap(iconUri: Uri?): Bitmap? = withContext(Dispatchers.IO) {
         runCatching {

@@ -67,7 +67,9 @@ class NotificationCustomActionReceiver(
     )
 
     override fun onCustomAction(player: Player, action: String, intent: Intent) {
-        val currentRadioStationMetadata = currentRadioQueueHolder.currentMediaMetadata ?: return
+        val currentRadioStationMetadata = currentRadioQueueHolder.getMediaMetadataOrNull(
+            position = player.currentWindowIndex
+        ) ?: return
 
         when (action) {
             CUSTOM_ACTION_LIKE -> onLike(currentRadioStationMetadata.id)

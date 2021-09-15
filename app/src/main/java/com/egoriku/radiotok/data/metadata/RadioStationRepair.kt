@@ -2,7 +2,7 @@ package com.egoriku.radiotok.data.metadata
 
 import com.egoriku.radiotok.common.entity.RadioEntity
 
-object RadioStationOverhaul {
+object RadioStationRepair {
 
     private val data = listOf(
         Metadata(
@@ -12,6 +12,14 @@ object RadioStationOverhaul {
         Metadata(
             id = "10f7b21c-74ed-4527-a59f-958f4d2a62c2",
             logoUrl = "https://www.radio1.hu/wp-content/themes/radio1/assets/dist/img/logo.png"
+        ),
+        Metadata(
+            id = "6e433bac-f036-11e8-a471-52543be04c81",
+            logoUrl = "https://cdn-radiotime-logos.tunein.com/s128283d.png"
+        ),
+        Metadata(
+            id = "06a8e0f6-c453-11e9-8502-52543be04c81",
+            logoUrl = "https://www.kissfm.de/_nuxt/icons/icon_512.be8y2280000.png"
         )
     )
 

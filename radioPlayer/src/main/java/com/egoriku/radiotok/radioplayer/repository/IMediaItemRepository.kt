@@ -1,29 +1,31 @@
 package com.egoriku.radiotok.radioplayer.repository
 
-import android.support.v4.media.MediaBrowserCompat
+import android.support.v4.media.MediaBrowserCompat.MediaItem
 import android.support.v4.media.MediaMetadataCompat
+import com.egoriku.radiotok.common.entity.RadioEntity
 
 interface IMediaItemRepository {
 
-    fun getRootItems(): List<MediaBrowserCompat.MediaItem>
-    fun getShuffleAndPlayItems(): List<MediaBrowserCompat.MediaItem>
+    fun getRootItems(): List<MediaItem>
+    fun getShuffleAndPlayItems(): List<MediaItem>
 
-    fun getPersonalPlaylistsItems(): List<MediaBrowserCompat.MediaItem>
-    fun getLikedItems(): List<MediaBrowserCompat.MediaItem>
-    fun getRecentlyPlayedItems(): List<MediaBrowserCompat.MediaItem>
-    fun getDislikedItems(): List<MediaBrowserCompat.MediaItem>
+    fun getPersonalPlaylistsItems(): List<MediaItem>
+    fun getLikedItems(): List<MediaItem>
+    fun getLikedItemsTest(): List<RadioEntity>
+    fun getRecentlyPlayedItems(): List<MediaItem>
+    fun getDislikedItems(): List<MediaItem>
 
-    fun getSmartPlaylistsItems(): List<MediaBrowserCompat.MediaItem>
-    fun getLocalItems(): List<MediaBrowserCompat.MediaItem>
-    fun getTopClicksItems(): List<MediaBrowserCompat.MediaItem>
-    fun getTopVoteItems(): List<MediaBrowserCompat.MediaItem>
-    fun getChangedLatelyItems(): List<MediaBrowserCompat.MediaItem>
-    fun getPlayingItems(): List<MediaBrowserCompat.MediaItem>
+    fun getSmartPlaylistsItems(): List<MediaItem>
+    fun getLocalItems(): List<MediaItem>
+    fun getTopClicksItems(): List<MediaItem>
+    fun getTopVoteItems(): List<MediaItem>
+    fun getChangedLatelyItems(): List<MediaItem>
+    fun getPlayingItems(): List<MediaItem>
 
-    fun getCatalogItems(): List<MediaBrowserCompat.MediaItem>
-    fun getCatalogTags(): List<MediaBrowserCompat.MediaItem>
-    fun getCatalogCountries(): List<MediaBrowserCompat.MediaItem>
-    fun getCatalogLanguages(): List<MediaBrowserCompat.MediaItem>
+    fun getCatalogItems(): List<MediaItem>
+    fun getCatalogTags(): List<MediaItem>
+    fun getCatalogCountries(): List<MediaItem>
+    fun getCatalogLanguages(): List<MediaItem>
 
     suspend fun getRandomItem(): MediaMetadataCompat
     suspend fun getLikedItem(): MediaMetadataCompat

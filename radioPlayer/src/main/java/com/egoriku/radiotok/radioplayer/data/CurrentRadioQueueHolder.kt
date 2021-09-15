@@ -2,42 +2,39 @@ package com.egoriku.radiotok.radioplayer.data
 
 import android.support.v4.media.MediaMetadataCompat
 import com.egoriku.radiotok.common.ext.logD
-import com.egoriku.radiotok.radioplayer.ext.isHls
-import com.egoriku.radiotok.radioplayer.ext.mediaUri
+import com.egoriku.radiotok.radioplayer.data.mapper.toMediaSource
 import com.egoriku.radiotok.radioplayer.model.MediaPath
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.source.hls.HlsMediaSource
+import com.egoriku.radiotok.radioplayer.model.MediaPath.ShuffleAndPlayRoot
+import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
-import kotlin.properties.Delegates
 
 class CurrentRadioQueueHolder(
     private val defaultHttpDataSourceFactory: DefaultHttpDataSource.Factory
 ) {
-    var currentMediaMetadata: MediaMetadataCompat? = null
+    var currentMediaSource = ConcatenatingMediaSource()
         private set
 
-    var currentMediaSource: MediaSource by Delegates.notNull()
+    var currentMediaPath: MediaPath = MediaPath.Root
         private set
 
-    var currentPath: MediaPath = MediaPath.Root
+    var radioStations = mutableListOf<MediaMetadataCompat>()
+        private set
 
-    fun set(item: MediaMetadataCompat) {
-        logD("set")
+    fun isRandomRadio() = currentMediaPath == ShuffleAndPlayRoot.ShuffleRandom ||
+            currentMediaPath == ShuffleAndPlayRoot.ShuffleLiked
 
-        currentMediaMetadata = item
-        currentMediaSource = item.toMediaSource()
-    }
+    fun getMediaMetadataOrNull(position: Int): MediaMetadataCompat? =
+        radioStations.getOrNull(position)
 
-    private fun MediaMetadataCompat.toMediaSource(): MediaSource {
-        val mediaItem = MediaItem.fromUri(mediaUri)
+    fun updateQueue(mediaPath: MediaPath, stations: List<MediaMetadataCompat>) {
+        logD("updateQueue: size = ${stations.size}")
 
-        return when {
-            isHls -> HlsMediaSource.Factory(defaultHttpDataSourceFactory)
-                .createMediaSource(mediaItem)
-            else -> ProgressiveMediaSource.Factory(defaultHttpDataSourceFactory)
-                .createMediaSource(mediaItem)
-        }
+        currentMediaPath = mediaPath
+
+        radioStations.clear()
+        radioStations.addAll(stations)
+
+        currentMediaSource.clear()
+        currentMediaSource.addMediaSources(stations.toMediaSource(defaultHttpDataSourceFactory))
     }
 }

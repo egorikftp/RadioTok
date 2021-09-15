@@ -24,4 +24,6 @@ object MediaBrowserConstant {
     const val SUB_PATH_BY_TAGS = "/by_tags"
     const val SUB_PATH_BY_COUNTRIES = "/by_countries"
     const val SUB_PATH_BY_LANGUAGES = "/by_languages"
+
+    const val PLAY_LIKED = "play_liked"
 }

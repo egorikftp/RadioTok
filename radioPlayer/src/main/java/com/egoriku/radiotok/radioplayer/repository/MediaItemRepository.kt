@@ -6,10 +6,10 @@ import androidx.core.net.toUri
 import com.egoriku.mediaitemdsl.browsableMediaItem
 import com.egoriku.mediaitemdsl.playableMediaItem
 import com.egoriku.radiotok.common.datasource.*
+import com.egoriku.radiotok.common.ext.logD
 import com.egoriku.radiotok.common.provider.IBitmapProvider
 import com.egoriku.radiotok.common.provider.IStringResourceProvider
 import com.egoriku.radiotok.db.RadioTokDb
-import com.egoriku.radiotok.db.mapper.DbStationToModelMapper
 import com.egoriku.radiotok.db.mapper.RadioEntityToModelMapper
 import com.egoriku.radiotok.radioplayer.ext.from
 import com.egoriku.radiotok.radioplayer.model.MediaPath.*
@@ -30,7 +30,6 @@ internal class MediaItemRepository(
     private val playingStationsDataSource: IPlayingStationsDataSource
 ) : IMediaItemRepository {
 
-    private val dbMapper = DbStationToModelMapper()
     private val entityMapper = RadioEntityToModelMapper()
 
     override fun getRootItems() = listOf(
@@ -104,7 +103,12 @@ internal class MediaItemRepository(
     )
 
     override fun getLikedItems() = runBlocking {
-        radioMetadataDataSource.loadByIds(
+        listOf(
+            playableMediaItem {
+                id = PlayLiked.path
+                title = "Play All"
+            }
+        ) + radioMetadataDataSource.loadByIds(
             ids = radioTokDb.stationDao().getLikedStationsIds()
         ).map {
             playableMediaItem {
@@ -120,12 +124,20 @@ internal class MediaItemRepository(
         }
     }
 
+    override fun getLikedItemsTest() = runBlocking {
+        radioMetadataDataSource.loadByIds(
+            ids = radioTokDb.stationDao().getLikedStationsIds()
+        )
+    }
+
     override fun getRecentlyPlayedItems(): List<MediaBrowserCompat.MediaItem> {
         return emptyList()
     }
 
     override fun getDislikedItems() = runBlocking {
-        radioTokDb.stationDao().getDislikedStations().map {
+        radioMetadataDataSource.loadByIds(
+            ids = radioTokDb.stationDao().getDislikedStationsIds()
+        ).map {
             playableMediaItem {
                 id = it.stationUuid
                 title = it.name
@@ -236,6 +248,7 @@ internal class MediaItemRepository(
             browsableMediaItem {
                 id = it.key
                 title = it.key
+                iconUri = bitmapProvider.bgRadioGradient
                 subTitle = stringResource.getStationsCount(it.value.size)
 
                 appearance {
@@ -275,27 +288,23 @@ internal class MediaItemRepository(
     }
 
     override suspend fun getRandomItem(): MediaMetadataCompat {
-        val randomStation = radioTokDb.stationDao().getRandomStation()
+        val id = radioTokDb.stationDao().getRandomStationId()
 
-        return MediaMetadataCompat.Builder().from(
-            itemModel = dbMapper.invoke(randomStation)
-        ).build()
+        return loadByStationId(id)
     }
 
     override suspend fun getLikedItem(): MediaMetadataCompat {
-        val randomStation = radioTokDb.stationDao().getRandomLikedStation()
+        val id = radioTokDb.stationDao().getRandomLikedStationId()
 
-        return MediaMetadataCompat.Builder().from(
-            itemModel = dbMapper.invoke(randomStation)
-        ).build()
+        return loadByStationId(id)
     }
 
-    override suspend fun loadByStationId(id: String): MediaMetadataCompat =
-        runBlocking {
-            val stationById = radioMetadataDataSource.loadByIds(listOf(id)).first()
+    override suspend fun loadByStationId(id: String): MediaMetadataCompat {
+        logD("loadByStationId: $id")
+        val stationById = radioMetadataDataSource.loadByIds(listOf(id)).first()
 
-            MediaMetadataCompat.Builder().from(
-                itemModel = entityMapper.invoke(stationById)
-            ).build()
-        }
+        return MediaMetadataCompat.Builder().from(
+            itemModel = entityMapper.invoke(stationById)
+        ).build()
+    }
 }
