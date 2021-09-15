@@ -53,7 +53,10 @@ class RadioCacheMediator(
             is CatalogRoot.ByTags -> mediaItemRepository.getCatalogTags()
             is CatalogRoot.ByCountries -> mediaItemRepository.getCatalogCountries()
             is CatalogRoot.ByLanguages -> mediaItemRepository.getCatalogLanguages()
-            else -> throw IllegalArgumentException()
+            else -> {
+                updatePlaylist(mediaPath)
+                emptyList()
+            }
         }
     }
 

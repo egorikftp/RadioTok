@@ -14,7 +14,7 @@ import androidx.media.MediaBrowserServiceCompat
 import androidx.media.utils.MediaConstants.*
 import com.egoriku.radiotok.common.ext.logD
 import com.egoriku.radiotok.radioplayer.constant.MediaBrowserConstant.PATH_ROOT
-import com.egoriku.radiotok.radioplayer.constant.PlayerConstants.NETWORK_ERROR
+import com.egoriku.radiotok.radioplayer.constant.PlayerConstants
 import com.egoriku.radiotok.radioplayer.constant.PlayerConstants.NOTIFICATION_CHANNEL_ID
 import com.egoriku.radiotok.radioplayer.constant.PlayerConstants.NOTIFICATION_ID
 import com.egoriku.radiotok.radioplayer.constant.PlayerConstants.SERVICE_TAG
@@ -304,19 +304,19 @@ class RadioService : MediaBrowserServiceCompat() {
             logD("onLoadChildren: mediaPath = $mediaPath, mediaBrowseItems = $mediaBrowseItems")
 
             if (mediaPath.isPlayable) {
+                logD("onLoadChildren not empty")
+
+                result.sendResult(mediaBrowseItems)
+                preparePlayer()
+            } else {
                 if (mediaBrowseItems.isEmpty()) {
                     logD("onLoadChildren empty")
 
-                    mediaSession.sendSessionEvent(NETWORK_ERROR, null)
+                    mediaSession.sendSessionEvent(PlayerConstants.NETWORK_ERROR, null)
                     result.detach()
                 } else {
-                    logD("onLoadChildren not empty")
-
                     result.sendResult(mediaBrowseItems)
-                    preparePlayer()
                 }
-            } else {
-                result.sendResult(mediaBrowseItems)
             }
         }
     }

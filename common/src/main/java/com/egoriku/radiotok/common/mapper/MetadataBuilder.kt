@@ -11,7 +11,11 @@ object MetadataBuilder {
         }
 
         if (tags.isNotEmpty()) {
-            add(tags.replace(",", ", "))
+            add(
+                tags
+                    .replace(",,", ",")
+                    .replace(",", ", ")
+            )
         }
-    }.joinToString(" / ")
+    }.joinToString(separator = " ")
 }
