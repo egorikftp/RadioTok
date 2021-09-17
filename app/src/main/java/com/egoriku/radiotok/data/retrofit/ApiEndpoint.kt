@@ -1,6 +1,6 @@
 package com.egoriku.radiotok.data.retrofit
 
-import com.egoriku.radiotok.data.Api
+import com.egoriku.radiotok.datasource.intertal.api.Api
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

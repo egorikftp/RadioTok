@@ -9,6 +9,7 @@ sealed class FeedType {
     ) : FeedType()
 
     data class Playlist(
+        val id: String,
         val name: String,
         val icon: Int
     ) : FeedType()

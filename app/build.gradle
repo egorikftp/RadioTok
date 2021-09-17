@@ -31,6 +31,7 @@ android {
 
 dependencies {
     implementation projects.common
+    implementation projects.datasource
     implementation projects.db
     implementation projects.mediaItemDsl
     implementation projects.radioPlayer
@@ -54,6 +55,7 @@ dependencies {
     implementation libs.material
     implementation libs.okhttp
     implementation libs.storage
+    implementation libs.toolbar.compose
 
     debugImplementation libs.compose.tooling
 }

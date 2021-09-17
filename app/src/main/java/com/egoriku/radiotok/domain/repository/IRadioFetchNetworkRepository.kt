@@ -1,6 +1,6 @@
 package com.egoriku.radiotok.domain.repository
 
-import com.egoriku.radiotok.common.entity.RadioEntity
+import com.egoriku.radiotok.datasource.entity.RadioEntity
 
 interface IRadioFetchNetworkRepository {
 

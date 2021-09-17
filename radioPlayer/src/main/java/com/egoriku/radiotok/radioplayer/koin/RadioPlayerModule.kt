@@ -3,12 +3,16 @@ package com.egoriku.radiotok.radioplayer.koin
 import com.egoriku.radiotok.radioplayer.data.CurrentRadioQueueHolder
 import com.egoriku.radiotok.radioplayer.data.RadioStateMediator
 import com.egoriku.radiotok.radioplayer.repository.IMediaItemRepository
+import com.egoriku.radiotok.radioplayer.repository.IMediaMetadataRepository
 import com.egoriku.radiotok.radioplayer.repository.MediaItemRepository
+import com.egoriku.radiotok.radioplayer.repository.MediaMetadataRepository
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.bind
+import org.koin.dsl.factory
 import org.koin.dsl.module
 
 val exoPlayerModule = module {
@@ -33,22 +37,8 @@ val exoPlayerModule = module {
 }
 
 val radioPlayerModule = module {
-    factory<IMediaItemRepository> {
-        MediaItemRepository(
-            bitmapProvider = get(),
-            stringResource = get(),
-            radioTokDb = get(),
-            tagsDataSource = get(),
-            languagesDataSource = get(),
-            countriesDataSource = get(),
-            radioMetadataDataSource = get(),
-            topClicksDataSource = get(),
-            topVoteDataSource = get(),
-            localStationsDataSource = get(),
-            changedLatelyDataSource = get(),
-            playingStationsDataSource = get()
-        )
-    }
+    factory<MediaItemRepository>() bind IMediaItemRepository::class
+    factory<MediaMetadataRepository>() bind IMediaMetadataRepository::class
 
     single {
         RadioStateMediator(radioTokDb = get())

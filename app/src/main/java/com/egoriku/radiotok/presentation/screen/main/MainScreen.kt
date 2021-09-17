@@ -7,6 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
 import com.egoriku.radiotok.extension.currentFraction
 import com.egoriku.radiotok.foundation.SheetContent
 import com.egoriku.radiotok.presentation.ControlsActions
@@ -93,9 +94,21 @@ fun MainScreen(viewModel: RadioViewModel) {
             composable(NavScreen.Settings.route) {
                 SettingScreen()
             }
-            composable(NavScreen.Playlist.route) {
-                PlaylistScreen()
+            composable(route = NavScreen.Playlist.route,) { navBackStackEntry ->
+                val id = navBackStackEntry.extraNotNull<String>("id")
+
+                PlaylistScreen(
+                    id = id,
+                    paddingValues = paddingValues,
+                    navigator = navigator
+                )
             }
         }
     }
+}
+
+inline fun <reified T : Any> NavBackStackEntry.extraNotNull(key: String, default: T? = null): T {
+    val value = arguments?.get(key)
+
+    return requireNotNull(if (value is T) value else default) { key }
 }

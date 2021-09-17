@@ -1,8 +1,7 @@
 package com.egoriku.radiotok.radioplayer.repository
 
 import android.support.v4.media.MediaBrowserCompat.MediaItem
-import android.support.v4.media.MediaMetadataCompat
-import com.egoriku.radiotok.common.entity.RadioEntity
+import com.egoriku.radiotok.datasource.entity.RadioEntity
 
 interface IMediaItemRepository {
 
@@ -26,8 +25,4 @@ interface IMediaItemRepository {
     fun getCatalogTags(): List<MediaItem>
     fun getCatalogCountries(): List<MediaItem>
     fun getCatalogLanguages(): List<MediaItem>
-
-    suspend fun getRandomItem(): MediaMetadataCompat
-    suspend fun getLikedItem(): MediaMetadataCompat
-    suspend fun loadByStationId(id: String): MediaMetadataCompat
 }

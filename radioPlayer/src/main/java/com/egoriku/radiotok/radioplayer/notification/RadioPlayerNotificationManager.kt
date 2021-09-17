@@ -65,8 +65,12 @@ class RadioPlayerNotificationManager(
                 else -> add(ACTION_PLAY)
             }
 
-            if (player.hasNext()) {
+            if (currentRadioQueueHolder.isRandomRadio()) {
                 add(CUSTOM_ACTION_NEXT)
+            } else {
+                if (player.hasNext()) {
+                    add(CUSTOM_ACTION_NEXT)
+                }
             }
 
             val currentRadioId = currentRadioQueueHolder.getMediaMetadataOrNull(

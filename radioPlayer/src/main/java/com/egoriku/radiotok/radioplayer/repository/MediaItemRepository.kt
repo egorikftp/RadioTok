@@ -1,17 +1,15 @@
 package com.egoriku.radiotok.radioplayer.repository
 
 import android.support.v4.media.MediaBrowserCompat
-import android.support.v4.media.MediaMetadataCompat
 import androidx.core.net.toUri
 import com.egoriku.mediaitemdsl.browsableMediaItem
 import com.egoriku.mediaitemdsl.playableMediaItem
-import com.egoriku.radiotok.common.datasource.*
-import com.egoriku.radiotok.common.ext.logD
 import com.egoriku.radiotok.common.provider.IBitmapProvider
 import com.egoriku.radiotok.common.provider.IStringResourceProvider
+import com.egoriku.radiotok.datasource.IEntitySourceFactory
+import com.egoriku.radiotok.datasource.entity.params.MetadataParams
+import com.egoriku.radiotok.datasource.entity.params.PlaylistParams
 import com.egoriku.radiotok.db.RadioTokDb
-import com.egoriku.radiotok.db.mapper.RadioEntityToModelMapper
-import com.egoriku.radiotok.radioplayer.ext.from
 import com.egoriku.radiotok.radioplayer.model.MediaPath.*
 import kotlinx.coroutines.runBlocking
 
@@ -19,18 +17,8 @@ internal class MediaItemRepository(
     private val bitmapProvider: IBitmapProvider,
     private val stringResource: IStringResourceProvider,
     private val radioTokDb: RadioTokDb,
-    private val tagsDataSource: ITagsDataSource,
-    private val languagesDataSource: ILanguagesDataSource,
-    private val countriesDataSource: ICountriesDataSource,
-    private val radioMetadataDataSource: IRadioMetadataDataSource,
-    private val topClicksDataSource: ITopClicksDataSource,
-    private val topVoteDataSource: ITopVoteDataSource,
-    private val localStationsDataSource: ILocalStationsDataSource,
-    private val changedLatelyDataSource: IChangedLatelyDataSource,
-    private val playingStationsDataSource: IPlayingStationsDataSource
+    private val entitySourceFactory: IEntitySourceFactory
 ) : IMediaItemRepository {
-
-    private val entityMapper = RadioEntityToModelMapper()
 
     override fun getRootItems() = listOf(
         browsableMediaItem {
@@ -108,7 +96,7 @@ internal class MediaItemRepository(
                 id = PlayLiked.path
                 title = "Play All"
             }
-        ) + radioMetadataDataSource.loadByIds(
+        ) + entitySourceFactory.loadByIds(
             ids = radioTokDb.stationDao().getLikedStationsIds()
         ).map {
             playableMediaItem {
@@ -125,7 +113,7 @@ internal class MediaItemRepository(
     }
 
     override fun getLikedItemsTest() = runBlocking {
-        radioMetadataDataSource.loadByIds(
+        entitySourceFactory.loadByIds(
             ids = radioTokDb.stationDao().getLikedStationsIds()
         )
     }
@@ -135,7 +123,7 @@ internal class MediaItemRepository(
     }
 
     override fun getDislikedItems() = runBlocking {
-        radioMetadataDataSource.loadByIds(
+        entitySourceFactory.loadByIds(
             ids = radioTokDb.stationDao().getDislikedStationsIds()
         ).map {
             playableMediaItem {
@@ -176,7 +164,7 @@ internal class MediaItemRepository(
     )
 
     override fun getLocalItems() = runBlocking {
-        localStationsDataSource.load().map { radioEntity ->
+        entitySourceFactory.loadBy(params = PlaylistParams.LocalStations).map { radioEntity ->
             playableMediaItem {
                 id = radioEntity.stationUuid
                 title = radioEntity.name
@@ -204,7 +192,7 @@ internal class MediaItemRepository(
     )
 
     override fun getTopClicksItems() = runBlocking {
-        topClicksDataSource.load().map { radioEntity ->
+        entitySourceFactory.loadBy(params = PlaylistParams.TopClicks).map { radioEntity ->
             playableMediaItem {
                 id = radioEntity.stationUuid
                 title = radioEntity.name
@@ -214,7 +202,7 @@ internal class MediaItemRepository(
     }
 
     override fun getTopVoteItems() = runBlocking {
-        topVoteDataSource.load().map { radioEntity ->
+        entitySourceFactory.loadBy(params = PlaylistParams.TopVote).map { radioEntity ->
             playableMediaItem {
                 id = radioEntity.stationUuid
                 title = radioEntity.name
@@ -224,7 +212,7 @@ internal class MediaItemRepository(
     }
 
     override fun getChangedLatelyItems() = runBlocking {
-        changedLatelyDataSource.load().map { radioEntity ->
+        entitySourceFactory.loadBy(params = PlaylistParams.ChangedLately).map { radioEntity ->
             playableMediaItem {
                 id = radioEntity.stationUuid
                 title = radioEntity.name
@@ -234,7 +222,7 @@ internal class MediaItemRepository(
     }
 
     override fun getPlayingItems() = runBlocking {
-        playingStationsDataSource.load().map { radioEntity ->
+        entitySourceFactory.loadBy(params = PlaylistParams.PlayingNow).map { radioEntity ->
             playableMediaItem {
                 id = radioEntity.stationUuid
                 title = radioEntity.name
@@ -244,22 +232,24 @@ internal class MediaItemRepository(
     }
 
     override fun getCatalogTags() = runBlocking {
-        tagsDataSource.getGroupedTags().map {
-            browsableMediaItem {
-                id = it.key
-                title = it.key
-                iconUri = bitmapProvider.bgRadioGradient
-                subTitle = stringResource.getStationsCount(it.value.size)
+        entitySourceFactory.loadBy(MetadataParams.Tags)
+            .groupBy { it.name.substring(0, 1) }
+            .map {
+                browsableMediaItem {
+                    id = it.key
+                    title = it.key
+                    iconUri = bitmapProvider.bgRadioGradient
+                    subTitle = stringResource.getStationsCount(it.value.size)
 
-                appearance {
-                    showAsList = true
+                    appearance {
+                        showAsList = true
+                    }
                 }
             }
-        }
     }
 
     override fun getCatalogCountries() = runBlocking {
-        countriesDataSource.load().map {
+        entitySourceFactory.loadBy(params = MetadataParams.Countries).map {
             browsableMediaItem {
                 id = it.name
                 title = it.name
@@ -273,7 +263,7 @@ internal class MediaItemRepository(
     }
 
     override fun getCatalogLanguages() = runBlocking {
-        languagesDataSource.load().map {
+        entitySourceFactory.loadBy(params = MetadataParams.Languages).map {
             browsableMediaItem {
                 id = it.name
                 title = it.name
@@ -285,26 +275,5 @@ internal class MediaItemRepository(
                 }
             }
         }
-    }
-
-    override suspend fun getRandomItem(): MediaMetadataCompat {
-        val id = radioTokDb.stationDao().getRandomStationId()
-
-        return loadByStationId(id)
-    }
-
-    override suspend fun getLikedItem(): MediaMetadataCompat {
-        val id = radioTokDb.stationDao().getRandomLikedStationId()
-
-        return loadByStationId(id)
-    }
-
-    override suspend fun loadByStationId(id: String): MediaMetadataCompat {
-        logD("loadByStationId: $id")
-        val stationById = radioMetadataDataSource.loadByIds(listOf(id)).first()
-
-        return MediaMetadataCompat.Builder().from(
-            itemModel = entityMapper.invoke(stationById)
-        ).build()
     }
 }

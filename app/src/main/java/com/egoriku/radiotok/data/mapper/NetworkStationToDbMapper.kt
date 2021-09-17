@@ -1,7 +1,7 @@
 package com.egoriku.radiotok.data.mapper
 
-import com.egoriku.radiotok.common.entity.RadioEntity
 import com.egoriku.radiotok.common.ext.IMapper
+import com.egoriku.radiotok.datasource.entity.RadioEntity
 import com.egoriku.radiotok.db.entity.StationDbEntity
 
 class NetworkStationToDbMapper : IMapper<RadioEntity, StationDbEntity> {

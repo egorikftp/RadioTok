@@ -22,7 +22,7 @@ import com.egoriku.radiotok.R
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun RadioLogo(url: String) {
+fun RadioLogo(url: String, modifier: Modifier = Modifier) {
     val painter = rememberImagePainter(
         data = url,
         builder = {
@@ -33,7 +33,7 @@ fun RadioLogo(url: String) {
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
+        modifier = modifier
             .size(300.dp)
             .shadow(30.dp, CircleShape)
             .background(

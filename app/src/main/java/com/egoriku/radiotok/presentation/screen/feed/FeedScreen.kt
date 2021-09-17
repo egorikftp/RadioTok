@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.egoriku.radiotok.R
+import com.egoriku.radiotok.foundation.button.IconButton
 import com.egoriku.radiotok.presentation.screen.Navigator
 import com.egoriku.radiotok.presentation.screen.feed.ui.FeedRow
 import com.egoriku.radiotok.presentation.screen.feed.ui.InstantRadio
@@ -66,7 +67,7 @@ fun FeedScreen(
                         ScreenHeader(
                             title = stringResource(id = R.string.app_name)
                         ) {
-                            com.egoriku.radiotok.foundation.button.IconButton(
+                            IconButton(
                                 modifier = Modifier.padding(end = 8.dp),
                                 painter = painterResource(id = R.drawable.ic_settings),
                                 contentDescription = stringResource(id = R.string.cc_open_settings)
@@ -87,14 +88,18 @@ fun FeedScreen(
                     item {
                         FeedRow(title = stringResource(id = R.string.media_item_path_personal_playlists)) {
                             items(state.feed.forYou) {
-                                PlaylistWithIcon(collection = it)
+                                PlaylistWithIcon(collection = it) { id ->
+                                    navigator.openPlaylist(id)
+                                }
                             }
                         }
                     }
                     item {
                         FeedRow(title = stringResource(id = R.string.media_item_path_smart_playlists)) {
                             items(state.feed.smartPlaylists) {
-                                PlaylistWithIcon(collection = it)
+                                PlaylistWithIcon(collection = it) { id ->
+                                    navigator.openPlaylist(id)
+                                }
                             }
                         }
                     }

@@ -3,6 +3,7 @@ activity-compose = "1.3.1"
 accompanist = "0.18.0"
 appcompat = "1.3.1"
 core = "1.6.0"
+coroutines = "1.5.2"
 coil = "1.3.2"
 compose = "1.1.0-alpha03"
 exoPlayer = "2.14.2"
@@ -11,6 +12,7 @@ kotlin = "1.5.30"
 retrofit = "2.9.0"
 okhttp = "4.9.1"
 room = "2.4.0-alpha04"
+toolbar-compose = "2.2.0"
 
 [libraries]
 gradle-build-tools = "com.android.tools.build:gradle:7.0.2"
@@ -33,6 +35,7 @@ compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.r
 compose-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 
 core = { module = "androidx.core:core-ktx", version.ref = "core" }
+coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 
 exoplayer-core = { module = "com.google.android.exoplayer:exoplayer-core", version.ref = "exoPlayer" }
 exoplayer-hls = { module = "com.google.android.exoplayer:exoplayer-hls", version.ref = "exoPlayer" }
@@ -60,6 +63,8 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 
 storage = "com.anggrayudi:storage:0.12.0"
+
+toolbar-compose = { module = "me.onebone:toolbar-compose", version.ref = "toolbar-compose" }
 
 [bundles]
 compose = ["compose-ui", "compose-material", "compose-preview"]

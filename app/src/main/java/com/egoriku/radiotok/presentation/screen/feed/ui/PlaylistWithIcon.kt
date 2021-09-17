@@ -21,7 +21,8 @@ import com.egoriku.radiotok.foundation.HSpacer
 @Composable
 fun PlaylistWithIcon(
     modifier: Modifier = Modifier,
-    collection: FeedType.Playlist
+    collection: FeedType.Playlist,
+    onClick: (String) -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(20.dp),
@@ -31,7 +32,7 @@ fun PlaylistWithIcon(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .clickable { },
+                .clickable { onClick(collection.id) },
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

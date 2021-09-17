@@ -3,10 +3,10 @@ package com.egoriku.radiotok.radioplayer.ext
 import android.net.Uri
 import android.support.v4.media.MediaMetadataCompat
 import androidx.core.net.toUri
-import com.egoriku.radiotok.common.entity.RadioEntity
 import com.egoriku.radiotok.common.ext.logD
 import com.egoriku.radiotok.common.mapper.MetadataBuilder
 import com.egoriku.radiotok.common.model.RadioItemModel
+import com.egoriku.radiotok.datasource.entity.RadioEntity
 
 const val NO_GET = "Property does not have a 'get'"
 
