@@ -12,10 +12,12 @@ import com.egoriku.radiotok.radioplayer.model.MediaPath.*
 import com.egoriku.radiotok.radioplayer.model.MediaPath.ShuffleAndPlayRoot.ShuffleLiked
 import com.egoriku.radiotok.radioplayer.model.MediaPath.ShuffleAndPlayRoot.ShuffleRandom
 import com.egoriku.radiotok.radioplayer.repository.IMediaItemRepository
+import com.egoriku.radiotok.radioplayer.repository.IMediaMetadataRepository
 
 class RadioCacheMediator(
     private val radioCacheUseCase: IRadioCacheUseCase,
     private val mediaItemRepository: IMediaItemRepository,
+    private val mediaMetadataRepository: IMediaMetadataRepository,
     private val currentRadioQueueHolder: CurrentRadioQueueHolder
 ) : IRadioCacheMediator {
 
@@ -25,7 +27,7 @@ class RadioCacheMediator(
 
         currentRadioQueueHolder.updateQueue(
             mediaPath = Single,
-            stations = listOf(mediaItemRepository.loadByStationId(id))
+            stations = listOf(mediaMetadataRepository.loadByStationId(id))
         )
     }
 
@@ -64,8 +66,8 @@ class RadioCacheMediator(
         checkCacheOrLoad()
 
         return when (mediaPath) {
-            is ShuffleRandom -> mediaItemRepository.getRandomItem()
-            is ShuffleLiked -> mediaItemRepository.getLikedItem()
+            is ShuffleRandom -> mediaMetadataRepository.getRandomItem()
+            is ShuffleLiked -> mediaMetadataRepository.getLikedItem()
             else -> throw IllegalArgumentException()
         }
     }
