@@ -10,6 +10,7 @@ import com.egoriku.radiotok.radioplayer.data.RadioStateMediator
 import com.egoriku.radiotok.radioplayer.ext.id
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
+import com.google.android.exoplayer2.ui.R
 
 class RadioPlayerNotificationManager(
     context: Context,
@@ -26,13 +27,22 @@ class RadioPlayerNotificationManager(
     notificationId,
     mediaDescriptionAdapter,
     notificationListener,
-    customActionReceiver
+    customActionReceiver,
+    R.drawable.exo_notification_small_icon,
+    R.drawable.exo_notification_play,
+    R.drawable.exo_notification_pause,
+    R.drawable.exo_notification_stop,
+    R.drawable.exo_notification_rewind,
+    R.drawable.exo_notification_fastforward,
+    R.drawable.exo_notification_previous,
+    R.drawable.exo_notification_next,
+    null
 ) {
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun getActionIndicesForCompactView(
         actionNames: MutableList<String>,
-        player: Player
+        player: Player,
     ): IntArray {
         val pauseActionIndex = actionNames.indexOf(ACTION_PAUSE)
         val playActionIndex = actionNames.indexOf(ACTION_PLAY)
@@ -68,7 +78,7 @@ class RadioPlayerNotificationManager(
             if (currentRadioQueueHolder.isRandomRadio()) {
                 add(CUSTOM_ACTION_NEXT)
             } else {
-                if (player.hasNext()) {
+                if (player.hasNextWindow()) {
                     add(CUSTOM_ACTION_NEXT)
                 }
             }

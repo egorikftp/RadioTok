@@ -34,6 +34,7 @@ import com.egoriku.radiotok.radioplayer.notification.listener.NotificationMediaB
 import com.egoriku.radiotok.radioplayer.notification.listener.RadioPlayerNotificationListener
 import com.egoriku.radiotok.radioplayer.queue.RadioQueueNavigator
 import com.google.android.exoplayer2.ExoPlaybackException
+import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
@@ -88,21 +89,21 @@ class RadioService : MediaBrowserServiceCompat() {
         mediaSessionConnector = MediaSessionConnector(mediaSession).apply {
             setPlayer(simpleExoPlayer)
 
-            setErrorMessageProvider { error ->
-                when (error.type) {
-                    ExoPlaybackException.TYPE_SOURCE -> {
-                        logD("TYPE_SOURCE: " + error.sourceException.toString())
-                        Pair(0, applicationContext.getString(R.string.playback_error_source))
+            setErrorMessageProvider { error: PlaybackException ->
+                if (error is ExoPlaybackException) {
+                    val message = when (error.type) {
+                        ExoPlaybackException.TYPE_SOURCE -> {
+                            logD("TYPE_SOURCE: " + error.sourceException.toString())
+                            applicationContext.getString(R.string.playback_error_source)
+                        }
+                        ExoPlaybackException.TYPE_RENDERER -> "TYPE_RENDERER: " + error.rendererException.toString()
+                        ExoPlaybackException.TYPE_UNEXPECTED -> "TYPE_UNEXPECTED: " + error.unexpectedException.toString()
+                        else -> "ETC: " + error.sourceException.toString()
                     }
-                    ExoPlaybackException.TYPE_RENDERER -> Pair(
-                        0,
-                        "TYPE_RENDERER: " + error.rendererException.toString()
-                    )
-                    ExoPlaybackException.TYPE_UNEXPECTED -> Pair(
-                        0,
-                        "TYPE_UNEXPECTED: " + error.unexpectedException.toString()
-                    )
-                    else -> Pair(0, "ETC: " + error.sourceException.toString())
+
+                    Pair(0, message)
+                } else {
+                    Pair(0, "unknown error")
                 }
             }
 
@@ -266,7 +267,7 @@ class RadioService : MediaBrowserServiceCompat() {
     override fun onGetRoot(
         clientPackageName: String,
         clientUid: Int,
-        rootHints: Bundle?
+        rootHints: Bundle?,
     ): BrowserRoot {
         val rootExtras = bundleOf(
             MEDIA_SEARCH_SUPPORTED to true,
@@ -279,7 +280,7 @@ class RadioService : MediaBrowserServiceCompat() {
     override fun onSearch(
         query: String,
         extras: Bundle?,
-        result: Result<MutableList<MediaBrowserCompat.MediaItem>>
+        result: Result<MutableList<MediaBrowserCompat.MediaItem>>,
     ) {
         logD("onSearch: $query")
         super.onSearch(query, extras, result)
@@ -287,7 +288,7 @@ class RadioService : MediaBrowserServiceCompat() {
 
     override fun onLoadChildren(
         parentId: String,
-        result: Result<List<MediaBrowserCompat.MediaItem>>
+        result: Result<List<MediaBrowserCompat.MediaItem>>,
     ) {
         logD("onLoadChildren: $parentId")
 

@@ -44,8 +44,8 @@ class RadioQueueNavigator(
         when {
             currentRadioQueueHolder.isRandomRadio() -> onNextRandom()
             else -> {
-                if (player.hasNext()) {
-                    player.next()
+                if (player.hasNextWindow()) {
+                    player.seekToNextWindow()
                 } else {
                     player.stop()
                 }

@@ -2,6 +2,7 @@ package com.egoriku.radiotok.radioplayer.listener
 
 import com.egoriku.radiotok.common.ext.logD
 import com.google.android.exoplayer2.ExoPlaybackException
+import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
 
 class RadioPlayerEventListener(
@@ -15,16 +16,18 @@ class RadioPlayerEventListener(
         }
     }
 
-    override fun onPlayerError(error: ExoPlaybackException) {
+    override fun onPlayerError(error: PlaybackException) {
         super.onPlayerError(error)
 
         onError()
 
-        when (error.type) {
-            ExoPlaybackException.TYPE_SOURCE -> logD("onPlayerError, TYPE_SOURCE: " + error.sourceException.toString())
-            ExoPlaybackException.TYPE_RENDERER -> logD("onPlayerError, TYPE_RENDERER: " + error.rendererException.toString())
-            ExoPlaybackException.TYPE_UNEXPECTED -> logD("onPlayerError, TYPE_UNEXPECTED: " + error.unexpectedException.toString())
-            else -> logD("onPlayerError, ETC: " + error.sourceException.toString())
+        if (error is ExoPlaybackException) {
+            when (error.type) {
+                ExoPlaybackException.TYPE_SOURCE -> logD("onPlayerError, TYPE_SOURCE: " + error.sourceException.toString())
+                ExoPlaybackException.TYPE_RENDERER -> logD("onPlayerError, TYPE_RENDERER: " + error.rendererException.toString())
+                ExoPlaybackException.TYPE_UNEXPECTED -> logD("onPlayerError, TYPE_UNEXPECTED: " + error.unexpectedException.toString())
+                else -> logD("onPlayerError, ETC: " + error.sourceException.toString())
+            }
         }
     }
 }
