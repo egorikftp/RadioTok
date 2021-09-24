@@ -240,6 +240,7 @@ class RadioService : MediaBrowserServiceCompat() {
         simpleExoPlayer.setMediaSource(currentRadioQueueHolder.currentMediaSource)
         simpleExoPlayer.prepare()
         simpleExoPlayer.playWhenReady = true
+        simpleExoPlayer.play()
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {

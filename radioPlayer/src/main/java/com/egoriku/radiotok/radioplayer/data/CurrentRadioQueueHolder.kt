@@ -20,6 +20,8 @@ class CurrentRadioQueueHolder(
     var radioStations = mutableListOf<MediaMetadataCompat>()
         private set
 
+    fun isSingle() = currentMediaPath == MediaPath.Single
+
     fun isRandomRadio() = currentMediaPath == ShuffleAndPlayRoot.ShuffleRandom ||
             currentMediaPath == ShuffleAndPlayRoot.ShuffleLiked
 
