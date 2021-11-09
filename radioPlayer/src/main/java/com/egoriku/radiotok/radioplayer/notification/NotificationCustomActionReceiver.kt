@@ -85,7 +85,7 @@ class NotificationCustomActionReceiver(
         context,
         instanceId,
         Intent(action).setPackage(context.packageName),
-        PendingIntent.FLAG_CANCEL_CURRENT
+        PendingIntent.FLAG_IMMUTABLE
     )
 }
 
