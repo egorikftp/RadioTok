@@ -2,6 +2,7 @@ package com.egoriku.radiotok.datasource.intertal.api
 
 import com.egoriku.radiotok.datasource.entity.MetadataEntity
 import com.egoriku.radiotok.datasource.entity.RadioEntity
+import com.egoriku.radiotok.datasource.intertal.datasource.random.entity.ServerStats
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -39,4 +40,7 @@ interface Api {
 
     @GET("json/tags")
     suspend fun allTags(): List<MetadataEntity>
+
+    @GET("json/stats")
+    suspend fun stats(): ServerStats
 }

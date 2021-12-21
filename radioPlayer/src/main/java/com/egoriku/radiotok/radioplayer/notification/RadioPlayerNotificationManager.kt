@@ -39,7 +39,6 @@ class RadioPlayerNotificationManager(
     null
 ) {
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun getActionIndicesForCompactView(
         actionNames: MutableList<String>,
         player: Player,
@@ -65,7 +64,6 @@ class RadioPlayerNotificationManager(
         }.toIntArray()
     }
 
-    @ExperimentalStdlibApi
     override fun getActions(player: Player): List<String> {
         return buildList {
             add(CUSTOM_ACTION_DISLIKE)
