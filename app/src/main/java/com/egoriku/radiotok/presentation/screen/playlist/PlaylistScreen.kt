@@ -19,8 +19,10 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.egoriku.radiotok.foundation.button.IconButton
-import com.egoriku.radiotok.presentation.screen.Navigator
 import com.egoriku.radiotok.presentation.screen.playlist.components.CircleResourceImage
 import com.egoriku.radiotok.presentation.screen.playlist.components.RadioListItem
 import com.egoriku.radiotok.presentation.screen.playlist.components.ShuffleButton
@@ -32,104 +34,104 @@ import me.onebone.toolbar.ScrollStrategy
 import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
 import org.koin.androidx.compose.getViewModel
 
-@Composable
-fun PlaylistScreen(
-    id: String,
-    paddingValues: PaddingValues,
-    navigator: Navigator
-) {
-    val playlistViewModel = getViewModel<PlaylistViewModel>()
+class PlaylistScreen(private val id: String) : Screen {
 
-    LaunchedEffect(key1 = Unit) {
-        playlistViewModel.load(id)
-    }
+    @Composable
+    override fun Content() {
+        val playlistViewModel = getViewModel<PlaylistViewModel>()
+        val navigator = LocalNavigator.currentOrThrow
 
-    val playlistState by playlistViewModel.playlistState.collectAsState()
-
-    when (val playlistState: PlaylistState = playlistState) {
-        is PlaylistState.Loading -> {
-            Surface(modifier = Modifier.fillMaxSize()) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(modifier = Modifier)
-                }
-            }
+        LaunchedEffect(key1 = Unit) {
+            playlistViewModel.load(id)
         }
-        is PlaylistState.Error -> {
-            Surface(modifier = Modifier.fillMaxSize()) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = "Error loading")
-                }
-            }
-        }
-        is PlaylistState.Success -> {
-            val state = rememberCollapsingToolbarScaffoldState()
 
-            CollapsingToolbarScaffold(
-                modifier = Modifier.fillMaxSize(),
-                state = state,
-                scrollStrategy = ScrollStrategy.ExitUntilCollapsed,
-                toolbarModifier = Modifier.statusBarsPadding(),
-                toolbar = {
-                    val textSize = (18 + (30 - 18) * state.toolbarState.progress).sp
+        val playlistState by playlistViewModel.playlistState.collectAsState()
 
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(300.dp)
-                            .pin()
-                    )
-
-                    CircleResourceImage(
-                        modifier = Modifier
-                            .road(Alignment.Center, Alignment.Center)
-                            .graphicsLayer {
-                                alpha = state.toolbarState.progress
-                            },
-                        size = 150.dp,
-                        iconSize = 50.dp,
-                        tintColor = Color.White,
-                        painter = painterResource(id = playlistState.playlist.icon)
-                    )
-
-                    Text(
-                        text = playlistState.playlist.title,
-                        modifier = Modifier
-                            .road(Alignment.TopCenter, Alignment.BottomCenter)
-                            .padding(horizontal = 32.dp, vertical = 16.dp),
-                        fontSize = textSize
-                    )
-
-                    IconButton(
-                        modifier = Modifier
-                            .pin()
-                            .padding(start = 8.dp),
-                        imageVector = Icons.Default.Close,
-                    ) {
-                        navigator.back()
+        when (
+            val playlistState: PlaylistState = playlistState) {
+            is PlaylistState.Loading -> {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(modifier = Modifier)
                     }
                 }
-            ) {
-                LazyColumn(
-                    contentPadding = rememberInsetsPaddingValues(
-                        insets = LocalWindowInsets.current.systemBars,
-                        applyTop = true,
-                        applyBottom = true,
-                        additionalTop = 70.dp,
-                        additionalBottom = paddingValues.calculateBottomPadding()
-                    ),
-                ) {
-                    items(playlistState.playlist.radioStations) {
-                        RadioListItem(
-                            radioItemModel = it
+            }
+            is PlaylistState.Error -> {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text(text = "Error loading")
+                    }
+                }
+            }
+            is PlaylistState.Success -> {
+                val state = rememberCollapsingToolbarScaffoldState()
+
+                CollapsingToolbarScaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    state = state,
+                    scrollStrategy = ScrollStrategy.ExitUntilCollapsed,
+                    toolbarModifier = Modifier.statusBarsPadding(),
+                    toolbar = {
+                        val textSize = (18 + (30 - 18) * state.toolbarState.progress).sp
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(300.dp)
+                                .pin()
                         )
-                    }
-                }
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
+                        CircleResourceImage(
+                            modifier = Modifier
+                                .road(Alignment.Center, Alignment.Center)
+                                .graphicsLayer {
+                                    alpha = state.toolbarState.progress
+                                },
+                            size = 150.dp,
+                            iconSize = 50.dp,
+                            tintColor = Color.White,
+                            painter = painterResource(id = playlistState.playlist.icon)
+                        )
+
+                        Text(
+                            text = playlistState.playlist.title,
+                            modifier = Modifier
+                                .road(Alignment.TopCenter, Alignment.BottomCenter)
+                                .padding(horizontal = 32.dp, vertical = 16.dp),
+                            fontSize = textSize
+                        )
+
+                        IconButton(
+                            modifier = Modifier
+                                .pin()
+                                .padding(start = 8.dp),
+                            imageVector = Icons.Default.Close,
+                        ) {
+                            navigator.pop()
+                        }
+                    }
                 ) {
-                    ShuffleButton()
+                    LazyColumn(
+                        contentPadding = rememberInsetsPaddingValues(
+                            insets = LocalWindowInsets.current.systemBars,
+                            applyTop = true,
+                            applyBottom = true,
+                            additionalTop = 70.dp
+                        ),
+                    ) {
+                        items(playlistState.playlist.radioStations) {
+                            RadioListItem(
+                                radioItemModel = it
+                            )
+                        }
+                    }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        ShuffleButton()
+                    }
                 }
             }
         }

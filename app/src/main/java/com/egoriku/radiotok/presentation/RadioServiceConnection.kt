@@ -138,7 +138,8 @@ internal class RadioServiceConnection(context: Context) : IMusicServiceConnectio
 
                             RadioItemModel(
                                 id = description.mediaId ?: EMPTY,
-                                name = description.title.toString(),
+                                title = description.title.toString(),
+                                subTitle = description.subtitle.toString(),
                                 streamUrl = description.mediaUri.toString(),
                                 icon = description.iconUri.toString()
                             )

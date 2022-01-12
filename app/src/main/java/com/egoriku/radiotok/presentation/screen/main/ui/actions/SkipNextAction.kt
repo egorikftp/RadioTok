@@ -1,4 +1,4 @@
-package com.egoriku.radiotok.presentation.ui.radio.actions
+package com.egoriku.radiotok.presentation.screen.main.ui.actions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,21 +11,21 @@ import com.egoriku.radiotok.presentation.ui.RadioTokTheme
 
 @Preview(showBackground = true)
 @Composable
-fun TuneActionPreview() {
+fun SkipNextActionPreview() {
     RadioTokTheme {
-        TuneAction {}
+        SkipNextAction {}
     }
 }
 
 @Composable
-fun TuneAction(
+fun SkipNextAction(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     IconButton(
         modifier = modifier,
-        painter = painterResource(R.drawable.ic_tune),
-        contentDescription = stringResource(id = R.string.cc_tune)
+        painter = painterResource(R.drawable.ic_skip_next),
+        contentDescription = stringResource(id = R.string.cc_skip_next)
     ) {
         onClick()
     }

@@ -10,7 +10,7 @@ class RadioEntityToModelMapper : IMapper<RadioEntity, RadioItemModel> {
     override fun invoke(radioEntity: RadioEntity): RadioItemModel =
         RadioItemModel(
             id = radioEntity.stationUuid,
-            name = radioEntity.name,
+            title = radioEntity.name,
             streamUrl = radioEntity.streamUrl,
             icon = radioEntity.icon,
             hls = radioEntity.hls,

@@ -1,20 +1,16 @@
 package com.egoriku.radiotok.presentation
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
+import cafe.adriel.voyager.navigator.Navigator
 import com.egoriku.radiotok.presentation.screen.main.MainScreen
 import com.egoriku.radiotok.presentation.ui.RadioTokTheme
 import com.google.accompanist.insets.ProvideWindowInsets
-import org.koin.androidx.scope.ScopeActivity
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : ScopeActivity() {
+class MainActivity : ComponentActivity() {
 
-    private val viewModel: RadioViewModel by viewModel()
-
-    @SuppressLint("MissingSuperCall")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -23,18 +19,9 @@ class MainActivity : ScopeActivity() {
         setContent {
             RadioTokTheme {
                 ProvideWindowInsets {
-                    MainScreen(viewModel)
+                    Navigator(screen = MainScreen)
                 }
             }
         }
     }
-}
-
-class ControlsActions(viewModel: RadioViewModel) {
-
-    val dislikeRadioStationEvent: () -> Unit = { viewModel.dislikeRadioStation() }
-    val tuneRadiosEvent: () -> Unit = {}
-    val playPauseEvent: () -> Unit = { viewModel.togglePlayPause() }
-    val nextRadioEvent: () -> Unit = { viewModel.nextRadioStation() }
-    val toggleFavoriteEvent: () -> Unit = { viewModel.likeRadioStation() }
 }

@@ -25,7 +25,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion libs.versions.compose.get()
+        kotlinCompilerExtensionVersion libs.versions.composeCompiler.get()
     }
 }
 
@@ -46,6 +46,7 @@ dependencies {
     implementation libs.accompanist.placeholder
     implementation libs.appcompat
     implementation libs.coil
+    implementation libs.constraintlayoutCompose
     implementation libs.core
     implementation libs.gson
     implementation libs.koin.android
@@ -56,6 +57,8 @@ dependencies {
     implementation libs.okhttp
     implementation libs.storage
     implementation libs.toolbar.compose
+    implementation libs.voyager.androidx
+    implementation libs.voyager.navigator
 
     debugImplementation libs.compose.tooling
 }

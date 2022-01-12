@@ -1,4 +1,4 @@
-package com.egoriku.radiotok.presentation.ui.radio.actions
+package com.egoriku.radiotok.presentation.screen.main.ui.actions
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.MaterialTheme

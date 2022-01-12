@@ -3,6 +3,7 @@ package com.egoriku.radiotok.presentation.screen.playlist.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.MaterialTheme.typography
@@ -13,11 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.egoriku.radiotok.R
 import com.egoriku.radiotok.common.model.RadioItemModel
-import com.egoriku.radiotok.presentation.ui.radio.miniplayer.component.RadioLogoSmall
+import com.egoriku.radiotok.foundation.NetworkImage
 
 @Composable
 fun RadioListItem(radioItemModel: RadioItemModel) {
@@ -25,9 +29,18 @@ fun RadioListItem(radioItemModel: RadioItemModel) {
         modifier = Modifier.padding(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        RadioLogoSmall(
-            modifier = Modifier.padding(4.dp),
-            url = radioItemModel.icon
+        NetworkImage(
+            modifier = Modifier
+                .size(48.dp)
+                .padding(4.dp),
+            data = radioItemModel.icon,
+            error = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_radio),
+                    tint = MaterialTheme.colors.onPrimary,
+                    contentDescription = stringResource(id = R.string.cc_radio_logo_error)
+                )
+            }
         )
 
         Column(
@@ -36,7 +49,7 @@ fun RadioListItem(radioItemModel: RadioItemModel) {
                 .weight(1f)
         ) {
             Text(
-                text = radioItemModel.name,
+                text = radioItemModel.title,
                 style = typography.h6.copy(fontSize = 16.sp),
                 color = MaterialTheme.colors.onSurface
             )
@@ -47,16 +60,6 @@ fun RadioListItem(radioItemModel: RadioItemModel) {
                 overflow = TextOverflow.Ellipsis
             )
         }
-        /*if (radioItemModel.id % 3 == 0) {
-            Icon(
-                imageVector = Icons.Default.Favorite,
-                contentDescription = null,
-                tint = MaterialTheme.colors.primaryVariant,
-                modifier = Modifier
-                    .padding(4.dp)
-                    .size(20.dp)
-            )
-        }*/
         Icon(
             imageVector = Icons.Default.MoreVert,
             contentDescription = null,

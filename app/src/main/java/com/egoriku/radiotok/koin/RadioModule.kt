@@ -16,7 +16,6 @@ import com.egoriku.radiotok.domain.usecase.IRadioCacheUseCase
 import com.egoriku.radiotok.domain.usecase.PlaylistUseCase
 import com.egoriku.radiotok.domain.usecase.RadioCacheUseCase
 import com.egoriku.radiotok.presentation.IMusicServiceConnection
-import com.egoriku.radiotok.presentation.MainActivity
 import com.egoriku.radiotok.presentation.RadioServiceConnection
 import com.egoriku.radiotok.presentation.RadioViewModel
 import com.egoriku.radiotok.presentation.screen.feed.FeedViewModel
@@ -73,10 +72,8 @@ val radioModule = module {
         RadioServiceConnection(context = androidContext())
     }
 
-    scope<MainActivity> {
-        viewModel {
-            RadioViewModel(serviceConnection = get())
-        }
+    viewModel {
+        RadioViewModel(serviceConnection = get())
     }
 }
 

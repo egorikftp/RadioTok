@@ -1,4 +1,4 @@
-package com.egoriku.radiotok.presentation.ui.radio.controls
+package com.egoriku.radiotok.presentation.screen.main.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.egoriku.radiotok.presentation.ControlsActions
-import com.egoriku.radiotok.presentation.ui.radio.actions.*
+import com.egoriku.radiotok.presentation.screen.main.PlayerControlsActions
+import com.egoriku.radiotok.presentation.screen.main.ui.actions.*
 
 @Composable
 fun PlayerControls(
@@ -18,14 +18,14 @@ fun PlayerControls(
     isPlaying: Boolean,
     isLiked: Boolean,
     isError: Boolean,
-    controlsActions: ControlsActions
+    playerControlsActions: PlayerControlsActions
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         NotInterestedAction(
-            onClick = controlsActions.dislikeRadioStationEvent,
+            onClick = playerControlsActions.dislikeRadioStationEvent,
             modifier = Modifier.padding(start = 16.dp)
         )
 
@@ -35,26 +35,26 @@ fun PlayerControls(
             horizontalArrangement = Arrangement.Center
         ) {
             TuneAction(
-                onClick = controlsActions.tuneRadiosEvent,
+                onClick = playerControlsActions.tuneRadiosEvent,
                 modifier = Modifier.padding(end = 16.dp)
             )
 
             PlayPauseAction(
                 enable = !isError,
                 isPlaying = isPlaying,
-                onClick = controlsActions.playPauseEvent
+                onClick = playerControlsActions.playPauseEvent
             )
 
             SkipNextAction(
                 modifier = Modifier.padding(start = 16.dp),
-                onClick = controlsActions.nextRadioEvent
+                onClick = playerControlsActions.nextRadioEvent
             )
         }
 
         LikeAction(
             modifier = Modifier.padding(end = 16.dp),
             tint = MaterialTheme.colors.secondary,
-            onClick = { controlsActions.toggleFavoriteEvent() },
+            onClick = { playerControlsActions.toggleFavoriteEvent() },
             isLiked = isLiked
         )
     }

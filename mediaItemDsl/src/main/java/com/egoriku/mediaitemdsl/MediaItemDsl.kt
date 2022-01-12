@@ -13,7 +13,7 @@ inline fun playableMediaItem(
     body: MediaItemBuilder.() -> Unit
 ) = MediaItemBuilder(flag = MediaItem.FLAG_PLAYABLE).apply(body).build()
 
-inline fun playableMediaItem(
+fun playableMediaItem(
     metadata: MediaMetadataCompat
 ) = MediaItem(metadata.description, MediaItem.FLAG_PLAYABLE)
 
@@ -21,6 +21,6 @@ inline fun browsableMediaItem(
     body: MediaItemBuilder.() -> Unit
 ) = MediaItemBuilder(flag = MediaItem.FLAG_BROWSABLE).apply(body).build()
 
-inline fun browsableMediaItem(
+fun browsableMediaItem(
     metadata: MediaMetadataCompat
 ) = MediaItem(metadata.description, MediaItem.FLAG_BROWSABLE)
