@@ -1,19 +1,19 @@
 [versions]
 activity-compose = "1.4.0"
 accompanist = "0.22.0-rc"
-appcompat = "1.4.0"
+appcompat = "1.4.1"
 core = "1.7.0"
 coroutines = "1.6.0"
 coil = "2.0.0-alpha06"
 compose = "1.1.0-rc01"
 composeCompiler = "1.1.0-rc02"
-constraintlayoutCompose = "1.0.0-rc02"
+constraintlayout-compose = "1.0.0"
 exoPlayer = "2.15.1"
 koin = "3.1.4"
 kotlin = "1.6.10"
 retrofit = "2.9.0"
 okhttp = "4.9.3"
-room = "2.4.0"
+room = "2.4.1"
 toolbar-compose = "2.3.0"
 voyager = "1.0.0-beta13"
 
@@ -37,7 +37,7 @@ compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 
-constraintlayoutCompose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose"}
+constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayout-compose"}
 
 core = { module = "androidx.core:core-ktx", version.ref = "core" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }

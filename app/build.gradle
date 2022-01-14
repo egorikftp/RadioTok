@@ -46,7 +46,7 @@ dependencies {
     implementation libs.accompanist.placeholder
     implementation libs.appcompat
     implementation libs.coil
-    implementation libs.constraintlayoutCompose
+    implementation libs.constraintlayout.compose
     implementation libs.core
     implementation libs.gson
     implementation libs.koin.android
