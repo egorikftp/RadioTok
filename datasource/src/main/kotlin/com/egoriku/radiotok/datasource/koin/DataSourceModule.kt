@@ -14,24 +14,40 @@ import com.egoriku.radiotok.datasource.intertal.datasource.metadata.CountriesDat
 import com.egoriku.radiotok.datasource.intertal.datasource.metadata.LanguagesDataSource
 import com.egoriku.radiotok.datasource.intertal.datasource.metadata.TagsDataSource
 import com.egoriku.radiotok.datasource.intertal.datasource.playlist.*
-import org.koin.dsl.bind
-import org.koin.dsl.factory
+import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
 val dataSourceModule = module {
 
-    factory<EntitySourceFactory>() bind IEntitySourceFactory::class
+    factory<IEntitySourceFactory> {
+        EntitySourceFactory(
+            changedLatelyDataSource = get(),
+            localStationsDataSource = get(),
+            playingNowDataSource = get(),
+            topClicksDataSource = get(),
+            topVoteDataSource = get(),
+            tagsDataSource = get(),
+            languagesDataSource = get(),
+            countriesDataSource = get(),
+            radioInfoDataSource = get()
+        )
+    }
 
-    factory<ChangedLatelyDataSource>() bind IChangedLatelyDataSource::class
-    factory<LocalStationsDataSource>() bind ILocalStationsDataSource::class
-    factory<PlayingNowDataSource>() bind IPlayingNowDataSource::class
-    factory<TopClicksDataSource>() bind ITopClicksDataSource::class
-    factory<TopVoteDataSource>() bind ITopVoteDataSource::class
+    factory<IChangedLatelyDataSource> { ChangedLatelyDataSource(api = get()) }
+    factory<ILocalStationsDataSource> {
+        LocalStationsDataSource(
+            api = get(),
+            context = androidApplication()
+        )
+    }
+    factory<IPlayingNowDataSource> { PlayingNowDataSource(api = get()) }
+    factory<ITopClicksDataSource> { TopClicksDataSource(api = get()) }
+    factory<ITopVoteDataSource> { TopVoteDataSource(api = get()) }
 
-    factory<TagsDataSource>() bind ITagsDataSource::class
-    factory<LanguagesDataSource>() bind ILanguagesDataSource::class
-    factory<CountriesDataSource>() bind ICountriesDataSource::class
+    factory<ITagsDataSource> { TagsDataSource(api = get()) }
+    factory<ILanguagesDataSource> { LanguagesDataSource(api = get()) }
+    factory<ICountriesDataSource> { CountriesDataSource(api = get()) }
 
-    factory<RadioInfoDataSource>() bind IRadioInfoDataSource::class
-    factory<AllStationsDataSource>() bind IAllStationsDataSource::class
+    factory<IRadioInfoDataSource> { RadioInfoDataSource(api = get()) }
+    factory<IAllStationsDataSource> { AllStationsDataSource(api = get()) }
 }
