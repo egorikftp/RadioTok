@@ -11,10 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
-import coil.annotation.ExperimentalCoilApi
 import coil.transform.CircleCropTransformation
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun RadioLogo(
     modifier: Modifier = Modifier,

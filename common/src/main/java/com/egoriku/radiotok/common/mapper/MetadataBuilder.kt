@@ -4,7 +4,6 @@ import com.egoriku.radiotok.common.ext.toFlagEmoji
 
 object MetadataBuilder {
 
-    @OptIn(ExperimentalStdlibApi::class)
     fun build(countryCode: String, tags: String) = buildList {
         if (countryCode.isNotEmpty()) {
             add(countryCode.toFlagEmoji)
