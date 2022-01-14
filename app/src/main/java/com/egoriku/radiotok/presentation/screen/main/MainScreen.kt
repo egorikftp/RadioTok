@@ -15,6 +15,7 @@ import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintSet
+import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.constraintlayout.compose.MotionLayout
 import androidx.constraintlayout.compose.Transition
 import cafe.adriel.voyager.core.screen.Screen
@@ -68,7 +69,7 @@ object MainScreen : Screen {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalMotionApi::class)
 @Composable
 fun RadioPlayer(
     modifier: Modifier,
