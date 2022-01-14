@@ -25,13 +25,11 @@ import com.egoriku.radiotok.radioplayer.data.mediator.IRadioCacheMediator
 import com.egoriku.radiotok.util.BackupManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.bind
 import org.koin.dsl.module
-import org.koin.dsl.single
 
 val appScope = module {
-    single<BitmapProvider>() bind IBitmapProvider::class
-    single<StringResourceProvider>() bind IStringResourceProvider::class
+    single<IBitmapProvider> { BitmapProvider(context = androidContext()) }
+    single<IStringResourceProvider> { StringResourceProvider(context = androidContext()) }
     single {
         BackupManager(
             context = androidContext(),

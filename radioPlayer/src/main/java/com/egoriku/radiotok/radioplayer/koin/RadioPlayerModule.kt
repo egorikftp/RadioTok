@@ -11,8 +11,6 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.bind
-import org.koin.dsl.factory
 import org.koin.dsl.module
 
 val exoPlayerModule = module {
@@ -37,8 +35,20 @@ val exoPlayerModule = module {
 }
 
 val radioPlayerModule = module {
-    factory<MediaItemRepository>() bind IMediaItemRepository::class
-    factory<MediaMetadataRepository>() bind IMediaMetadataRepository::class
+    factory<IMediaItemRepository> {
+        MediaItemRepository(
+            bitmapProvider = get(),
+            stringResource = get(),
+            radioTokDb = get(),
+            entitySourceFactory = get()
+        )
+    }
+    factory<IMediaMetadataRepository> {
+        MediaMetadataRepository(
+            radioTokDb = get(),
+            entitySourceFactory = get()
+        )
+    }
 
     single {
         RadioStateMediator(radioTokDb = get())
