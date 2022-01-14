@@ -7,7 +7,6 @@ import com.egoriku.radiotok.radioplayer.R
 import com.egoriku.radiotok.radioplayer.constant.CustomAction.ACTION_DISLIKE
 import com.egoriku.radiotok.radioplayer.data.CurrentRadioQueueHolder
 import com.egoriku.radiotok.radioplayer.ext.id
-import com.google.android.exoplayer2.ControlDispatcher
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 
@@ -25,14 +24,9 @@ class DislikeActionProvider(
         ).build()
     }
 
-    override fun onCustomAction(
-        player: Player,
-        controlDispatcher: ControlDispatcher,
-        action: String,
-        extras: Bundle?
-    ) {
+    override fun onCustomAction(player: Player, action: String, extras: Bundle?) {
         val currentMediaMetadata = currentRadioQueueHolder.getMediaMetadataOrNull(
-            position = player.currentWindowIndex
+            position = player.currentMediaItemIndex
         ) ?: return
 
         onDislike(currentMediaMetadata.id)

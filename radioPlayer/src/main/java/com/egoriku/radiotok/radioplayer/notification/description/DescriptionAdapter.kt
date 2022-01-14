@@ -28,19 +28,19 @@ class DescriptionAdapter(
     private var currentBitmap: Bitmap? = null
 
     override fun getCurrentContentTitle(player: Player) =
-        getDescription(index = player.currentWindowIndex)?.title.toString()
+        getDescription(index = player.currentMediaItemIndex)?.title.toString()
 
     override fun createCurrentContentIntent(player: Player): PendingIntent? =
         mediaController.sessionActivity
 
     override fun getCurrentContentText(player: Player) =
-        getDescription(index = player.currentWindowIndex)?.subtitle.toString()
+        getDescription(index = player.currentMediaItemIndex)?.subtitle.toString()
 
     override fun getCurrentLargeIcon(
         player: Player,
         callback: PlayerNotificationManager.BitmapCallback
     ): Bitmap? {
-        val iconUri = getDescription(index = player.currentWindowIndex)?.iconUri
+        val iconUri = getDescription(index = player.currentMediaItemIndex)?.iconUri
 
         return if (currentIconUri != iconUri || currentBitmap == null) {
             currentBitmap = null

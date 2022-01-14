@@ -2,7 +2,6 @@ package com.egoriku.radiotok.radioplayer.notification.listener
 
 import android.content.Intent
 import android.view.KeyEvent
-import com.google.android.exoplayer2.ControlDispatcher
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 
@@ -10,11 +9,7 @@ class NotificationMediaButtonEventHandler(
     private val onNext: () -> Unit
 ) : MediaSessionConnector.MediaButtonEventHandler {
 
-    override fun onMediaButtonEvent(
-        player: Player,
-        controlDispatcher: ControlDispatcher,
-        mediaButtonEvent: Intent
-    ): Boolean {
+    override fun onMediaButtonEvent(player: Player, mediaButtonEvent: Intent): Boolean {
         var canHandle = false
 
         val extras = mediaButtonEvent.extras ?: return canHandle

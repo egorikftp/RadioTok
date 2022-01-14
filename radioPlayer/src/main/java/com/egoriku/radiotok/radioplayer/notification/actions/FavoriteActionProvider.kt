@@ -9,7 +9,6 @@ import com.egoriku.radiotok.radioplayer.constant.CustomAction.ACTION_TOGGLE_FAVO
 import com.egoriku.radiotok.radioplayer.data.CurrentRadioQueueHolder
 import com.egoriku.radiotok.radioplayer.data.RadioStateMediator
 import com.egoriku.radiotok.radioplayer.ext.id
-import com.google.android.exoplayer2.ControlDispatcher
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 
@@ -22,7 +21,7 @@ class FavoriteActionProvider(
 
     override fun getCustomAction(player: Player): PlaybackStateCompat.CustomAction? {
         val mediaItem = currentRadioQueueHolder.getMediaMetadataOrNull(
-            position = player.currentWindowIndex
+            position = player.currentMediaItemIndex
         )
 
         return if (mediaItem == null) {
@@ -52,14 +51,9 @@ class FavoriteActionProvider(
         }
     }
 
-    override fun onCustomAction(
-        player: Player,
-        controlDispatcher: ControlDispatcher,
-        action: String,
-        extras: Bundle?
-    ) {
+    override fun onCustomAction(player: Player, action: String, extras: Bundle?) {
         val currentMediaMetadata = currentRadioQueueHolder.getMediaMetadataOrNull(
-            position = player.currentWindowIndex
+            position = player.currentMediaItemIndex
         ) ?: return
 
         radioStateMediator.toggleLiked(id = currentMediaMetadata.id)

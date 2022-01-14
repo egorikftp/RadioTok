@@ -76,13 +76,13 @@ class RadioPlayerNotificationManager(
             if (currentRadioQueueHolder.isRandomRadio()) {
                 add(CUSTOM_ACTION_NEXT)
             } else {
-                if (player.hasNextWindow()) {
+                if (player.hasNextMediaItem()) {
                     add(CUSTOM_ACTION_NEXT)
                 }
             }
 
             val currentRadioId = currentRadioQueueHolder.getMediaMetadataOrNull(
-                position = player.currentWindowIndex
+                position = player.currentMediaItemIndex
             )?.id ?: return@buildList
 
             if (radioStateMediator.isLiked(currentRadioId)) {

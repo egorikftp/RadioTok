@@ -35,13 +35,12 @@ import com.egoriku.radiotok.radioplayer.notification.listener.NotificationMediaB
 import com.egoriku.radiotok.radioplayer.notification.listener.RadioPlayerNotificationListener
 import com.egoriku.radiotok.radioplayer.queue.RadioQueueNavigator
 import com.google.android.exoplayer2.ExoPlaybackException
+import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.PlaybackException
-import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.google.android.exoplayer2.util.NotificationUtil
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
 import org.koin.android.ext.android.inject
 import kotlin.properties.Delegates
 
@@ -52,7 +51,7 @@ class RadioService : MediaBrowserServiceCompat() {
     private val radioStateMediator: RadioStateMediator by inject()
     private val currentRadioQueueHolder: CurrentRadioQueueHolder by inject()
     private val radioCacheMediator: IRadioCacheMediator by inject()
-    private val simpleExoPlayer: SimpleExoPlayer by inject()
+    private val exoPlayer: ExoPlayer by inject()
 
     private val eventHandler = EventHandler()
 
@@ -88,7 +87,7 @@ class RadioService : MediaBrowserServiceCompat() {
         initializePlayerNotificationManager()
 
         mediaSessionConnector = MediaSessionConnector(mediaSession).apply {
-            setPlayer(simpleExoPlayer)
+            setPlayer(exoPlayer)
 
             setErrorMessageProvider { error: PlaybackException ->
                 if (error is ExoPlaybackException) {
@@ -169,7 +168,7 @@ class RadioService : MediaBrowserServiceCompat() {
             }
         )
 
-        simpleExoPlayer.addListener(radioPlayerEventListener)
+        exoPlayer.addListener(radioPlayerEventListener)
 
         serviceScope.launch {
             eventHandler.event.collect {
@@ -233,21 +232,21 @@ class RadioService : MediaBrowserServiceCompat() {
         )
         playerNotificationManager.setSmallIcon(R.drawable.ic_radio)
         playerNotificationManager.setMediaSessionToken(mediaSession.sessionToken)
-        playerNotificationManager.setPlayer(simpleExoPlayer)
+        playerNotificationManager.setPlayer(exoPlayer)
     }
 
     private fun preparePlayer() {
         logD("preparePlayer, queue size: ${currentRadioQueueHolder.currentMediaSource.size}")
-        simpleExoPlayer.setMediaSource(currentRadioQueueHolder.currentMediaSource)
-        simpleExoPlayer.prepare()
-        simpleExoPlayer.playWhenReady = true
-        simpleExoPlayer.play()
+        exoPlayer.setMediaSource(currentRadioQueueHolder.currentMediaSource)
+        exoPlayer.prepare()
+        exoPlayer.playWhenReady = true
+        exoPlayer.play()
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         super.onTaskRemoved(rootIntent)
-        simpleExoPlayer.stop()
-        simpleExoPlayer.clearMediaItems()
+        exoPlayer.stop()
+        exoPlayer.clearMediaItems()
     }
 
     override fun onDestroy() {
@@ -258,8 +257,8 @@ class RadioService : MediaBrowserServiceCompat() {
             release()
         }
 
-        simpleExoPlayer.removeListener(radioPlayerEventListener)
-        simpleExoPlayer.release()
+        exoPlayer.removeListener(radioPlayerEventListener)
+        exoPlayer.release()
 
         playerNotificationManager.setPlayer(null)
 

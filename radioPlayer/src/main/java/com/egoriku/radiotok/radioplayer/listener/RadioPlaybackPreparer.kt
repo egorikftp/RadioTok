@@ -10,7 +10,6 @@ import com.egoriku.radiotok.radioplayer.model.MediaPath
 import com.egoriku.radiotok.radioplayer.model.MediaPath.PlayLiked
 import com.egoriku.radiotok.radioplayer.model.MediaPath.ShuffleAndPlayRoot.ShuffleLiked
 import com.egoriku.radiotok.radioplayer.model.MediaPath.ShuffleAndPlayRoot.ShuffleRandom
-import com.google.android.exoplayer2.ControlDispatcher
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import kotlinx.coroutines.runBlocking
@@ -22,7 +21,6 @@ class RadioPlaybackPreparer(
 
     override fun onCommand(
         player: Player,
-        controlDispatcher: ControlDispatcher,
         command: String,
         extras: Bundle?,
         cb: ResultReceiver?

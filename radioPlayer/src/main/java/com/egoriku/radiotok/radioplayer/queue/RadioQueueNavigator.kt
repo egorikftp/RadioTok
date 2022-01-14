@@ -5,7 +5,6 @@ import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import com.egoriku.radiotok.common.ext.logD
 import com.egoriku.radiotok.radioplayer.data.CurrentRadioQueueHolder
-import com.google.android.exoplayer2.ControlDispatcher
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ext.mediasession.TimelineQueueNavigator
 
@@ -40,7 +39,7 @@ class RadioQueueNavigator(
 
             actions = actions or PlaybackStateCompat.ACTION_SKIP_TO_QUEUE_ITEM
 
-            if (player.hasNextWindow()) {
+            if (player.hasNextMediaItem()) {
                 actions = actions or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
             }
         }
@@ -48,15 +47,12 @@ class RadioQueueNavigator(
         return actions
     }
 
-    override fun onSkipToNext(
-        player: Player,
-        controlDispatcher: ControlDispatcher
-    ) {
+    override fun onSkipToNext(player: Player) {
         when {
             currentRadioQueueHolder.isRandomRadio() -> onNextRandom()
             else -> {
-                if (player.hasNextWindow()) {
-                    player.seekToNextWindow()
+                if (player.hasNextMediaItem()) {
+                    player.seekToNextMediaItem()
                 } else {
                     player.stop()
                 }

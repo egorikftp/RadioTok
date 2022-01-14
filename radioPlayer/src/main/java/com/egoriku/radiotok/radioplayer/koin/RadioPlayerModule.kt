@@ -7,7 +7,7 @@ import com.egoriku.radiotok.radioplayer.repository.IMediaMetadataRepository
 import com.egoriku.radiotok.radioplayer.repository.MediaItemRepository
 import com.egoriku.radiotok.radioplayer.repository.MediaMetadataRepository
 import com.google.android.exoplayer2.C
-import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import org.koin.android.ext.koin.androidContext
@@ -26,7 +26,7 @@ val exoPlayerModule = module {
     }
 
     single {
-        SimpleExoPlayer.Builder(androidContext())
+        ExoPlayer.Builder(androidContext())
             .setAudioAttributes(get(), true)
             .setHandleAudioBecomingNoisy(true)
             .setWakeMode(C.WAKE_MODE_NETWORK)

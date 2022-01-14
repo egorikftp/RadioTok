@@ -68,7 +68,7 @@ class NotificationCustomActionReceiver(
 
     override fun onCustomAction(player: Player, action: String, intent: Intent) {
         val currentRadioStationMetadata = currentRadioQueueHolder.getMediaMetadataOrNull(
-            position = player.currentWindowIndex
+            position = player.currentMediaItemIndex
         ) ?: return
 
         when (action) {
