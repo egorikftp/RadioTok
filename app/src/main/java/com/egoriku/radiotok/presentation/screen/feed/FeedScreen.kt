@@ -21,13 +21,13 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.egoriku.radiotok.R
 import com.egoriku.radiotok.foundation.button.IconButton
+import com.egoriku.radiotok.foundation.header.ScreenHeader
 import com.egoriku.radiotok.presentation.screen.feed.ui.FeedRow
 import com.egoriku.radiotok.presentation.screen.feed.ui.InstantRadio
 import com.egoriku.radiotok.presentation.screen.feed.ui.PlaylistWithIcon
 import com.egoriku.radiotok.presentation.screen.feed.ui.SimplePlaylist
 import com.egoriku.radiotok.presentation.screen.playlist.PlaylistScreen
 import com.egoriku.radiotok.presentation.screen.settings.SettingScreen
-import com.egoriku.radiotok.presentation.ui.header.ScreenHeader
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import org.koin.androidx.compose.getViewModel

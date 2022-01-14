@@ -1,4 +1,4 @@
-package com.egoriku.radiotok.presentation.ui.header
+package com.egoriku.radiotok.foundation.header
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -6,13 +6,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ScreenHeader(
+fun SectionHeader(
     title: String,
-    actions: @Composable RowScope.() -> Unit = {}
+    content: @Composable ColumnScope.() -> Unit = {},
 ) {
     Row(
         modifier = Modifier
@@ -24,8 +23,10 @@ fun ScreenHeader(
         Text(
             modifier = Modifier.padding(start = 16.dp),
             text = title,
-            style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.Bold)
+            style = MaterialTheme.typography.h6
         )
-        actions()
+    }
+    Column(modifier = Modifier.fillMaxWidth()) {
+        content()
     }
 }

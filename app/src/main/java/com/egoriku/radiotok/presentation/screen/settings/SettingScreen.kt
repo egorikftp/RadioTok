@@ -10,9 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import cafe.adriel.voyager.core.screen.Screen
 import com.egoriku.radiotok.R
+import com.egoriku.radiotok.foundation.header.ScreenHeader
+import com.egoriku.radiotok.foundation.header.SectionHeader
 import com.egoriku.radiotok.presentation.screen.settings.ui.SettingItem
-import com.egoriku.radiotok.presentation.ui.header.ScreenHeader
-import com.egoriku.radiotok.presentation.ui.header.SectionHeader
 import com.google.accompanist.insets.systemBarsPadding
 import org.koin.androidx.compose.getViewModel
 
