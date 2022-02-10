@@ -111,8 +111,9 @@ object FeedScreen : Screen {
                             }
                         }
                         item {
-                            FeedRow(title = stringResource(id = R.string.media_item_path_by_tags)) {
-                                items(state.feed.byTags) {
+                            val tags = state.feed.byTags
+                            FeedRow(title = stringResource(id = tags.titleRes)) {
+                                items(tags.items) {
                                     SimplePlaylist(collection = it)
                                 }
                             }
