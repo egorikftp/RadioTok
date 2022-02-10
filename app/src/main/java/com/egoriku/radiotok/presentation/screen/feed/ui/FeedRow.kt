@@ -34,7 +34,7 @@ fun FeedRow(
         if (lane.showMore) {
             Text(
                 modifier = Modifier.noRippleClickable { onMoreActionClick() },
-                text = stringResource(id = R.string.show_more),
+                text = stringResource(id = R.string.show_all),
                 style = MaterialTheme.typography.button
             )
         }

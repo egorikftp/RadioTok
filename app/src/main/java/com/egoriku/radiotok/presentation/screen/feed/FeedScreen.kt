@@ -22,10 +22,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.egoriku.radiotok.R
 import com.egoriku.radiotok.foundation.button.IconButton
 import com.egoriku.radiotok.foundation.header.ScreenHeader
-import com.egoriku.radiotok.presentation.screen.feed.ui.FeedRow
-import com.egoriku.radiotok.presentation.screen.feed.ui.InstantRadio
-import com.egoriku.radiotok.presentation.screen.feed.ui.PlaylistWithIcon
-import com.egoriku.radiotok.presentation.screen.feed.ui.SimplePlaylist
+import com.egoriku.radiotok.presentation.screen.feed.ui.*
 import com.egoriku.radiotok.presentation.screen.playlist.PlaylistScreen
 import com.egoriku.radiotok.presentation.screen.settings.SettingScreen
 import com.google.accompanist.insets.LocalWindowInsets
@@ -123,6 +120,7 @@ object FeedScreen : Screen {
                                 items(tags.items) {
                                     SimplePlaylist(collection = it)
                                 }
+                                MoreItem(enabled = tags.showMore){}
                             }
                         }
                         item {
@@ -132,6 +130,7 @@ object FeedScreen : Screen {
                                 items(byCountry.items) {
                                     SimplePlaylist(collection = it)
                                 }
+                                MoreItem(enabled = byCountry.showMore) {}
                             }
                         }
                         item {
@@ -141,6 +140,7 @@ object FeedScreen : Screen {
                                 items(byLanguage.items) {
                                     SimplePlaylist(collection = it)
                                 }
+                                MoreItem(enabled = byLanguage.showMore) {}
                             }
                         }
                     }
