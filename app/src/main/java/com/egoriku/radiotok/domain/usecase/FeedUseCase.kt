@@ -23,6 +23,8 @@ import com.egoriku.radiotok.radioplayer.model.MediaPath.SmartPlaylistsRoot.TopVo
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
+private const val DEFAULT_PORTION_SIZE = 10
+
 class FeedUseCase(
     private val tagsDataSource: ITagsDataSource,
     private val languagesDataSource: ILanguagesDataSource,
@@ -32,7 +34,7 @@ class FeedUseCase(
 
     suspend fun loadFeed(): Feed = coroutineScope {
         val tagsDeferred = async {
-            tagsDataSource.load().map {
+            tagsDataSource.loadPortion(size = DEFAULT_PORTION_SIZE).map {
                 SimplePlaylist(
                     name = it.name,
                     count = it.count.toString()
@@ -41,25 +43,21 @@ class FeedUseCase(
         }
 
         val languagesDeferred = async {
-            Lane.ByLanguage(
-                items = languagesDataSource.load().map {
-                    SimplePlaylist(
-                        name = it.name,
-                        count = it.count.toString()
-                    )
-                }
-            )
+            languagesDataSource.loadPortion(size = DEFAULT_PORTION_SIZE).map {
+                SimplePlaylist(
+                    name = it.name,
+                    count = it.count.toString()
+                )
+            }
         }
 
         val countryCodesDeferred = async {
-            Lane.ByCountry(
-                items = countriesDataSource.load().map {
-                    SimplePlaylist(
-                        name = it.name.toFlagEmoji,
-                        count = it.count.toString()
-                    )
-                }
-            )
+            countriesDataSource.loadPortion(size = DEFAULT_PORTION_SIZE).map {
+                SimplePlaylist(
+                    name = it.name.toFlagEmoji,
+                    count = it.count.toString()
+                )
+            }
         }
 
         Feed(
@@ -67,8 +65,8 @@ class FeedUseCase(
             forYou = getForYou(),
             smartPlaylists = getSmartPlaylists(),
             byTags = Lane.ByTag(items = tagsDeferred.await()),
-            byCountry = countryCodesDeferred.await(),
-            byLanguage = languagesDeferred.await()
+            byCountry = Lane.ByCountry(items = countryCodesDeferred.await()),
+            byLanguage = Lane.ByLanguage(items = languagesDeferred.await())
         )
     }
 

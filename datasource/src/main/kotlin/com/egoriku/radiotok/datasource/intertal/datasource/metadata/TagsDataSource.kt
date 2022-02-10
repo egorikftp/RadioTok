@@ -17,4 +17,9 @@ internal class TagsDataSource(private val api: Api) : ITagsDataSource {
             }
         }
     }.getOrDefault(emptyList())
+
+    override suspend fun loadPortion(size: Int) = runCatching {
+        load()
+        requireNotNull(result).subList(0, size)
+    }.getOrDefault(emptyList())
 }

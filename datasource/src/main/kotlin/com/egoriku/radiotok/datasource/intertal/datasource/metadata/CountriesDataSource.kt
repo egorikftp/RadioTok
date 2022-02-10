@@ -17,4 +17,9 @@ internal class CountriesDataSource(private val api: Api) : ICountriesDataSource 
             }
         }
     }.getOrDefault(emptyList())
+
+    override suspend fun loadPortion(size: Int) = runCatching {
+        load()
+        requireNotNull(result).subList(0, size)
+    }.getOrDefault(emptyList())
 }

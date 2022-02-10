@@ -17,4 +17,9 @@ internal class LanguagesDataSource(private val api: Api) : ILanguagesDataSource 
             }
         }
     }.getOrDefault(emptyList())
+
+    override suspend fun loadPortion(size: Int) = runCatching {
+        load()
+        requireNotNull(result).subList(0, size)
+    }.getOrDefault(emptyList())
 }
