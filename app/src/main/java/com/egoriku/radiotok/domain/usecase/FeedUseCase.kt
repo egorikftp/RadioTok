@@ -7,6 +7,7 @@ import com.egoriku.radiotok.datasource.datasource.metadata.ICountriesDataSource
 import com.egoriku.radiotok.datasource.datasource.metadata.ILanguagesDataSource
 import com.egoriku.radiotok.datasource.datasource.metadata.ITagsDataSource
 import com.egoriku.radiotok.domain.model.Feed
+import com.egoriku.radiotok.domain.model.Lane
 import com.egoriku.radiotok.domain.model.section.FeedType
 import com.egoriku.radiotok.domain.model.section.FeedType.Playlist
 import com.egoriku.radiotok.domain.model.section.FeedType.SimplePlaylist
@@ -30,11 +31,6 @@ class FeedUseCase(
 ) {
 
     suspend fun loadFeed(): Feed = coroutineScope {
-
-        val shuffleAndPlay = getShuffleAndPlay()
-        val forYou = getForYou()
-        val smartPlaylists = getSmartPlaylists()
-
         val tagsDeferred = async {
             tagsDataSource.load().map {
                 SimplePlaylist(
@@ -45,89 +41,99 @@ class FeedUseCase(
         }
 
         val languagesDeferred = async {
-            languagesDataSource.load().map {
-                SimplePlaylist(
-                    name = it.name,
-                    count = it.count.toString()
-                )
-            }
+            Lane.ByLanguage(
+                items = languagesDataSource.load().map {
+                    SimplePlaylist(
+                        name = it.name,
+                        count = it.count.toString()
+                    )
+                }
+            )
         }
 
         val countryCodesDeferred = async {
-            countriesDataSource.load().map {
-                SimplePlaylist(
-                    name = it.name.toFlagEmoji,
-                    count = it.count.toString()
-                )
-            }
+            Lane.ByCountry(
+                items = countriesDataSource.load().map {
+                    SimplePlaylist(
+                        name = it.name.toFlagEmoji,
+                        count = it.count.toString()
+                    )
+                }
+            )
         }
 
         Feed(
-            shuffleAndPlay = shuffleAndPlay,
-            forYou = forYou,
-            smartPlaylists = smartPlaylists,
-            byTags = tagsDeferred.await(),
+            shuffleAndPlay = getShuffleAndPlay(),
+            forYou = getForYou(),
+            smartPlaylists = getSmartPlaylists(),
+            byTags = Lane.ByTag(items = tagsDeferred.await()),
             byCountry = countryCodesDeferred.await(),
             byLanguage = languagesDeferred.await()
         )
     }
 
-    private fun getSmartPlaylists() = listOf(
-        Playlist(
-            id = LocalStations.path,
-            name = stringResource.localStations,
-            icon = R.drawable.ic_local
-        ),
-        Playlist(
-            id = TopClicks.path,
-            name = stringResource.topClicks,
-            icon = R.drawable.ic_top_clicks
-        ),
-        Playlist(
-            id = TopVote.path,
-            name = stringResource.topVote,
-            icon = R.drawable.ic_top_vote
-        ),
-        Playlist(
-            id = ChangedLately.path,
-            name = stringResource.changedLately,
-            icon = R.drawable.ic_changed_lately
-        ),
-        Playlist(
-            id = Playing.path,
-            name = stringResource.playing,
-            icon = R.drawable.ic_playing
+    private fun getSmartPlaylists() = Lane.SmartPlaylist(
+        items = listOf(
+            Playlist(
+                id = LocalStations.path,
+                name = stringResource.localStations,
+                icon = R.drawable.ic_local
+            ),
+            Playlist(
+                id = TopClicks.path,
+                name = stringResource.topClicks,
+                icon = R.drawable.ic_top_clicks
+            ),
+            Playlist(
+                id = TopVote.path,
+                name = stringResource.topVote,
+                icon = R.drawable.ic_top_vote
+            ),
+            Playlist(
+                id = ChangedLately.path,
+                name = stringResource.changedLately,
+                icon = R.drawable.ic_changed_lately
+            ),
+            Playlist(
+                id = Playing.path,
+                name = stringResource.playing,
+                icon = R.drawable.ic_playing
+            )
         )
     )
 
-    private fun getForYou() = listOf(
-        Playlist(
-            id = Liked.path,
-            name = stringResource.liked,
-            icon = R.drawable.ic_favorite
-        ),
-        Playlist(
-            id = RecentlyPlayed.path,
-            name = stringResource.recentlyPlayed,
-            icon = R.drawable.ic_history
-        ),
-        Playlist(
-            id = Disliked.path,
-            name = stringResource.disliked,
-            icon = R.drawable.ic_not_interested
+    private fun getForYou() = Lane.ForYou(
+        items = listOf(
+            Playlist(
+                id = Liked.path,
+                name = stringResource.liked,
+                icon = R.drawable.ic_favorite
+            ),
+            Playlist(
+                id = RecentlyPlayed.path,
+                name = stringResource.recentlyPlayed,
+                icon = R.drawable.ic_history
+            ),
+            Playlist(
+                id = Disliked.path,
+                name = stringResource.disliked,
+                icon = R.drawable.ic_not_interested
+            )
         )
     )
 
-    private fun getShuffleAndPlay() = listOf(
-        FeedType.InstantPlay(
-            mediaId = MediaBrowserConstant.SUB_PATH_SHUFFLE_RANDOM,
-            name = stringResource.randomRadio,
-            icon = R.drawable.ic_random
-        ),
-        FeedType.InstantPlay(
-            mediaId = MediaBrowserConstant.SUB_PATH_SHUFFLE_LIKED,
-            name = stringResource.likedRadio,
-            icon = R.drawable.ic_favorite
+    private fun getShuffleAndPlay() = Lane.ShuffleAndPlay(
+        items = listOf(
+            FeedType.InstantPlay(
+                mediaId = MediaBrowserConstant.SUB_PATH_SHUFFLE_RANDOM,
+                name = stringResource.randomRadio,
+                icon = R.drawable.ic_random
+            ),
+            FeedType.InstantPlay(
+                mediaId = MediaBrowserConstant.SUB_PATH_SHUFFLE_LIKED,
+                name = stringResource.likedRadio,
+                icon = R.drawable.ic_favorite
+            )
         )
     )
 }

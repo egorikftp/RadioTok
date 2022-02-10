@@ -33,6 +33,8 @@
     <string name="media_item_path_changed_lately">Changed Lately</string>
     <string name="media_item_path_playing">Playing</string>
 
+    <string name="show_more">More</string>
+
     <!-- Settings  -->
     <string name="settings_screen_header">Settings</string>
     <string name="settings_section_backup_header">Backup/Restore</string>

@@ -80,8 +80,10 @@ object FeedScreen : Screen {
                             }
                         }
                         item {
-                            FeedRow(title = stringResource(id = R.string.media_item_path_shuffle_and_play)) {
-                                items(state.feed.shuffleAndPlay) {
+                            val shuffleAndPlay = state.feed.shuffleAndPlay
+
+                            FeedRow(lane = shuffleAndPlay) {
+                                items(shuffleAndPlay.items) {
                                     InstantRadio(feed = it) {
                                         feedViewModel.playFromMediaId(it.mediaId)
                                     }
@@ -89,8 +91,10 @@ object FeedScreen : Screen {
                             }
                         }
                         item {
-                            FeedRow(title = stringResource(id = R.string.media_item_path_personal_playlists)) {
-                                items(state.feed.forYou) {
+                            val forYou = state.feed.forYou
+
+                            FeedRow(lane = forYou) {
+                                items(forYou.items) {
                                     PlaylistWithIcon(collection = it) { id ->
                                         navigator.push(
                                             PlaylistScreen(id = id)
@@ -100,8 +104,10 @@ object FeedScreen : Screen {
                             }
                         }
                         item {
-                            FeedRow(title = stringResource(id = R.string.media_item_path_smart_playlists)) {
-                                items(state.feed.smartPlaylists) {
+                            val smartPlaylist = state.feed.smartPlaylists
+
+                            FeedRow(lane = smartPlaylist) {
+                                items(smartPlaylist.items) {
                                     PlaylistWithIcon(collection = it) { id ->
                                         navigator.push(
                                             PlaylistScreen(id = id)
@@ -112,22 +118,27 @@ object FeedScreen : Screen {
                         }
                         item {
                             val tags = state.feed.byTags
-                            FeedRow(title = stringResource(id = tags.titleRes)) {
+
+                            FeedRow(lane = tags) {
                                 items(tags.items) {
                                     SimplePlaylist(collection = it)
                                 }
                             }
                         }
                         item {
-                            FeedRow(title = stringResource(id = R.string.media_item_path_by_country)) {
-                                items(state.feed.byCountry) {
+                            val byCountry = state.feed.byCountry
+
+                            FeedRow(lane = byCountry) {
+                                items(byCountry.items) {
                                     SimplePlaylist(collection = it)
                                 }
                             }
                         }
                         item {
-                            FeedRow(title = stringResource(id = R.string.media_item_path_by_language)) {
-                                items(state.feed.byLanguage) {
+                            val byLanguage = state.feed.byLanguage
+
+                            FeedRow(lane = byLanguage) {
+                                items(byLanguage.items) {
                                     SimplePlaylist(collection = it)
                                 }
                             }
