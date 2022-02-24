@@ -43,7 +43,6 @@ internal class MediaItemRepository(
         }
     )
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun getShuffleAndPlayItems() = buildList {
         add(
             playableMediaItem {

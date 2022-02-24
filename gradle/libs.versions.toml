@@ -4,23 +4,23 @@ accompanist = "0.23.0"
 appcompat = "1.4.1"
 core = "1.7.0"
 coroutines = "1.6.0"
-coil = "2.0.0-alpha08"
-compose = "1.1.0"
+coil = "2.0.0-alpha09"
+compose = "1.1.1"
 constraintlayout-compose = "1.0.0"
-exoPlayer = "2.16.1"
+exoPlayer = "2.17.0"
 koin = "3.1.5"
 kotlin = "1.6.10"
 retrofit = "2.9.0"
 okhttp = "4.9.3"
-room = "2.4.1"
+room = "2.4.2"
 toolbar-compose = "2.3.1"
-voyager = "1.0.0-beta15"
+voyager = "1.0.0-beta16"
 
 [libraries]
-gradle-build-tools = "com.android.tools.build:gradle:7.1.1"
+gradle-build-tools = "com.android.tools.build:gradle:7.1.2"
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradle-versioncheck = "com.github.ben-manes:gradle-versions-plugin:0.42.0"
-gradle-ksp = "com.google.devtools.ksp:symbol-processing-gradle-plugin:1.6.10-1.0.2"
+gradle-ksp = "com.google.devtools.ksp:symbol-processing-gradle-plugin:1.6.10-1.0.4"
 
 accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }
 accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
@@ -46,8 +46,8 @@ exoplayer-hls = { module = "com.google.android.exoplayer:exoplayer-hls", version
 exoplayer-ui = { module = "com.google.android.exoplayer:exoplayer-ui", version.ref = "exoPlayer" }
 exoplayer-extension-mediasession = { module = "com.google.android.exoplayer:extension-mediasession", version.ref = "exoPlayer" }
 
-glide = "com.github.bumptech.glide:glide:4.13.0"
-gson = "com.google.code.gson:gson:2.8.9"
+glide = "com.github.bumptech.glide:glide:4.13.1"
+gson = "com.google.code.gson:gson:2.9.0"
 
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
