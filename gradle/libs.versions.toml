@@ -47,7 +47,7 @@ exoplayer-ui = { module = "com.google.android.exoplayer:exoplayer-ui", version.r
 exoplayer-extension-mediasession = { module = "com.google.android.exoplayer:extension-mediasession", version.ref = "exoPlayer" }
 
 glide = "com.github.bumptech.glide:glide:4.13.1"
-gson = "com.google.code.gson:gson:2.9.0"
+gson = "com.google.code.gson:gson:2.10.1"
 
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
