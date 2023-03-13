@@ -66,7 +66,7 @@ room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 
-storage = "com.anggrayudi:storage:1.1.0"
+storage = "com.anggrayudi:storage:1.5.4"
 
 toolbar-compose = { module = "me.onebone:toolbar-compose", version.ref = "toolbar-compose" }
 
