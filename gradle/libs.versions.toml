@@ -14,7 +14,7 @@ retrofit = "2.9.0"
 okhttp = "4.9.3"
 room = "2.4.2"
 toolbar-compose = "2.3.1"
-voyager = "1.0.0-beta16"
+voyager = "1.0.0-rc03"
 
 [libraries]
 gradle-build-tools = "com.android.tools.build:gradle:7.1.2"
