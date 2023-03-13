@@ -13,7 +13,7 @@ kotlin = "1.6.10"
 retrofit = "2.9.0"
 okhttp = "4.9.3"
 room = "2.4.2"
-toolbar-compose = "2.3.1"
+toolbar-compose = "2.3.5"
 voyager = "1.0.0-beta16"
 
 [libraries]
