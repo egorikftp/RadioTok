@@ -20,7 +20,7 @@ voyager = "1.0.0-beta16"
 gradle-build-tools = "com.android.tools.build:gradle:7.1.2"
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradle-versioncheck = "com.github.ben-manes:gradle-versions-plugin:0.42.0"
-gradle-ksp = "com.google.devtools.ksp:symbol-processing-gradle-plugin:1.6.10-1.0.4"
+gradle-ksp = "com.google.devtools.ksp:symbol-processing-gradle-plugin:1.8.20-1.0.11"
 
 accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }
 accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
